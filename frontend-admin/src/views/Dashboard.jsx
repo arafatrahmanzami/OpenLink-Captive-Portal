@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { DollarSign, Users, CheckCircle, BarChart, TrendingUp } from 'lucide-react'
+import { DollarSign, Users, CheckCircle, TrendingUp } from 'lucide-react'
 import { api } from '../lib/api.js'
 import { useCurrency } from '../lib/currency.js'
 import { Card, CardTitle } from '../components/ui.jsx'
@@ -89,7 +89,7 @@ export default function Dashboard({ onUnauthorized }) {
         />
       </div>
 
-      <Card className="lg:col-span-8 lg:row-span-2">
+      <Card className="lg:col-span-8">
         <CardTitle>Voucher Sales Statistics</CardTitle>
         <div className="h-64 sm:h-80">
           {stats.sales_stats && (
@@ -113,14 +113,6 @@ export default function Dashboard({ onUnauthorized }) {
           )}
         </div>
       </Card>
-
-      <div className="lg:col-span-4">
-        <StatCard
-          title="Total Data Consumed"
-          value={`${stats.data_consumed || 0} GB`}
-          icon={BarChart}
-        />
-      </div>
 
       <Card className="lg:col-span-6">
         <CardTitle>Top Selling Plans</CardTitle>
