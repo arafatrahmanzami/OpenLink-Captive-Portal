@@ -6,13 +6,13 @@ import Sidebar from './components/Sidebar.jsx'
 import Topbar from './components/Topbar.jsx'
 import Dashboard from './views/Dashboard.jsx'
 import Vouchers from './views/Vouchers.jsx'
+import Sessions from './views/Sessions.jsx'
+import Logs from './views/Logs.jsx'
 import Settings from './views/Settings.jsx'
 import { Card, CardTitle } from './components/ui.jsx'
 
 const COMING_SOON = {
-  sessions: 'Active Sessions',
   zones: 'Hotspot Zones',
-  logs: 'User Logs',
   reports: 'Revenue Reports',
 }
 
@@ -133,6 +133,12 @@ export default function App() {
               )}
               {view === 'vouchers' && (
                 <Vouchers onUnauthorized={handleLogout} search={search} />
+              )}
+              {view === 'sessions' && (
+                <Sessions onUnauthorized={handleLogout} search={search} />
+              )}
+              {view === 'logs' && (
+                <Logs onUnauthorized={handleLogout} search={search} />
               )}
               {view === 'settings' && <Settings onUnauthorized={handleLogout} />}
               {COMING_SOON[view] && <ComingSoon title={COMING_SOON[view]} />}
