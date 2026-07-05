@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Shield } from 'lucide-react'
+import { Flower2 } from 'lucide-react'
 import { api } from '../lib/api.js'
 import { Button, Field, Input } from './ui.jsx'
 
@@ -34,7 +34,7 @@ export default function Login({ onSuccess }) {
 
       <div className="relative z-10 w-full max-w-md rounded-base border border-border-default bg-neutral-primary-soft p-8 text-center shadow-xl sm:p-12 transition-all duration-300">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft text-brand shadow-xs animate-pulseGlow transition-all duration-200">
-          <Shield className="h-7 w-7" />
+          <Flower2 className="h-7 w-7" />
         </div>
         <h1 className="mb-2 font-heading text-3xl font-bold tracking-tight text-heading">
           Rose<span className="text-brand">Net</span> Admin

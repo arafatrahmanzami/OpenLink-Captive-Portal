@@ -1,5 +1,5 @@
 import {
-  Shield,
+  Flower2,
   LayoutDashboard,
   CreditCard,
   Users,
@@ -60,7 +60,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
         <div className="mb-10 flex items-center justify-between px-1">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft p-2.5 text-brand shadow-xs hover:shadow-sm hover:-translate-y-[1px] transition-all duration-200">
-              <Shield className="h-5 w-5" />
+              <Flower2 className="h-5 w-5" />
             </div>
             <h1 className="font-heading text-xl font-bold tracking-tight text-heading">
               Rose<span className="text-brand">Net</span>

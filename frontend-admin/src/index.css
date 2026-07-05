@@ -7,108 +7,108 @@
 :root {
   color-scheme: light dark;
 
-  /* Fonts (Grounded in RoseNet brand story: Space Grotesk for Tech, Plus Jakarta for UI) */
+  /* Fonts (Space Grotesk for Tech heading, Plus Jakarta Sans for UI body) */
   --font-sans: 'Plus Jakarta Sans', sans-serif;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* RoseNet Premium Flat Light Theme */
-  --neutral-primary-soft: #FCF9F9;
-  --neutral-primary: #FCF9F9;
-  --neutral-primary-medium: #FCF9F9;
-  --neutral-primary-strong: #F5ECEE;
-  --neutral-secondary-soft: #F5EFEF;
-  --neutral-secondary: #F5EFEF;
-  --neutral-secondary-medium: #EADEE0;
-  --neutral-secondary-strong: #DFD0D3;
-  --neutral-tertiary-soft: #EADEE0;
-  --neutral-tertiary: #DFD0D3;
-  --neutral-tertiary-medium: #D2C0C3;
-  --neutral-quaternary: #DFD0D3;
-  --quaternary-medium: #DFD0D3;
-  --gray: #8A7276;
+  /* Official Design System Light Theme Hex Colors */
+  --neutral-primary-soft: #FFFFFF;
+  --neutral-primary: #FFFFFF;
+  --neutral-primary-medium: #FFFFFF;
+  --neutral-primary-strong: #FFFFFF;
+  --neutral-secondary-soft: #F9FAFB;
+  --neutral-secondary: #F9FAFB;
+  --neutral-secondary-medium: #F9FAFB;
+  --neutral-secondary-strong: #F9FAFB;
+  --neutral-tertiary-soft: #F3F4F6;
+  --neutral-tertiary: #F3F4F6;
+  --neutral-tertiary-medium: #F3F4F6;
+  --neutral-quaternary: #E5E7EB;
+  --quaternary-medium: #E5E7EB;
+  --gray: #D1D5DC;
 
-  /* Brand Colors (Rose-based: Crimson and Dusty Rose) */
-  --brand: #C83C56;
-  --brand-softer: #FFF0F2;
-  --brand-soft: #FCD2D8;
-  --brand-medium: #F5A3B1;
-  --brand-strong: #A52A40;
+  /* Brand Colors */
+  --brand: #1447E6;
+  --brand-softer: #EEF6FF;
+  --brand-soft: #DBEAFE;
+  --brand-medium: #BEDBFF;
+  --brand-strong: #193CB8;
 
-  /* Success Colors (Rose leaf green) */
-  --success: #1E7854;
-  --success-soft: #EEF9F4;
-  --success-medium: #C6ECD7;
-  --success-strong: #11593C;
+  /* Success Colors */
+  --success: #007A55;
+  --success-soft: #ECFDF5;
+  --success-medium: #D0FAE5;
+  --success-strong: #006045;
 
-  /* Danger Colors (Red Rose Danger) */
-  --danger: #DC2626;
-  --danger-soft: #FEF2F2;
-  --danger-medium: #FEE2E2;
-  --danger-strong: #991B1B;
+  /* Danger Colors */
+  --danger: #C70036;
+  --danger-soft: #FEF0F2;
+  --danger-medium: #FFE4E6;
+  --danger-strong: #A50036;
 
-  /* Warning Colors (Amber Thorn) */
-  --warning: #D97706;
-  --warning-soft: #FEF3C7;
-  --warning-medium: #FDE68A;
-  --warning-strong: #B45309;
+  /* Warning Colors */
+  --warning: #F97316;
+  --warning-soft: #FFF7ED;
+  --warning-medium: #FFEDD5;
+  --warning-strong: #C2410C;
 
   /* Utility & State */
-  --dark: #3D2E30;
-  --dark-strong: #2A1F21;
-  --disabled: #F5ECEE;
+  --dark: #1F2937;
+  --dark-strong: #111827;
+  --disabled: #F3F4F6;
 
-  /* Text Colors (Highly legible dark rose-charcoal) */
+  /* Text Colors */
   --white: #FFFFFF;
-  --black: #000000;
-  --heading: #1A0A0D;
-  --body: #4A3C3E;
-  --body-subtle: #8A7276;
+  --black: #111827;
+  --heading: #111827;
+  --body: #4B5563;
+  --body-subtle: #6B7280;
 
-  --fg-brand-subtle: #F5A3B1;
-  --fg-brand: #C83C56;
-  --fg-brand-strong: #A52A40;
+  --fg-brand-subtle: #BEDBFF;
+  --fg-brand: #1447E6;
+  --fg-brand-strong: #193CB8;
 
-  --fg-success: #1E7854;
-  --fg-success-strong: #11593C;
-  --fg-danger: #DC2626;
-  --fg-danger-strong: #991B1B;
-  --fg-warning: #B45309;
-  --fg-warning-subtle: #D97706;
-  --fg-disabled: #AFA0A2;
+  --fg-success: #047857;
+  --fg-success-strong: #065F46;
+  --fg-danger: #BE123C;
+  --fg-danger-strong: #881337;
+  --fg-warning: #7C2D12;
+  --fg-warning-subtle: #EA580C;
+  --fg-disabled: #9CA3AF;
 
-  /* Border Colors (Flat, structured grid layout) */
-  --border-dark: #8A7276;
+  /* Border Colors */
+  --border-dark: #1F2937;
   --border-buffer: #FFFFFF;
   --border-buffer-medium: #FFFFFF;
   --border-buffer-strong: #FFFFFF;
-  --border-muted: #FCF9F9;
-  --border-light-subtle: #F5EFEF;
-  --border-light: #F5EFEF;
-  --border-light-medium: #EADEE0;
-  --border-default: #E9DEE0;
-  --border-default-subtle: #F5EFEF;
-  --border-default-medium: #DFD0D3;
-  --border-default-strong: #D2C0C3;
+  --border-muted: #F9FAFB;
+  --border-light-subtle: #F3F4F6;
+  --border-light: #F3F4F6;
+  --border-light-medium: #F3F4F6;
+  --border-default-subtle: #E5E7EB;
+  --border-default: #E5E7EB;
+  --border-default-medium: #E5E7EB;
+  --border-default-strong: #E5E7EB;
   
-  --border-brand: #C83C56;
-  --border-brand-subtle: #FCD2D8;
-  --border-success: #1E7854;
-  --border-success-subtle: #C6ECD7;
-  --border-danger: #DC2626;
-  --border-danger-subtle: #FEE2E2;
-  --border-warning: #D97706;
-  --border-warning-subtle: #FDE68A;
+  --border-brand: #1447E6;
+  --border-brand-subtle: #BEDBFF;
+  --border-success: #047857;
+  --border-success-subtle: #A7F3D0;
+  --border-danger: #BE123C;
+  --border-danger-subtle: #FECDD3;
+  --border-warning: #EA580C;
+  --border-warning-subtle: #FED7AA;
 
   /* Flat Shadows (Exactly matching shadows.md) */
-  --shadow-2xs: 0 1px rgba(61, 46, 48, 0.03);
-  --shadow-xs: 0 1px 2px 0 rgba(61, 46, 48, 0.05);
-  --shadow-sm: 0 1px 3px 0 rgba(61, 46, 48, 0.08), 0 1px 2px -1px rgba(61, 46, 48, 0.08);
-  --shadow-md: 0 4px 6px -1px rgba(61, 46, 48, 0.08), 0 2px 4px -2px rgba(61, 46, 48, 0.08);
-  --shadow-lg: 0 10px 15px -3px rgba(61, 46, 48, 0.08), 0 4px 6px -4px rgba(61, 46, 48, 0.08);
-  --shadow-xl: 0 20px 25px -5px rgba(61, 46, 48, 0.1), 0 8px 10px -6px rgba(61, 46, 48, 0.1);
-  --shadow-2xl: 0 25px 50px -12px rgba(61, 46, 48, 0.15);
-  --shadow-inset: inset 0 2px 4px 0 rgba(61, 46, 48, 0.06);
+  --shadow-2xs: 0 1px rgba(0, 0, 0, 0.03);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px -1px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 
   /* Button Glint Highlights (Exactly matching buttons.md) */
   --color-1-400: rgba(255, 255, 255, 0.25);
@@ -122,91 +122,91 @@
 }
 
 .dark {
-  /* RoseNet Premium Flat Dark Theme (Deep Obsidian Rose) */
-  --neutral-primary-soft: #120E0F;
-  --neutral-primary: #0B0808;
-  --neutral-primary-medium: #1C1516;
-  --neutral-primary-strong: #2A1F21;
-  --neutral-secondary-soft: #181213;
-  --neutral-secondary: #0B0808;
-  --neutral-secondary-medium: #22191B;
-  --neutral-secondary-strong: #332528;
-  --neutral-tertiary-soft: #22191B;
-  --neutral-tertiary: #2A1F21;
-  --neutral-tertiary-medium: #3D2C30;
-  --neutral-quaternary: #2A1F21;
-  --quaternary-medium: #3D2C30;
-  --gray: #7A6669;
+  /* Official Design System Dark Theme Hex Colors */
+  --neutral-primary-soft: #101828;
+  --neutral-primary: #030712;
+  --neutral-primary-medium: #1E2939;
+  --neutral-primary-strong: #333E4F;
+  --neutral-secondary-soft: #101828;
+  --neutral-secondary: #030712;
+  --neutral-secondary-medium: #1E2939;
+  --neutral-secondary-strong: #333E4F;
+  --neutral-tertiary-soft: #101828;
+  --neutral-tertiary: #1E2939;
+  --neutral-tertiary-medium: #333E4F;
+  --neutral-quaternary: #333E4F;
+  --quaternary-medium: #4A5565;
+  --gray: #4A5565;
 
-  /* Brand Colors (Vibrant Neon Rose/Crimson) */
-  --brand: #FF6B8B;
-  --brand-softer: #2A0E13;
-  --brand-soft: #4E1A23;
-  --brand-medium: #8A2536;
-  --brand-strong: #FF9EB2;
+  /* Brand Colors */
+  --brand: #155DFC;
+  --brand-softer: #162455;
+  --brand-soft: #1C398E;
+  --brand-medium: #1C398E;
+  --brand-strong: #1447E6;
 
-  /* Success Colors (Bright Mint Green) */
-  --success: #34D399;
-  --success-soft: #0A261B;
-  --success-medium: #154D37;
-  --success-strong: #6EE7B7;
+  /* Success Colors */
+  --success: #009966;
+  --success-soft: #002C22;
+  --success-medium: #004F3B;
+  --success-strong: #007A55;
 
-  /* Danger Colors (Vibrant Rose Danger) */
-  --danger: #EF4444;
-  --danger-soft: #2A0808;
-  --danger-medium: #541111;
-  --danger-strong: #F87171;
+  /* Danger Colors */
+  --danger: #C70036;
+  --danger-soft: #4D0218;
+  --danger-medium: #8B0836;
+  --danger-strong: #A50036;
 
-  /* Warning Colors (Vibrant Amber) */
-  --warning: #F59E0B;
-  --warning-soft: #2D1C00;
-  --warning-medium: #543800;
-  --warning-strong: #FBBF24;
+  /* Warning Colors */
+  --warning: #F97316;
+  --warning-soft: #7C2D12;
+  --warning-medium: #7C2D12;
+  --warning-strong: #C2410C;
 
   /* Utility & State */
-  --dark: #FAF5F6;
-  --dark-strong: #FAF5F6;
-  --disabled: #22191B;
+  --dark: #1F2937;
+  --dark-strong: #374151;
+  --disabled: #1F2937;
 
-  /* Text Colors (High contrast rose silver) */
-  --heading: #FCF5F6;
-  --body: #AFA0A2;
-  --body-subtle: #7A6669;
+  /* Text Colors */
+  --heading: #FFFFFF;
+  --body: #9CA3AF;
+  --body-subtle: #9CA3AF;
 
-  --fg-brand-subtle: #FF6B8B;
-  --fg-brand: #FF6B8B;
-  --fg-brand-strong: #FF9EB2;
+  --fg-brand-subtle: #1C398E;
+  --fg-brand: #51A2FF;
+  --fg-brand-strong: #BEDBFF;
 
-  --fg-success: #34D399;
-  --fg-success-strong: #6EE7B7;
-  --fg-danger: #EF4444;
+  --fg-success: #065F46;
+  --fg-success-strong: #10B981;
+  --fg-danger: #F43F5E;
   --fg-danger-strong: #F87171;
   --fg-warning: #FBBF24;
-  --fg-warning-subtle: #F59E0B;
-  --fg-disabled: #5E4E50;
+  --fg-warning-subtle: #F97316;
+  --fg-disabled: #6B7280;
 
   /* Border Colors */
-  --border-dark: #7A6669;
-  --border-buffer: #0B0808;
-  --border-buffer-medium: #1C1516;
-  --border-buffer-strong: #2A1F21;
-  --border-muted: #120E0F;
-  --border-light-subtle: #181213;
-  --border-light: #181213;
-  --border-light-medium: #22191B;
-  --border-default: #251B1D;
-  --border-default-subtle: #1C1516;
-  --border-default-medium: #352629;
-  --border-default-strong: #4A373A;
+  --border-dark: #4B5563;
+  --border-buffer: #030712;
+  --border-buffer-medium: #1F2937;
+  --border-buffer-strong: #374151;
+  --border-muted: #111827;
+  --border-light-subtle: #111827;
+  --border-light: #1F2937;
+  --border-light-medium: #374151;
+  --border-default-subtle: #111827;
+  --border-default: #1F2937;
+  --border-default-medium: #374151;
+  --border-default-strong: #4B5563;
 
-  --border-brand: #FF6B8B;
-  --border-brand-subtle: #4E1A23;
-  --border-success: #34D399;
-  --border-success-subtle: #154D37;
-  --border-danger: #EF4444;
-  --border-danger-subtle: #541111;
-  --border-warning: #F59E0B;
-  --border-warning-subtle: #543800;
+  --border-brand: #51A2FF;
+  --border-brand-subtle: #1C398E;
+  --border-success: #065F46;
+  --border-success-subtle: #064E3B;
+  --border-danger: #BE123C;
+  --border-danger-subtle: #881337;
+  --border-warning: #F97316;
+  --border-warning-subtle: #7C2D12;
 
   /* Flat Shadows for Dark Mode */
   --shadow-2xs: 0 1px rgba(0, 0, 0, 0.3);
