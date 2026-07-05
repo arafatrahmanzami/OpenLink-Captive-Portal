@@ -8,13 +8,9 @@ import Dashboard from './views/Dashboard.jsx'
 import Vouchers from './views/Vouchers.jsx'
 import Sessions from './views/Sessions.jsx'
 import Logs from './views/Logs.jsx'
+import Zones from './views/Zones.jsx'
+import Reports from './views/Reports.jsx'
 import Settings from './views/Settings.jsx'
-import { Card, CardTitle } from './components/ui.jsx'
-
-const COMING_SOON = {
-  zones: 'Hotspot Zones',
-  reports: 'Revenue Reports',
-}
 
 // Decorative background grid + ambient glows (matches the design system).
 function Backdrop() {
@@ -33,14 +29,6 @@ function Backdrop() {
       <div className="pointer-events-none absolute -right-36 -top-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
       <div className="pointer-events-none absolute -bottom-36 -left-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
     </>
-  )
-}
-
-function ComingSoon({ title }) {
-  return (
-    <Card className="animate-fadeIn">
-      <CardTitle>{title} (Coming Soon)</CardTitle>
-    </Card>
   )
 }
 
@@ -158,8 +146,11 @@ export default function App() {
               {view === 'logs' && (
                 <Logs onUnauthorized={handleLogout} search={search} />
               )}
+              {view === 'zones' && (
+                <Zones onUnauthorized={handleLogout} search={search} />
+              )}
+              {view === 'reports' && <Reports onUnauthorized={handleLogout} />}
               {view === 'settings' && <Settings onUnauthorized={handleLogout} />}
-              {COMING_SOON[view] && <ComingSoon title={COMING_SOON[view]} />}
             </main>
           </div>
         </div>

@@ -4,6 +4,18 @@ import { api, asJson } from '../lib/api.js'
 import { useCurrency } from '../lib/currency.js'
 import { Card, CardTitle, Button, Input, Select, Field } from '../components/ui.jsx'
 
+const CURRENCIES = [
+  { value: '$', label: 'USD — Dollar ($)' },
+  { value: '€', label: 'EUR — Euro (€)' },
+  { value: '£', label: 'GBP — Pound (£)' },
+  { value: '₨', label: 'PKR — Rupee (₨)' },
+  { value: '৳', label: 'BDT — Taka (৳)' },
+  { value: '₹', label: 'INR — Rupee (₹)' },
+  { value: '¥', label: 'JPY — Yen (¥)' },
+  { value: '₦', label: 'NGN — Naira (₦)' },
+  { value: 'R', label: 'ZAR — Rand (R)' },
+]
+
 const THEMES = [
   { value: 'default', label: 'RoseNet (Matrix Pink)' },
   { value: 'modern', label: 'QuickConnect (Clean Modern)' },
@@ -85,12 +97,17 @@ export default function Settings({ onUnauthorized }) {
       <Card>
         <CardTitle icon={Sliders}>General Settings</CardTitle>
         <form onSubmit={saveGeneral} className="max-w-md space-y-6">
-          <Field label="Currency Symbol">
-            <Input
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-              placeholder="e.g., $, €, £"
-            />
+          <Field label="Currency">
+            <Select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
+              {!CURRENCIES.some((c) => c.value === symbol) && (
+                <option value={symbol}>{symbol} (custom)</option>
+              )}
+              {CURRENCIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </Select>
           </Field>
           <Field label="Portal Theme">
             <Select value={theme} onChange={(e) => setTheme(e.target.value)}>

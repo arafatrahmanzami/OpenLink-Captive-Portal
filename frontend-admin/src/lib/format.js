@@ -31,6 +31,15 @@ export function formatRemaining(seconds) {
   return `${s}s`
 }
 
+// Map a client IP to its hotspot zone (the /24 subnet it was handed).
+// Different APs/VLANs hand out different subnets, so the subnet is the zone.
+export function zoneLabel(ip) {
+  if (!ip) return 'Unassigned'
+  const p = ip.split('.')
+  if (p.length !== 4) return 'Unassigned'
+  return `${p[0]}.${p[1]}.${p[2]}.0/24`
+}
+
 // Format an ISO timestamp for the logs/sessions tables ('—' when absent).
 export function formatDateTime(iso) {
   if (!iso) return '—'

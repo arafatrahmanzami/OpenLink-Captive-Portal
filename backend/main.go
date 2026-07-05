@@ -9,10 +9,22 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"sort"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
+
+// subnetOf maps a client IP to its /24 zone label, e.g.
+// "192.168.8.42" -> "192.168.8.0/24". Empty for blank/malformed IPs.
+func subnetOf(ip string) string {
+	p := strings.Split(ip, ".")
+	if len(p) != 4 {
+		return ""
+	}
+	return fmt.Sprintf("%s.%s.%s.0/24", p[0], p[1], p[2])
+}
 
 var sessionCookieName = "voucher-admin-session"
 var frontendDir = "frontend"
@@ -353,11 +365,17 @@ func adminStatsHandler(w http.ResponseWriter, r *http.Request) {
 	salesByMonth := make(map[string]float64)
 	sixMonthsAgo := now.AddDate(0, -6, 0)
 	topPlans := make(map[string]int)
+	zoneCounts := make(map[string]int) // redeemed sessions per /24 subnet
 
 	for _, v := range vouchers {
 		totalRevenue += v.Price
 		if v.Name != "" {
 			topPlans[v.Name]++
+		}
+		if v.IsUsed {
+			if zone := subnetOf(v.UserIP); zone != "" {
+				zoneCounts[zone]++
+			}
 		}
 		if !v.CreatedAt.IsZero() && v.CreatedAt.After(sixMonthsAgo) {
 			month := v.CreatedAt.Format("2006-01")
@@ -393,6 +411,17 @@ func adminStatsHandler(w http.ResponseWriter, r *http.Request) {
 		planList = append(planList, plan{Name: name, Sales: sales})
 	}
 
+	// Sort zones by label so the dashboard radar stays stable across requests.
+	zoneLabels := make([]string, 0, len(zoneCounts))
+	for zone := range zoneCounts {
+		zoneLabels = append(zoneLabels, zone)
+	}
+	sort.Strings(zoneLabels)
+	zoneData := make([]int, 0, len(zoneLabels))
+	for _, zone := range zoneLabels {
+		zoneData = append(zoneData, zoneCounts[zone])
+	}
+
 	stats := map[string]interface{}{
 		"total_revenue":   totalRevenue,
 		"active_vouchers": activeVouchers,
@@ -400,7 +429,7 @@ func adminStatsHandler(w http.ResponseWriter, r *http.Request) {
 		"sales_stats":     map[string]interface{}{"labels": salesLabels, "data": salesData},
 		"voucher_status":  map[string]int{"active": activeVouchers, "expired": expiredCount, "unused": unusedCount},
 		"top_plans":       planList,
-		"traffic_by_zone": map[string]interface{}{"labels": []string{"Zone A", "Zone B", "Zone C"}, "data": []int{0, 0, 0}},
+		"traffic_by_zone": map[string]interface{}{"labels": zoneLabels, "data": zoneData},
 	}
 	json.NewEncoder(w).Encode(stats)
 }
