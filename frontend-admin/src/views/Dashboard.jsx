@@ -21,7 +21,7 @@ function StatCard({ title, value, icon: Icon, trend }) {
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-default border border-border-default-medium bg-neutral-secondary-medium p-2.5 text-brand">
+        <div className="flex items-center justify-center rounded-full border border-border/30 bg-neutral-primary-soft p-3 text-brand shadow-inset">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -126,17 +126,17 @@ export default function Dashboard({ onUnauthorized }) {
         <CardTitle>Top Selling Plans</CardTitle>
         <ul className="space-y-2">
           {topPlans.length === 0 && (
-            <li className="rounded-base border border-border-default-medium bg-neutral-secondary-medium px-4 py-3 text-sm">
+            <li className="rounded-base border border-border/20 bg-neutral-primary-soft px-4 py-4 text-sm text-body-subtle shadow-inset text-center">
               No plan sales data available.
             </li>
           )}
           {topPlans.map((plan) => (
             <li
               key={plan.name}
-              className="flex items-center justify-between rounded-base border border-border-default-medium bg-neutral-secondary-medium px-4 py-3 text-sm"
+              className="flex items-center justify-between rounded-base border border-border/20 bg-neutral-primary-soft px-4 py-3.5 text-sm shadow-inset"
             >
-              <span className="text-heading">{plan.name}</span>
-              <span className="text-fg-brand-strong font-semibold">({plan.sales} sold)</span>
+              <span className="text-heading font-medium">{plan.name}</span>
+              <span className="text-brand font-semibold">({plan.sales} sold)</span>
             </li>
           ))}
         </ul>

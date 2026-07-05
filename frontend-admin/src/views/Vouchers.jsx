@@ -147,7 +147,6 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
                 type="checkbox"
                 checked={form.reusable}
                 onChange={set('reusable')}
-                className="h-4 w-4 rounded-sm border border-border-default-medium bg-neutral-secondary-medium text-brand accent-brand focus:ring-2 focus:ring-brand-soft"
               />
               Reusable
             </label>
@@ -208,7 +207,7 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
                     <td className="px-6 py-4">
                       <button
                         onClick={() => remove(v.id)}
-                        className="flex h-8 w-8 items-center justify-center rounded-default border border-border-default-medium bg-neutral-secondary-medium text-body transition duration-150 hover:border-border-danger hover:bg-danger-soft hover:text-fg-danger-strong"
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-border/20 bg-neutral-primary-soft text-body-subtle shadow-sm hover:shadow-md hover:text-danger active:shadow-inset transition-all duration-200"
                         aria-label="Delete voucher"
                       >
                         <Trash2 className="h-4 w-4" />

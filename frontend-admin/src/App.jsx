@@ -25,13 +25,13 @@ function Backdrop() {
         style={{
           backgroundSize: '50px 50px',
           backgroundImage:
-            'linear-gradient(to right, rgba(255,108,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,108,0,0.03) 1px, transparent 1px)',
+            'linear-gradient(to right, rgba(200,60,86,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,60,86,0.02) 1px, transparent 1px)',
           maskImage:
             'radial-gradient(circle at center, black 50%, transparent 100%)',
         }}
       />
-      <div className="pointer-events-none absolute -right-36 -top-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.06] blur-[140px]" />
-      <div className="pointer-events-none absolute -bottom-36 -left-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.06] blur-[140px]" />
+      <div className="pointer-events-none absolute -right-36 -top-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
+      <div className="pointer-events-none absolute -bottom-36 -left-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
     </>
   )
 }

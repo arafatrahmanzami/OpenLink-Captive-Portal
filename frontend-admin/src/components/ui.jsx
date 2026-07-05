@@ -1,9 +1,15 @@
 // Small reusable, design-system styled primitives shared across views.
 
-export function Card({ className = '', children, ...props }) {
+export function Card({ className = '', children, clickable, ...props }) {
+  const isClickable = clickable || !!props.onClick;
   return (
     <div
-      className={`rounded-base border border-border bg-neutral-primary-soft p-5 shadow-xs sm:p-6 ${className}`}
+      className={`rounded-base border border-border/30 bg-neutral-primary-soft p-5 sm:p-6 transition-all duration-200
+        ${isClickable
+          ? 'cursor-pointer shadow-sm hover:shadow-md active:shadow-inset'
+          : 'shadow-md'
+        }
+        ${className}`}
       {...props}
     >
       {children}
@@ -14,7 +20,7 @@ export function Card({ className = '', children, ...props }) {
 export function CardTitle({ icon: Icon, children, className = '' }) {
   return (
     <h3
-      className={`mb-6 flex items-center gap-3 text-base md:text-xl font-medium text-heading ${className}`}
+      className={`mb-6 flex items-center gap-3 text-base md:text-xl font-semibold text-heading ${className}`}
     >
       {Icon && <Icon className="h-5 w-5 text-brand" />}
       {children}
@@ -38,24 +44,24 @@ export function Button({
   }
 
   const variantClasses = {
-    brand: 'bg-brand border-transparent text-white hover:bg-brand-strong focus:ring-brand-medium/50 glint-effect',
-    secondary: 'bg-neutral-secondary-medium border-border-default-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-neutral-tertiary/50 glint-effect',
-    tertiary: 'bg-neutral-primary-soft border-border-default text-body hover:bg-neutral-secondary-medium hover:text-heading focus:ring-neutral-tertiary-soft/50 glint-effect',
-    success: 'bg-success border-transparent text-white hover:bg-success-strong focus:ring-success-medium/50 glint-effect',
-    danger: 'bg-danger border-transparent text-white hover:bg-danger-strong focus:ring-danger-medium/50 glint-effect',
-    warning: 'bg-warning border-transparent text-white hover:bg-warning-strong focus:ring-warning-medium/50 glint-effect',
-    dark: 'bg-dark border-transparent text-black hover:bg-dark-strong focus:ring-neutral-tertiary/50 glint-effect',
-    ghost: 'bg-transparent border-transparent text-heading hover:bg-neutral-secondary-medium focus:ring-neutral-tertiary/50',
+    brand: 'bg-neutral-primary-soft border border-border/30 text-fg-brand hover:text-fg-brand-strong hover:shadow-md active:shadow-inset focus:ring-brand/20',
+    secondary: 'bg-neutral-primary-soft border border-border/30 text-body hover:text-heading hover:shadow-md active:shadow-inset focus:ring-neutral-tertiary/20',
+    tertiary: 'bg-neutral-primary-soft border border-border/30 text-body hover:text-heading hover:shadow-md active:shadow-inset focus:ring-neutral-tertiary/20',
+    success: 'bg-neutral-primary-soft border border-border/30 text-fg-success hover:text-fg-success-strong hover:shadow-md active:shadow-inset focus:ring-success/20',
+    danger: 'bg-neutral-primary-soft border border-border/30 text-fg-danger hover:text-fg-danger-strong hover:shadow-md active:shadow-inset focus:ring-danger/20',
+    warning: 'bg-neutral-primary-soft border border-border/30 text-fg-warning hover:text-fg-warning-strong hover:shadow-md active:shadow-inset focus:ring-warning/20',
+    dark: 'bg-neutral-primary-soft border border-border/30 text-heading hover:shadow-md active:shadow-inset focus:ring-neutral-tertiary/20',
+    ghost: 'bg-transparent border-transparent text-body hover:shadow-sm active:shadow-inset focus:ring-neutral-tertiary/20',
   }
 
   const isDisabled = props.disabled
 
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 border font-medium transition duration-150 focus:outline-none focus:ring-4 select-none
+      className={`inline-flex items-center justify-center gap-2 font-medium select-none shadow-sm transition-all duration-200 outline-none focus:outline-none
         ${sizeClasses[size] || sizeClasses.base}
         ${isDisabled
-          ? 'bg-disabled border-border-default-medium text-fg-disabled cursor-not-allowed shadow-none'
+          ? 'bg-neutral-primary-soft border border-border/10 text-fg-disabled cursor-not-allowed shadow-none'
           : (variantClasses[variant] || variantClasses.brand)
         }
         ${className}
@@ -70,14 +76,14 @@ export function Button({
 export function Input({ className = '', error, success, ...props }) {
   return (
     <input
-      className={`w-full rounded-base border bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs outline-none transition duration-200 placeholder:text-body hover:border-border-default-strong focus:outline-none
+      className={`w-full rounded-base border bg-neutral-primary-soft px-3 py-2.5 text-sm text-heading shadow-inset outline-none transition-all duration-200 placeholder:text-body/60 hover:border-border-default-strong focus:outline-none
         ${error
-          ? 'border-border-danger focus:border-border-danger focus:ring-1 focus:ring-danger'
+          ? 'border-danger focus:border-danger focus:ring-1 focus:ring-danger/40'
           : success
-          ? 'border-border-success focus:border-border-success focus:ring-1 focus:ring-success'
-          : 'border-border-default-medium focus:border-brand focus:ring-1 focus:ring-brand'
+          ? 'border-success focus:border-success focus:ring-1 focus:ring-success/40'
+          : 'border-border/40 focus:border-brand focus:ring-1 focus:ring-brand/40'
         }
-        disabled:bg-disabled disabled:text-fg-disabled disabled:cursor-not-allowed
+        disabled:text-fg-disabled disabled:cursor-not-allowed
         ${className}
       `}
       {...props}
@@ -88,14 +94,14 @@ export function Input({ className = '', error, success, ...props }) {
 export function Select({ className = '', error, success, children, ...props }) {
   return (
     <select
-      className={`w-full rounded-base border bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs outline-none transition duration-200 hover:border-border-default-strong focus:outline-none
+      className={`w-full rounded-base border bg-neutral-primary-soft px-3 py-2.5 text-sm text-heading shadow-inset outline-none transition-all duration-200 hover:border-border-default-strong focus:outline-none
         ${error
-          ? 'border-border-danger focus:border-border-danger focus:ring-1 focus:ring-danger'
+          ? 'border-danger focus:border-danger focus:ring-1 focus:ring-danger/40'
           : success
-          ? 'border-border-success focus:border-border-success focus:ring-1 focus:ring-success'
-          : 'border-border-default-medium focus:border-brand focus:ring-1 focus:ring-brand'
+          ? 'border-success focus:border-success focus:ring-1 focus:ring-success/40'
+          : 'border-border/40 focus:border-brand focus:ring-1 focus:ring-brand/40'
         }
-        disabled:bg-disabled disabled:text-fg-disabled disabled:cursor-not-allowed
+        disabled:text-fg-disabled disabled:cursor-not-allowed
         ${className}
       `}
       {...props}
@@ -122,16 +128,16 @@ export function Field({ label, htmlFor, children, className = '' }) {
 }
 
 const chipStyles = {
-  active: 'bg-success-soft text-fg-success-strong border-border-success-subtle',
-  expired: 'bg-danger-soft text-fg-danger-strong border-border-danger-subtle',
-  unused: 'bg-brand-softer text-fg-brand-strong border-border-brand-subtle',
+  active: 'bg-success-soft text-fg-success border-border-success/30 shadow-sm',
+  expired: 'bg-danger-soft text-fg-danger border-border-danger/30 shadow-sm',
+  unused: 'bg-brand-softer text-fg-brand border-border-brand/30 shadow-sm',
 }
 
 export function StatusChip({ status }) {
   const label = status.charAt(0).toUpperCase() + status.slice(1)
   return (
     <span
-      className={`inline-block rounded-default border px-1.5 py-0.5 text-xs font-medium ${chipStyles[status] || 'bg-neutral-primary-soft border-border-default text-heading'}`}
+      className={`inline-block rounded-default border px-2.5 py-0.5 text-xs font-semibold ${chipStyles[status] || 'bg-neutral-primary-soft border-border text-heading shadow-sm'}`}
     >
       {label}
     </span>

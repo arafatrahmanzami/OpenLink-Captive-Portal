@@ -26,22 +26,35 @@ ChartJS.register(
   Filler,
 )
 
-ChartJS.defaults.font.family = '"JetBrains Mono", monospace'
-ChartJS.defaults.color = '#9CA3AF'
+ChartJS.defaults.font.family = '"Nunito Sans", sans-serif'
+ChartJS.defaults.font.size = 11
 
-// Shared palette (mirrors the design-system tokens).
-export const C = {
-  brand: '#FF6C00',
-  success: '#009966',
-  danger: '#C70036',
-  body: '#9CA3AF',
-  neutralPrimary: '#000000',
-  heading: '#FFFFFF',
+const getVar = (name) => {
+  if (typeof window === 'undefined') return ''
+  return window.getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 }
 
-const grid = 'rgba(255, 255, 255, 0.03)'
+// Shared dynamic palette reflecting the neumorphic CSS variables.
+export const C = {
+  get brand() { return getVar('--brand') || '#C83C56' },
+  get success() { return getVar('--success') || '#1E7854' },
+  get danger() { return getVar('--danger') || '#C83C56' },
+  get body() { return getVar('--body') || '#5C4E50' },
+  get neutralPrimary() { return getVar('--neutral-primary-soft') || '#F5EFEF' },
+  get heading() { return getVar('--heading') || '#3D2E30' },
+}
+
+const getGridColor = () => {
+  if (typeof window === 'undefined') return 'rgba(0,0,0,0.05)'
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  return isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(61, 46, 48, 0.06)'
+}
 
 export function SalesBarChart({ labels, data }) {
+  const brandColor = C.brand
+  const bodyColor = C.body
+  const gridColor = getGridColor()
+
   return (
     <Bar
       data={{
@@ -50,9 +63,9 @@ export function SalesBarChart({ labels, data }) {
           {
             label: 'Voucher Sales',
             data,
-            backgroundColor: C.brand + '33',
-            borderColor: C.brand,
-            borderWidth: 1,
+            backgroundColor: brandColor + '25',
+            borderColor: brandColor,
+            borderWidth: 1.5,
             borderRadius: 4,
           },
         ],
@@ -64,10 +77,10 @@ export function SalesBarChart({ labels, data }) {
         scales: {
           y: {
             beginAtZero: true,
-            grid: { color: grid },
-            ticks: { color: C.body },
+            grid: { color: gridColor },
+            ticks: { color: bodyColor },
           },
-          x: { grid: { display: false }, ticks: { color: C.body } },
+          x: { grid: { display: false }, ticks: { color: bodyColor } },
         },
       }}
     />
@@ -75,6 +88,11 @@ export function SalesBarChart({ labels, data }) {
 }
 
 export function StatusDoughnutChart({ active, expired, unused }) {
+  const successColor = C.success
+  const dangerColor = C.danger
+  const brandColor = C.brand
+  const bodyColor = C.body
+
   return (
     <Doughnut
       data={{
@@ -82,7 +100,7 @@ export function StatusDoughnutChart({ active, expired, unused }) {
         datasets: [
           {
             data: [active, expired, unused],
-            backgroundColor: [C.success, C.danger, C.brand],
+            backgroundColor: [successColor, dangerColor, brandColor],
             borderWidth: 0,
             hoverOffset: 12,
           },
@@ -95,7 +113,7 @@ export function StatusDoughnutChart({ active, expired, unused }) {
         plugins: {
           legend: {
             position: 'bottom',
-            labels: { color: C.body, usePointStyle: true, padding: 16 },
+            labels: { color: bodyColor, usePointStyle: true, padding: 16 },
           },
         },
       }}
@@ -104,6 +122,12 @@ export function StatusDoughnutChart({ active, expired, unused }) {
 }
 
 export function TrafficRadarChart({ labels, data }) {
+  const brandColor = C.brand
+  const bodyColor = C.body
+  const neutralPrimary = C.neutralPrimary
+  const headingColor = C.heading
+  const gridColor = getGridColor()
+
   return (
     <Radar
       data={{
@@ -112,12 +136,12 @@ export function TrafficRadarChart({ labels, data }) {
           {
             label: 'Traffic',
             data,
-            backgroundColor: C.brand + '15',
-            borderColor: C.brand,
-            pointBackgroundColor: C.brand,
-            pointBorderColor: C.neutralPrimary,
-            pointHoverBackgroundColor: C.heading,
-            borderWidth: 1,
+            backgroundColor: brandColor + '15',
+            borderColor: brandColor,
+            pointBackgroundColor: brandColor,
+            pointBorderColor: neutralPrimary,
+            pointHoverBackgroundColor: headingColor,
+            borderWidth: 1.5,
           },
         ],
       }}
@@ -127,9 +151,9 @@ export function TrafficRadarChart({ labels, data }) {
         plugins: { legend: { display: false } },
         scales: {
           r: {
-            angleLines: { color: grid },
-            grid: { color: grid },
-            pointLabels: { color: C.body, font: { size: 10 } },
+            angleLines: { color: gridColor },
+            grid: { color: gridColor },
+            pointLabels: { color: bodyColor, font: { size: 10 } },
             ticks: { display: false },
           },
         },
