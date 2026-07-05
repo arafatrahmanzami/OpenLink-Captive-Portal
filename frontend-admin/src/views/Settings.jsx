@@ -37,7 +37,7 @@ function Message({ message }) {
 export default function Settings({ onUnauthorized }) {
   const { currency, setCurrency } = useCurrency()
   const [symbol, setSymbol] = useState(currency)
-  const [theme, setTheme] = useState('default')
+  const [theme, setTheme] = useState('music')
   const [brand, setBrand] = useState('RoseNet')
   const [generalMsg, setGeneralMsg] = useState(null)
 

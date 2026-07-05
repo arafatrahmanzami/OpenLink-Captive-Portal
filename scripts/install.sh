@@ -84,7 +84,9 @@ EOF
 echo "Enabling and starting the service..."
 chmod +x /etc/init.d/voucher
 /etc/init.d/voucher enable
-/etc/init.d/voucher start
+# restart (not start) so re-running the installer swaps in the new binary;
+# procd's `start` is a no-op when an old instance is already running.
+/etc/init.d/voucher restart
 
 # 5. Install and configure NoDogSplash
 echo "Configuring NoDogSplash..."
