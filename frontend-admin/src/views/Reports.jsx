@@ -7,17 +7,17 @@ import { SalesBarChart } from '../components/charts.jsx'
 
 function StatCard({ title, value, icon: Icon }) {
   return (
-    <Card>
+    <Card className="h-full">
       <div className="flex items-start justify-between">
         <div>
-          <div className="mb-2 text-[13px] font-medium uppercase tracking-wide text-body">
+          <div className="mb-2 text-[13px] font-medium uppercase tracking-wider text-body-subtle">
             {title}
           </div>
-          <div className="text-3xl font-semibold tracking-tight text-heading">
+          <div className="text-3xl font-bold tracking-tight text-heading">
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-full border border-border/30 bg-neutral-primary-soft p-3 text-brand shadow-inset">
+        <div className="flex items-center justify-center rounded-full border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -82,75 +82,79 @@ export default function Reports({ onUnauthorized }) {
   const plans = [...planMap.values()].sort((a, b) => b.revenue - a.revenue)
 
   return (
-    <div className="grid animate-fadeIn grid-cols-1 gap-6 lg:grid-cols-12">
-      <div className="lg:col-span-3">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <div className="lg:col-span-3 animate-fadeIn animate-stagger-1">
         <StatCard title="Total Revenue" value={money(totalRevenue)} icon={DollarSign} />
       </div>
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-3 animate-fadeIn animate-stagger-2">
         <StatCard title="Redeemed Revenue" value={money(redeemedRevenue)} icon={Wallet} />
       </div>
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-3 animate-fadeIn animate-stagger-3">
         <StatCard title="Vouchers Sold" value={sold} icon={ShoppingCart} />
       </div>
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-3 animate-fadeIn animate-stagger-4">
         <StatCard title="Average Sale" value={money(avg)} icon={BarChart2} />
       </div>
 
-      <Card className="lg:col-span-7">
-        <CardTitle icon={BarChart2}>Revenue by Month</CardTitle>
-        <div className="h-64 sm:h-80">
-          <SalesBarChart labels={labels} data={monthData} />
-        </div>
-      </Card>
+      <div className="lg:col-span-7 animate-fadeIn animate-stagger-5">
+        <Card className="h-full">
+          <CardTitle icon={BarChart2}>Revenue by Month</CardTitle>
+          <div className="h-64 sm:h-80">
+            <SalesBarChart labels={labels} data={monthData} />
+          </div>
+        </Card>
+      </div>
 
-      <Card className="lg:col-span-5 p-0 sm:p-0 overflow-hidden">
-        <div className="p-5 sm:p-6">
-          <CardTitle className="mb-0">Revenue by Plan</CardTitle>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[360px] text-left text-sm text-body">
-            <thead>
-              <tr className="border-b border-border bg-neutral-secondary-soft text-body">
-                {['Plan', 'Sold', 'Revenue', 'Share'].map((h) => (
-                  <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {plans.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-body-subtle bg-neutral-primary">
-                    {error || 'No sales data yet.'}
-                  </td>
-                </tr>
-              )}
-              {plans.map((p, index) => {
-                const isLast = index === plans.length - 1
-                const share = totalRevenue ? Math.round((p.revenue / totalRevenue) * 100) : 0
-                return (
-                  <tr
-                    key={p.name}
-                    className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                      isLast ? '' : 'border-b border-border'
-                    }`}
-                  >
-                    <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
-                      {p.name}
+      <div className="lg:col-span-5 animate-fadeIn animate-stagger-5">
+        <Card className="h-full p-0 sm:p-0 overflow-hidden">
+          <div className="p-5 sm:p-6">
+            <CardTitle className="mb-0">Revenue by Plan</CardTitle>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[360px] text-left text-sm text-body">
+              <thead>
+                <tr className="border-b border-border-default bg-neutral-secondary-soft text-body">
+                  {['Plan', 'Sold', 'Revenue', 'Share'].map((h) => (
+                    <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
+                      {h}
                     </th>
-                    <td className="px-6 py-4">{p.count}</td>
-                    <td className="px-6 py-4 text-fg-brand-strong font-semibold whitespace-nowrap">
-                      {money(p.revenue)}
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {plans.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-8 text-center text-body-subtle bg-neutral-primary">
+                      {error || 'No sales data yet.'}
                     </td>
-                    <td className="px-6 py-4">{share}%</td>
                   </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-      </Card>
+                )}
+                {plans.map((p, index) => {
+                  const isLast = index === plans.length - 1
+                  const share = totalRevenue ? Math.round((p.revenue / totalRevenue) * 100) : 0
+                  return (
+                    <tr
+                      key={p.name}
+                      className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
+                        isLast ? '' : 'border-b border-border-default'
+                      }`}
+                    >
+                      <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
+                        {p.name}
+                      </th>
+                      <td className="px-6 py-4 font-mono">{p.count}</td>
+                      <td className="px-6 py-4 text-fg-brand-strong font-semibold whitespace-nowrap">
+                        {money(p.revenue)}
+                      </td>
+                      <td className="px-6 py-4">{share}%</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      </div>
     </div>
   )
 }

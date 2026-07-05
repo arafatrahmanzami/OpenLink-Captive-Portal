@@ -32,8 +32,8 @@ export default function Login({ onSuccess }) {
       <div className="pointer-events-none absolute -right-36 -top-36 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
       <div className="pointer-events-none absolute -bottom-36 -left-36 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
 
-      <div className="relative z-10 w-full max-w-md rounded-base border border-border/30 bg-neutral-primary-soft p-8 text-center shadow-xl sm:p-12 transition-all duration-300">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-border/30 bg-neutral-primary-soft text-brand shadow-sm animate-pulseGlow transition-all duration-200">
+      <div className="relative z-10 w-full max-w-md rounded-base border border-border-default bg-neutral-primary-soft p-8 text-center shadow-xl sm:p-12 transition-all duration-300">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft text-brand shadow-xs animate-pulseGlow transition-all duration-200">
           <Shield className="h-7 w-7" />
         </div>
         <h1 className="mb-2 font-heading text-3xl font-bold tracking-tight text-heading">

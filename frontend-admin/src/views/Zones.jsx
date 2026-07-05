@@ -50,20 +50,20 @@ export default function Zones({ onUnauthorized, search = '' }) {
     .sort((a, b) => b.active - a.active || b.users - a.users)
 
   return (
-    <div className="animate-fadeIn">
+    <div className="animate-fadeIn animate-stagger-1">
       <Card className="p-0 sm:p-0 overflow-hidden">
         <div className="flex items-center justify-between p-5 sm:p-6">
           <CardTitle icon={MapPin} className="mb-0">
             Hotspot Zones
           </CardTitle>
-          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong">
+          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
             {zones.length} {zones.length === 1 ? 'zone' : 'zones'}
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[560px] text-left text-sm text-body">
             <thead>
-              <tr className="border-b border-border bg-neutral-secondary-soft text-body">
+              <tr className="border-b border-border-default bg-neutral-secondary-soft text-body">
                 {['Zone (Subnet)', 'Active Now', 'Total Users', 'Revenue'].map((h) => (
                   <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
                     {h}
@@ -85,16 +85,16 @@ export default function Zones({ onUnauthorized, search = '' }) {
                   <tr
                     key={z.label}
                     className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                      isLast ? '' : 'border-b border-border'
+                      isLast ? '' : 'border-b border-border-default'
                     }`}
                   >
                     <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
                       {z.label}
                     </th>
                     <td className="px-6 py-4">
-                      <span className="font-medium text-fg-success-strong">{z.active}</span>
+                      <span className="font-semibold text-fg-success-strong">{z.active}</span>
                     </td>
-                    <td className="px-6 py-4">{z.users}</td>
+                    <td className="px-6 py-4 font-mono">{z.users}</td>
                     <td className="px-6 py-4 text-fg-brand-strong font-semibold whitespace-nowrap">
                       {money(z.revenue)}
                     </td>

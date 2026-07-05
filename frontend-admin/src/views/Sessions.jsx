@@ -46,20 +46,20 @@ export default function Sessions({ onUnauthorized, search = '' }) {
     .sort((a, b) => remainingSeconds(a) - remainingSeconds(b))
 
   return (
-    <div className="animate-fadeIn">
+    <div className="animate-fadeIn animate-stagger-1">
       <Card className="p-0 sm:p-0 overflow-hidden">
         <div className="flex items-center justify-between p-5 sm:p-6">
           <CardTitle icon={Users} className="mb-0">
             Active Sessions
           </CardTitle>
-          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong">
+          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
             {active.length} online
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-sm text-body">
             <thead>
-              <tr className="border-b border-border bg-neutral-secondary-soft text-body">
+              <tr className="border-b border-border-default bg-neutral-secondary-soft text-body">
                 {['Voucher', 'Code', 'MAC', 'IP', 'Started', 'Time Left'].map((h) => (
                   <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
                     {h}
@@ -81,15 +81,15 @@ export default function Sessions({ onUnauthorized, search = '' }) {
                   <tr
                     key={v.id}
                     className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                      isLast ? '' : 'border-b border-border'
+                      isLast ? '' : 'border-b border-border-default'
                     }`}
                   >
                     <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
                       {v.name || 'N/A'}
                     </th>
                     <td className="px-6 py-4 text-fg-brand-strong font-semibold">{v.code}</td>
-                    <td className="px-6 py-4 text-xs">{v.user_mac || '—'}</td>
-                    <td className="px-6 py-4 text-xs">{v.user_ip || '—'}</td>
+                    <td className="px-6 py-4 font-mono text-xs">{v.user_mac || '—'}</td>
+                    <td className="px-6 py-4 font-mono text-xs">{v.user_ip || '—'}</td>
                     <td className="px-6 py-4 whitespace-nowrap">{formatDateTime(v.start_time)}</td>
                     <td className="px-6 py-4 font-medium text-fg-success-strong whitespace-nowrap">
                       {formatRemaining(remainingSeconds(v))}

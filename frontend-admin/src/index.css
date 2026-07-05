@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,189 +7,220 @@
 :root {
   color-scheme: light dark;
 
-  /* Fonts */
-  --font-sans: 'Nunito Sans', sans-serif;
-  --font-heading: 'Outfit', sans-serif;
+  /* Fonts (Grounded in RoseNet brand story: Space Grotesk for Tech, Plus Jakarta for UI) */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-  /* RoseNet Premium Neumorphic Light Theme (default) */
-  --neutral-primary-soft: #F5EFEF;
-  --neutral-primary: #F5EFEF;
-  --neutral-primary-medium: #F5EFEF;
-  --neutral-primary-strong: #EADEE0;
+  /* RoseNet Premium Flat Light Theme */
+  --neutral-primary-soft: #FCF9F9;
+  --neutral-primary: #FCF9F9;
+  --neutral-primary-medium: #FCF9F9;
+  --neutral-primary-strong: #F5ECEE;
   --neutral-secondary-soft: #F5EFEF;
   --neutral-secondary: #F5EFEF;
-  --neutral-secondary-medium: #F5EFEF;
-  --neutral-secondary-strong: #EADEE0;
-  --neutral-tertiary-soft: #F5EFEF;
-  --neutral-tertiary: #EADEE0;
-  --neutral-tertiary-medium: #DFD0D3;
+  --neutral-secondary-medium: #EADEE0;
+  --neutral-secondary-strong: #DFD0D3;
+  --neutral-tertiary-soft: #EADEE0;
+  --neutral-tertiary: #DFD0D3;
+  --neutral-tertiary-medium: #D2C0C3;
   --neutral-quaternary: #DFD0D3;
   --quaternary-medium: #DFD0D3;
-  --gray: #8A7A7D;
+  --gray: #8A7276;
 
-  /* Brand Colors (Rose-based: Dusty crimson/green) */
+  /* Brand Colors (Rose-based: Crimson and Dusty Rose) */
   --brand: #C83C56;
-  --brand-softer: #FAE6E9;
-  --brand-soft: #F5D3D7;
-  --brand-medium: #E05A72;
-  --brand-strong: #9C273C;
+  --brand-softer: #FFF0F2;
+  --brand-soft: #FCD2D8;
+  --brand-medium: #F5A3B1;
+  --brand-strong: #A52A40;
 
+  /* Success Colors (Rose leaf green) */
   --success: #1E7854;
-  --success-soft: #ECF7F2;
-  --success-medium: #D2EDDF;
+  --success-soft: #EEF9F4;
+  --success-medium: #C6ECD7;
   --success-strong: #11593C;
 
-  --danger: #C83C56;
-  --danger-soft: #FAE6E9;
-  --danger-medium: #F5D3D7;
-  --danger-strong: #9C273C;
+  /* Danger Colors (Red Rose Danger) */
+  --danger: #DC2626;
+  --danger-soft: #FEF2F2;
+  --danger-medium: #FEE2E2;
+  --danger-strong: #991B1B;
 
+  /* Warning Colors (Amber Thorn) */
   --warning: #D97706;
   --warning-soft: #FEF3C7;
   --warning-medium: #FDE68A;
   --warning-strong: #B45309;
 
+  /* Utility & State */
   --dark: #3D2E30;
   --dark-strong: #2A1F21;
-  --disabled: #EADEE0;
+  --disabled: #F5ECEE;
 
-  /* Text Colors */
+  /* Text Colors (Highly legible dark rose-charcoal) */
   --white: #FFFFFF;
   --black: #000000;
-  --heading: #3D2E30;
-  --body: #5C4E50;
-  --body-subtle: #8A7A7D;
+  --heading: #1A0A0D;
+  --body: #4A3C3E;
+  --body-subtle: #8A7276;
 
-  --fg-brand-subtle: #C83C56;
+  --fg-brand-subtle: #F5A3B1;
   --fg-brand: #C83C56;
-  --fg-brand-strong: #9C273C;
+  --fg-brand-strong: #A52A40;
 
   --fg-success: #1E7854;
   --fg-success-strong: #11593C;
-  --fg-danger: #C83C56;
-  --fg-danger-strong: #9C273C;
+  --fg-danger: #DC2626;
+  --fg-danger-strong: #991B1B;
   --fg-warning: #B45309;
   --fg-warning-subtle: #D97706;
-  --fg-disabled: #A19194;
+  --fg-disabled: #AFA0A2;
 
-  /* Border Colors */
-  --border-dark: #8A7A7D;
-  --border-default: #E6D8DB;
-  --border-default-subtle: #EDE2E4;
+  /* Border Colors (Flat, structured grid layout) */
+  --border-dark: #8A7276;
+  --border-buffer: #FFFFFF;
+  --border-buffer-medium: #FFFFFF;
+  --border-buffer-strong: #FFFFFF;
+  --border-muted: #FCF9F9;
+  --border-light-subtle: #F5EFEF;
+  --border-light: #F5EFEF;
+  --border-light-medium: #EADEE0;
+  --border-default: #E9DEE0;
+  --border-default-subtle: #F5EFEF;
   --border-default-medium: #DFD0D3;
   --border-default-strong: #D2C0C3;
   
   --border-brand: #C83C56;
-  --border-brand-subtle: #F5D3D7;
+  --border-brand-subtle: #FCD2D8;
   --border-success: #1E7854;
-  --border-success-subtle: #D2EDDF;
-  --border-danger: #C83C56;
-  --border-danger-subtle: #F5D3D7;
+  --border-success-subtle: #C6ECD7;
+  --border-danger: #DC2626;
+  --border-danger-subtle: #FEE2E2;
   --border-warning: #D97706;
   --border-warning-subtle: #FDE68A;
 
-  /* Neumorphic Shadows */
-  --shadow-2xs: 1px 1px 2px #DFD2D5, -1px -1px 2px #FFFFFF;
-  --shadow-xs: 2px 2px 4px #DFD2D5, -2px -2px 4px #FFFFFF;
-  --shadow-sm: 3px 3px 6px #DFD2D5, -3px -3px 6px #FFFFFF;
-  --shadow-md: 6px 6px 12px #DFD2D5, -6px -6px 12px #FFFFFF;
-  --shadow-lg: 8px 8px 16px #DFD2D5, -8px -8px 16px #FFFFFF;
-  --shadow-xl: 10px 10px 20px #DFD2D5, -10px -10px 20px #FFFFFF;
-  --shadow-2xl: 12px 12px 24px #DFD2D5, -12px -12px 24px #FFFFFF;
-  --shadow-inset: inset 2.5px 2.5px 5px #DFD2D5, inset -3px -3px 7px #FFFFFF;
+  /* Flat Shadows (Exactly matching shadows.md) */
+  --shadow-2xs: 0 1px rgba(61, 46, 48, 0.03);
+  --shadow-xs: 0 1px 2px 0 rgba(61, 46, 48, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(61, 46, 48, 0.08), 0 1px 2px -1px rgba(61, 46, 48, 0.08);
+  --shadow-md: 0 4px 6px -1px rgba(61, 46, 48, 0.08), 0 2px 4px -2px rgba(61, 46, 48, 0.08);
+  --shadow-lg: 0 10px 15px -3px rgba(61, 46, 48, 0.08), 0 4px 6px -4px rgba(61, 46, 48, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(61, 46, 48, 0.1), 0 8px 10px -6px rgba(61, 46, 48, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(61, 46, 48, 0.15);
+  --shadow-inset: inset 0 2px 4px 0 rgba(61, 46, 48, 0.06);
+
+  /* Button Glint Highlights (Exactly matching buttons.md) */
+  --color-1-400: rgba(255, 255, 255, 0.25);
+  --color-1-700: rgba(0, 0, 0, 0.12);
 
   /* Border Radius (Strictly matching radius.md) */
   --radius-base: 8px;
-  --radius-default: 6px;
-  --radius-sm: 2px;
+  --radius-default: 8px;
+  --radius-sm: 4px;
   --radius-full: 9999px;
 }
 
 .dark {
-    /* RoseNet Premium Neumorphic Dark Theme (Deep Obsidian Rose) */
-    --neutral-primary-soft: #191415;
-    --neutral-primary: #191415;
-    --neutral-primary-medium: #191415;
-    --neutral-primary-strong: #221B1D;
-    --neutral-secondary-soft: #191415;
-    --neutral-secondary: #191415;
-    --neutral-secondary-medium: #191415;
-    --neutral-secondary-strong: #221B1D;
-    --neutral-tertiary-soft: #191415;
-    --neutral-tertiary: #221B1D;
-    --neutral-tertiary-medium: #2A2124;
-    --neutral-quaternary: #2A2124;
-    --quaternary-medium: #2A2124;
-    --gray: #7A6B6E;
+  /* RoseNet Premium Flat Dark Theme (Deep Obsidian Rose) */
+  --neutral-primary-soft: #120E0F;
+  --neutral-primary: #0B0808;
+  --neutral-primary-medium: #1C1516;
+  --neutral-primary-strong: #2A1F21;
+  --neutral-secondary-soft: #181213;
+  --neutral-secondary: #0B0808;
+  --neutral-secondary-medium: #22191B;
+  --neutral-secondary-strong: #332528;
+  --neutral-tertiary-soft: #22191B;
+  --neutral-tertiary: #2A1F21;
+  --neutral-tertiary-medium: #3D2C30;
+  --neutral-quaternary: #2A1F21;
+  --quaternary-medium: #3D2C30;
+  --gray: #7A6669;
 
-    /* Brand Colors (Obsidian Rose) */
-    --brand: #FF6B8B;
-    --brand-softer: #2E151A;
-    --brand-soft: #4A1D25;
-    --brand-medium: #D44260;
-    --brand-strong: #FF85A0;
+  /* Brand Colors (Vibrant Neon Rose/Crimson) */
+  --brand: #FF6B8B;
+  --brand-softer: #2A0E13;
+  --brand-soft: #4E1A23;
+  --brand-medium: #8A2536;
+  --brand-strong: #FF9EB2;
 
-    --success: #34D399;
-    --success-soft: #0F2E22;
-    --success-medium: #1C4D3A;
-    --success-strong: #6EE7B7;
+  /* Success Colors (Bright Mint Green) */
+  --success: #34D399;
+  --success-soft: #0A261B;
+  --success-medium: #154D37;
+  --success-strong: #6EE7B7;
 
-    --danger: #FF6B8B;
-    --danger-soft: #2E151A;
-    --danger-medium: #4A1D25;
-    --danger-strong: #FF85A0;
+  /* Danger Colors (Vibrant Rose Danger) */
+  --danger: #EF4444;
+  --danger-soft: #2A0808;
+  --danger-medium: #541111;
+  --danger-strong: #F87171;
 
-    --warning: #F59E0B;
-    --warning-soft: #332000;
-    --warning-medium: #4D3300;
-    --warning-strong: #FBBF24;
+  /* Warning Colors (Vibrant Amber) */
+  --warning: #F59E0B;
+  --warning-soft: #2D1C00;
+  --warning-medium: #543800;
+  --warning-strong: #FBBF24;
 
-    --dark: #FAF5F6;
-    --dark-strong: #FAF5F6;
-    --disabled: #221B1D;
+  /* Utility & State */
+  --dark: #FAF5F6;
+  --dark-strong: #FAF5F6;
+  --disabled: #22191B;
 
-    /* Text Colors */
-    --heading: #FAF5F6;
-    --body: #A89598;
-    --body-subtle: #7A6B6E;
+  /* Text Colors (High contrast rose silver) */
+  --heading: #FCF5F6;
+  --body: #AFA0A2;
+  --body-subtle: #7A6669;
 
-    --fg-brand-subtle: #FF6B8B;
-    --fg-brand: #FF6B8B;
-    --fg-brand-strong: #FF85A0;
+  --fg-brand-subtle: #FF6B8B;
+  --fg-brand: #FF6B8B;
+  --fg-brand-strong: #FF9EB2;
 
-    --fg-success: #34D399;
-    --fg-success-strong: #6EE7B7;
-    --fg-danger: #FF6B8B;
-    --fg-danger-strong: #FF85A0;
-    --fg-warning: #FBBF24;
-    --fg-warning-subtle: #F59E0B;
-    --fg-disabled: #5E5052;
+  --fg-success: #34D399;
+  --fg-success-strong: #6EE7B7;
+  --fg-danger: #EF4444;
+  --fg-danger-strong: #F87171;
+  --fg-warning: #FBBF24;
+  --fg-warning-subtle: #F59E0B;
+  --fg-disabled: #5E4E50;
 
-    /* Border Colors */
-    --border-default: #2A2124;
-    --border-default-subtle: #221B1D;
-    --border-default-medium: #352A2D;
-    --border-default-strong: #423438;
+  /* Border Colors */
+  --border-dark: #7A6669;
+  --border-buffer: #0B0808;
+  --border-buffer-medium: #1C1516;
+  --border-buffer-strong: #2A1F21;
+  --border-muted: #120E0F;
+  --border-light-subtle: #181213;
+  --border-light: #181213;
+  --border-light-medium: #22191B;
+  --border-default: #251B1D;
+  --border-default-subtle: #1C1516;
+  --border-default-medium: #352629;
+  --border-default-strong: #4A373A;
 
-    --border-brand: #FF6B8B;
-    --border-brand-subtle: #4A1D25;
-    --border-success: #34D399;
-    --border-success-subtle: #1C4D3A;
-    --border-danger: #FF6B8B;
-    --border-danger-subtle: #4A1D25;
-    --border-warning: #F59E0B;
-    --border-warning-subtle: #4D3300;
+  --border-brand: #FF6B8B;
+  --border-brand-subtle: #4E1A23;
+  --border-success: #34D399;
+  --border-success-subtle: #154D37;
+  --border-danger: #EF4444;
+  --border-danger-subtle: #541111;
+  --border-warning: #F59E0B;
+  --border-warning-subtle: #543800;
 
-    /* Neumorphic Dark Shadows */
-    --shadow-2xs: 1px 1px 2px #0D0A0A, -1px -1px 2px #221B1C;
-    --shadow-xs: 2px 2px 4px #0D0A0A, -2px -2px 4px #221B1C;
-    --shadow-sm: 3px 3px 6px #0D0A0A, -3px -3px 6px #221B1C;
-    --shadow-md: 6px 6px 12px #0D0A0A, -6px -6px 12px #221B1C;
-    --shadow-lg: 8px 8px 16px #0D0A0A, -8px -8px 16px #221B1C;
-    --shadow-xl: 10px 10px 20px #0D0A0A, -10px -10px 20px #221B1C;
-    --shadow-2xl: 12px 12px 24px #0D0A0A, -12px -12px 24px #221B1C;
-    --shadow-inset: inset 2.5px 2.5px 5px #0D0A0A, inset -3px -3px 7px #221B1C;
+  /* Flat Shadows for Dark Mode */
+  --shadow-2xs: 0 1px rgba(0, 0, 0, 0.3);
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+
+  /* Button Glint Highlights */
+  --color-1-400: rgba(255, 255, 255, 0.12);
+  --color-1-700: rgba(0, 0, 0, 0.25);
 }
 
 html,
@@ -197,31 +230,30 @@ body,
 }
 
 body {
-  @apply bg-neutral-primary-soft font-sans text-body antialiased;
+  @apply bg-neutral-secondary-soft font-sans text-body antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), var(--font-sans);
 }
 
-/* Inset box-shadow class */
-.shadow-inset {
-  box-shadow: var(--shadow-inset) !important;
+/* Button Glint effect matching buttons.md spec */
+.btn-glint {
+  box-shadow: var(--shadow-xs), inset var(--color-1-400) 0 6px 0px -5px, var(--color-1-700) 0 4px 10px -5px !important;
 }
 
-/* Custom scrollbar styling using design tokens */
+/* Custom scrollbar styling using flat design tokens */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--neutral-primary-soft);
-  box-shadow: var(--shadow-inset);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-default-strong);
   border-radius: var(--radius-default);
-  border: 2.5px solid var(--neutral-primary-soft);
+  border: 2px solid var(--neutral-primary-soft);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--brand);
@@ -233,7 +265,7 @@ select option {
   color: var(--heading);
 }
 
-/* Neumorphic Checkbox styling */
+/* Custom Checkbox (Flat & Premium Checkmark using clip-path) */
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -241,8 +273,8 @@ input[type="checkbox"] {
   height: 16px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-default-medium);
-  background-color: var(--neutral-primary-soft);
-  box-shadow: var(--shadow-inset);
+  background-color: var(--neutral-secondary-medium);
+  box-shadow: var(--shadow-xs);
   display: inline-grid;
   place-content: center;
   cursor: pointer;
@@ -252,25 +284,26 @@ input[type="checkbox"]:hover {
   border-color: var(--border-default-strong);
 }
 input[type="checkbox"]:checked {
+  background-color: var(--brand);
   border-color: var(--brand);
 }
 input[type="checkbox"]:checked::before {
   content: "";
   width: 8px;
   height: 8px;
-  border-radius: 1px;
-  background-color: var(--brand);
+  background-color: var(--white);
+  clip-path: polygon(14% 44%, 0 58%, 38% 96%, 100% 23%, 84% 9%, 38% 68%);
 }
 input[type="checkbox"]:focus {
   outline: none;
-  box-shadow: var(--shadow-inset), 0 0 0 2px var(--brand-softer);
+  box-shadow: var(--shadow-xs), 0 0 0 2px var(--brand-softer);
 }
 input[type="checkbox"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Neumorphic Radio styling */
+/* Custom Radio (Flat & Premium center circle) */
 input[type="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -278,8 +311,8 @@ input[type="radio"] {
   height: 16px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border-default-medium);
-  background-color: var(--neutral-primary-soft);
-  box-shadow: var(--shadow-inset);
+  background-color: var(--neutral-secondary-medium);
+  box-shadow: var(--shadow-xs);
   display: inline-grid;
   place-content: center;
   cursor: pointer;
@@ -300,15 +333,17 @@ input[type="radio"]:checked::before {
 }
 input[type="radio"]:focus {
   outline: none;
-  box-shadow: var(--shadow-inset), 0 0 0 2px var(--brand-softer);
+  box-shadow: var(--shadow-xs), 0 0 0 2px var(--brand-softer);
 }
 input[type="radio"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* Focus outline helpers */
-.focus-ring-brand:focus {
-  outline: none;
-  box-shadow: var(--shadow-inset), 0 0 0 2px var(--brand-softer);
-}
+/* Staggered animation delays for dashboard elements */
+.animate-stagger-1 { animation-delay: 40ms; }
+.animate-stagger-2 { animation-delay: 80ms; }
+.animate-stagger-3 { animation-delay: 120ms; }
+.animate-stagger-4 { animation-delay: 160ms; }
+.animate-stagger-5 { animation-delay: 200ms; }
+.animate-stagger-6 { animation-delay: 240ms; }

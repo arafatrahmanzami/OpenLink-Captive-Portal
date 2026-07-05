@@ -65,6 +65,9 @@ export default {
           light: 'var(--border-light)',
           'light-medium': 'var(--border-light-medium)',
           'light-subtle': 'var(--border-light-subtle)',
+          buffer: 'var(--border-buffer)',
+          'buffer-medium': 'var(--border-buffer-medium)',
+          'buffer-strong': 'var(--border-buffer-strong)',
         },
         heading: 'var(--heading)',
         body: 'var(--body)',
@@ -112,7 +115,7 @@ export default {
         },
       },
       animation: {
-        fadeIn: 'fadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+        fadeIn: 'fadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1) both',
         pulseGlow: 'pulseGlow 2s ease-in-out infinite',
       },
     },

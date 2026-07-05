@@ -26,11 +26,15 @@ const THEMES = [
 function Message({ message }) {
   if (!message?.text) return null
   return (
-    <p
-      className={`mt-4 text-sm ${message.ok ? 'text-fg-success-strong font-semibold' : 'text-fg-danger'}`}
+    <div
+      className={`mt-4 rounded-base border p-3.5 text-sm shadow-2xs ${
+        message.ok
+          ? 'border-border-success-subtle bg-success-soft text-fg-success-strong'
+          : 'border-border-danger-subtle bg-danger-soft text-fg-danger-strong'
+      }`}
     >
       {message.text}
-    </p>
+    </div>
   )
 }
 
@@ -96,75 +100,80 @@ export default function Settings({ onUnauthorized }) {
   }
 
   return (
-    <div className="animate-fadeIn space-y-6">
-      <Card>
-        <CardTitle icon={Sliders}>General Settings</CardTitle>
-        <form onSubmit={saveGeneral} className="max-w-md space-y-6">
-          <Field label="Brand Name">
-            <Input
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              placeholder="RoseNet"
-              maxLength={40}
-            />
-          </Field>
-          <Field label="Currency">
-            <Select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
-              {!CURRENCIES.some((c) => c.value === symbol) && (
-                <option value={symbol}>{symbol} (custom)</option>
-              )}
-              {CURRENCIES.map((c) => (
-                <option key={c.value} value={c.value}>
-                  {c.label}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <Field label="Portal Theme">
-            <Select value={theme} onChange={(e) => setTheme(e.target.value)}>
-              {THEMES.map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
-                </option>
-              ))}
-            </Select>
-          </Field>
-          <Button type="submit">Save Settings</Button>
-          <Message message={generalMsg} />
-        </form>
-      </Card>
+    <div className="space-y-6">
+      <div className="animate-fadeIn animate-stagger-1">
+        <Card>
+          <CardTitle icon={Sliders}>General Settings</CardTitle>
+          <form onSubmit={saveGeneral} className="max-w-md space-y-6">
+            <Field label="Brand Name">
+              <Input
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                placeholder="RoseNet"
+                maxLength={40}
+                required
+              />
+            </Field>
+            <Field label="Currency">
+              <Select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
+                {!CURRENCIES.some((c) => c.value === symbol) && (
+                  <option value={symbol}>{symbol} (custom)</option>
+                )}
+                {CURRENCIES.map((c) => (
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <Field label="Portal Theme">
+              <Select value={theme} onChange={(e) => setTheme(e.target.value)}>
+                {THEMES.map((t) => (
+                  <option key={t.value} value={t.value}>
+                    {t.label}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <Button type="submit">Save Settings</Button>
+            <Message message={generalMsg} />
+          </form>
+        </Card>
+      </div>
 
-      <Card>
-        <CardTitle icon={KeyRound}>Change Admin Password</CardTitle>
-        <form onSubmit={changePassword} className="max-w-md space-y-6">
-          <Field label="Current Password">
-            <Input
-              type="password"
-              value={pw.old}
-              onChange={(e) => setPw({ ...pw, old: e.target.value })}
-              required
-            />
-          </Field>
-          <Field label="New Password">
-            <Input
-              type="password"
-              value={pw.next}
-              onChange={(e) => setPw({ ...pw, next: e.target.value })}
-              required
-            />
-          </Field>
-          <Field label="Confirm New Password">
-            <Input
-              type="password"
-              value={pw.confirm}
-              onChange={(e) => setPw({ ...pw, confirm: e.target.value })}
-              required
-            />
-          </Field>
-          <Button type="submit">Change Password</Button>
-          <Message message={pwMsg} />
-        </form>
-      </Card>
+      <div className="animate-fadeIn animate-stagger-2">
+        <Card>
+          <CardTitle icon={KeyRound}>Change Admin Password</CardTitle>
+          <form onSubmit={changePassword} className="max-w-md space-y-6">
+            <Field label="Current Password">
+              <Input
+                type="password"
+                value={pw.old}
+                onChange={(e) => setPw({ ...pw, old: e.target.value })}
+                required
+              />
+            </Field>
+            <Field label="New Password">
+              <Input
+                type="password"
+                value={pw.next}
+                onChange={(e) => setPw({ ...pw, next: e.target.value })}
+                required
+              />
+            </Field>
+            <Field label="Confirm New Password">
+              <Input
+                type="password"
+                value={pw.confirm}
+                onChange={(e) => setPw({ ...pw, confirm: e.target.value })}
+                required
+              />
+            </Field>
+            <Button type="submit">Change Password</Button>
+            <Message message={pwMsg} />
+          </form>
+        </Card>
+      </div>
     </div>
   )
 }

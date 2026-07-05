@@ -26,7 +26,7 @@ ChartJS.register(
   Filler,
 )
 
-ChartJS.defaults.font.family = '"Nunito Sans", sans-serif'
+ChartJS.defaults.font.family = '"Plus Jakarta Sans", sans-serif'
 ChartJS.defaults.font.size = 11
 
 const getVar = (name) => {
