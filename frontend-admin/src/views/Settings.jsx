@@ -38,6 +38,7 @@ export default function Settings({ onUnauthorized }) {
   const { currency, setCurrency } = useCurrency()
   const [symbol, setSymbol] = useState(currency)
   const [theme, setTheme] = useState('default')
+  const [brand, setBrand] = useState('RoseNet')
   const [generalMsg, setGeneralMsg] = useState(null)
 
   const [pw, setPw] = useState({ old: '', next: '', confirm: '' })
@@ -51,6 +52,7 @@ export default function Settings({ onUnauthorized }) {
         const s = await asJson(res, 'Failed to load settings')
         if (s.currency_symbol) setSymbol(s.currency_symbol)
         if (s.active_theme) setTheme(s.active_theme)
+        if (s.brand_name) setBrand(s.brand_name)
       } catch {
         /* keep defaults */
       }
@@ -64,6 +66,7 @@ export default function Settings({ onUnauthorized }) {
       const res = await api.updateSettings({
         currency_symbol: symbol.trim(),
         active_theme: theme,
+        brand_name: brand.trim() || 'RoseNet',
       })
       if (res.status === 401) return onUnauthorized()
       await asJson(res, 'Failed to update settings')
@@ -97,6 +100,14 @@ export default function Settings({ onUnauthorized }) {
       <Card>
         <CardTitle icon={Sliders}>General Settings</CardTitle>
         <form onSubmit={saveGeneral} className="max-w-md space-y-6">
+          <Field label="Brand Name">
+            <Input
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              placeholder="RoseNet"
+              maxLength={40}
+            />
+          </Field>
           <Field label="Currency">
             <Select value={symbol} onChange={(e) => setSymbol(e.target.value)}>
               {!CURRENCIES.some((c) => c.value === symbol) && (

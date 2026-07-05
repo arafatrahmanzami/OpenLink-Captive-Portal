@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"html"
 	"log"
 	"net/http"
 	"os"
@@ -131,7 +132,20 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		themePath = fmt.Sprintf("%s/themes/default.html", frontendDir)
 	}
 
-	http.ServeFile(w, r, themePath)
+	content, err := os.ReadFile(themePath)
+	if err != nil {
+		http.Error(w, "Portal unavailable", http.StatusInternalServerError)
+		return
+	}
+
+	brand, err := getSetting("brand_name")
+	if err != nil || brand == "" {
+		brand = "RoseNet"
+	}
+	page := strings.ReplaceAll(string(content), "{{BRAND}}", html.EscapeString(brand))
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Write([]byte(page))
 }
 
 func validateVoucher(voucherCode string) (*Voucher, string) {
@@ -335,6 +349,9 @@ func adminGetSettingsHandler(w http.ResponseWriter, r *http.Request) {
 	if _, ok := settings["currency_symbol"]; !ok {
 		settings["currency_symbol"] = "$"
 	}
+	if _, ok := settings["brand_name"]; !ok {
+		settings["brand_name"] = "RoseNet"
+	}
 	json.NewEncoder(w).Encode(settings)
 }
 
@@ -346,7 +363,7 @@ func adminUpdateSettingsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for k, v := range newSettings {
-		if k == "currency_symbol" || k == "active_theme" {
+		if k == "currency_symbol" || k == "active_theme" || k == "brand_name" {
 			setSetting(k, v)
 		}
 	}
