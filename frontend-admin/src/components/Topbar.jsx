@@ -1,6 +1,6 @@
-import { Menu, Search, Bell } from 'lucide-react'
+import { Menu, Search, Bell, Sun, Moon } from 'lucide-react'
 
-export default function Topbar({ onMenu, search, onSearch }) {
+export default function Topbar({ onMenu, search, onSearch, theme, onToggleTheme }) {
   return (
     <header className="sticky top-0 z-20 mb-6 flex items-center gap-3 rounded-base border border-border/30 bg-neutral-primary-soft px-4 py-3 shadow-md backdrop-blur-lg sm:gap-4 sm:px-6">
       <button
@@ -23,6 +23,13 @@ export default function Topbar({ onMenu, search, onSearch }) {
       </div>
 
       <div className="ml-auto flex items-center gap-3 sm:gap-4">
+        <button
+          onClick={onToggleTheme}
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-border/20 bg-neutral-primary-soft text-body-subtle shadow-sm hover:shadow-md hover:text-heading active:shadow-inset transition-all duration-200"
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? <Sun className="h-[18px] w-[18px]" /> : <Moon className="h-[18px] w-[18px]" />}
+        </button>
         <button
           className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border/20 bg-neutral-primary-soft text-body-subtle shadow-sm hover:shadow-md hover:text-heading active:shadow-inset transition-all duration-200"
           aria-label="Notifications"

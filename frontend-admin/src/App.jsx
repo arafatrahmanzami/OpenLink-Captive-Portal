@@ -50,6 +50,22 @@ export default function App() {
   const [currency, setCurrency] = useState('$')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [search, setSearch] = useState('')
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'light'
+  })
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === 'light' ? 'dark' : 'light'))
+  }, [])
 
   // Probe an authenticated endpoint to decide login state on first load.
   useEffect(() => {
@@ -126,6 +142,8 @@ export default function App() {
               onMenu={() => setSidebarOpen(true)}
               search={search}
               onSearch={setSearch}
+              theme={theme}
+              onToggleTheme={toggleTheme}
             />
             <main className="flex-1">
               {view === 'dashboard' && (

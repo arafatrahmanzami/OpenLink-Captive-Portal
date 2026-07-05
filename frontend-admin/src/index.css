@@ -104,8 +104,7 @@
   --radius-full: 9999px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+.dark {
     /* RoseNet Premium Neumorphic Dark Theme (Deep Obsidian Rose) */
     --neutral-primary-soft: #191415;
     --neutral-primary: #191415;
@@ -189,7 +188,6 @@
     --shadow-xl: 10px 10px 20px #0D0A0A, -10px -10px 20px #221B1C;
     --shadow-2xl: 12px 12px 24px #0D0A0A, -12px -12px 24px #221B1C;
     --shadow-inset: inset 2.5px 2.5px 5px #0D0A0A, inset -3px -3px 7px #221B1C;
-  }
 }
 
 html,
