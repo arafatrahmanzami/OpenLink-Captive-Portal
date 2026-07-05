@@ -27,16 +27,16 @@ export default function Login({ onSuccess }) {
   }
 
   return (
-    <div className="relative grid h-full place-items-center overflow-hidden bg-neutral-primary px-4">
+    <div className="relative grid h-full place-items-center overflow-hidden bg-neutral-primary-soft px-4">
       {/* Ambient glows */}
       <div className="pointer-events-none absolute -right-36 -top-36 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.06] blur-[140px]" />
       <div className="pointer-events-none absolute -bottom-36 -left-36 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.06] blur-[140px]" />
 
-      <div className="relative z-10 w-full max-w-md rounded-base border border-line-medium bg-neutral-soft/85 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-base border border-brand/30 bg-brand-softer text-brand shadow-sm">
+      <div className="relative z-10 w-full max-w-md rounded-base border border-border-default-medium bg-neutral-primary/85 p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-base border border-border-brand-subtle bg-brand-softer text-brand shadow-xs">
           <Shield className="h-7 w-7" />
         </div>
-        <h1 className="mb-2 font-display text-3xl font-semibold tracking-tight text-heading">
+        <h1 className="mb-2 text-3xl font-medium tracking-tight text-heading">
           Rose<span className="text-brand">Net</span> Admin
         </h1>
         <p className="mb-10 text-sm text-body">

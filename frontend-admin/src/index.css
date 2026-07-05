@@ -4,6 +4,132 @@
 
 :root {
   color-scheme: dark;
+
+  /* Fonts */
+  --font-sans: Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Background Colors */
+  --neutral-primary-soft: #000000;
+  --neutral-primary: #000000;
+  --neutral-primary-medium: #050505;
+  --neutral-primary-strong: #0A0A0A;
+  --neutral-secondary-soft: #000000;
+  --neutral-secondary: #000000;
+  --neutral-secondary-medium: #0A0A0A;
+  --neutral-secondary-strong: #111111;
+  --neutral-tertiary-soft: #0A0A0A;
+  --neutral-tertiary: #111111;
+  --neutral-tertiary-medium: #1A1A1A;
+  --neutral-quaternary: #222222;
+  --quaternary-medium: #2A2A2A;
+  --gray: #3A3A3A;
+
+  --brand-softer: #1C0D00;
+  --brand-soft: #331400;
+  --brand: #FF6C00;
+  --brand-medium: #331400;
+  --brand-strong: #CC5500;
+
+  --success-soft: #001A12;
+  --success: #009966;
+  --success-medium: #002E1F;
+  --success-strong: #007A55;
+
+  --danger-soft: #1A0008;
+  --danger: #C70036;
+  --danger-medium: #330010;
+  --danger-strong: #A50036;
+
+  --warning-soft: #1A0E00;
+  --warning: #F97316;
+  --warning-medium: #331C00;
+  --warning-strong: #C2410C;
+
+  --color-1-400: rgba(255, 255, 255, 0.12);
+  --color-1-700: rgba(0, 0, 0, 0.25);
+
+  --dark: #E5E7EB;
+  --dark-strong: #D1D5DC;
+  --disabled: #111111;
+
+  --purple: #A855F7;
+  --sky: #0EA5E9;
+  --teal: #0D9488;
+  --pink: #DB2777;
+  --cyan: #06B6D4;
+  --fuchsia: #C026D3;
+  --indigo: #4F46E5;
+  --orange: #FF6C00;
+
+  /* Text Colors */
+  --white: #FFFFFF;
+  --black: #000000;
+  --heading: #FFFFFF;
+  --body: #9CA3AF;
+  --body-subtle: #71717A;
+
+  --fg-brand-subtle: #FFCFA3;
+  --fg-brand: #FF6C00;
+  --fg-brand-strong: #FF8C33;
+
+  --fg-success: #10B981;
+  --fg-success-strong: #34D399;
+  --fg-danger: #F43F5E;
+  --fg-danger-strong: #FB7185;
+  --fg-warning-subtle: #F97316;
+  --fg-warning: #FBBF24;
+  --fg-disabled: #52525B;
+
+  --fg-yellow: #FACC15;
+  --fg-info: #93C5FD;
+  --fg-purple: #A855F7;
+  --fg-purple-strong: #C084FC;
+  --fg-cyan: #22D3EE;
+  --fg-indigo: #818CF8;
+  --fg-pink: #EC4899;
+  --fg-lime: #84CC16;
+
+  /* Border Colors */
+  --border-dark: #4B5563;
+  --border-buffer: #000000;
+  --border-buffer-medium: #000000;
+  --border-buffer-strong: #0A0A0A;
+  --border-muted: #0A0A0A;
+  --border-light-subtle: #111111;
+  --border-light: #1A1A1A;
+  --border-light-medium: #222222;
+  --border-default-subtle: #1A1A1A;
+  --border-default: #222222;
+  --border-default-medium: #2A2A2A;
+  --border-default-strong: #333333;
+  --border-success-subtle: #064E3B;
+  --border-success: #059669;
+  --border-danger-subtle: #881337;
+  --border-danger: #E11D48;
+  --border-warning-subtle: #92400E;
+  --border-warning: #F97316;
+  --border-brand-subtle: #6B2E00;
+  --border-brand-light: #FF6C00;
+  --border-brand: #FF6C00;
+  --border-dark-subtle: #4B5563;
+  --border-purple: #A855F7;
+  --border-orange: #FF6C00;
+
+  /* Shadows */
+  --shadow-2xs: 0 1px rgb(0 0 0 / 0.04);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+
+  /* Border Radius */
+  --radius-base: 16px;
+  --radius-default: 10px;
+  --radius-sm: 6px;
+  --radius-full: 9999px;
 }
 
 html,
@@ -13,27 +139,36 @@ body,
 }
 
 body {
-  @apply bg-neutral-primary font-mono text-body antialiased;
+  @apply bg-neutral-primary-soft font-sans text-body antialiased;
 }
 
-/* Sleek scrollbar styling */
+/* Custom glint effect utility */
+.glint-effect {
+  box-shadow: var(--shadow-xs), inset 0 6px 0px -5px var(--color-1-400), 0 4px 10px -5px var(--color-1-700);
+}
+
+.glint-effect:hover {
+  box-shadow: var(--shadow-sm), inset 0 6px 0px -5px var(--color-1-400), 0 4px 10px -5px var(--color-1-700);
+}
+
+/* Custom scrollbar styling using design tokens */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050505;
+  background: var(--neutral-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: #222222;
-  border-radius: 4px;
+  background: var(--neutral-quaternary);
+  border-radius: var(--radius-sm);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: var(--gray);
 }
 
-/* Native select arrow color in dark mode */
+/* Native select option colors */
 select option {
-  background-color: #111111;
-  color: #ededed;
+  background-color: var(--neutral-secondary-medium);
+  color: var(--heading);
 }

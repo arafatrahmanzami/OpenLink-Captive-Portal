@@ -21,12 +21,12 @@ function StatCard({ title, value, icon: Icon, trend }) {
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-lg border border-line-medium bg-neutral-medium p-2.5 text-brand">
+        <div className="flex items-center justify-center rounded-default border border-border-default-medium bg-neutral-secondary-medium p-2.5 text-brand">
           <Icon className="h-5 w-5" />
         </div>
       </div>
       {trend != null && (
-        <div className="mt-2 flex items-center gap-1 text-[13px] font-semibold text-success-strong">
+        <div className="mt-2 flex items-center gap-1 text-[13px] font-semibold text-fg-success-strong">
           <TrendingUp className="h-4 w-4" />
           {trend}
         </div>
@@ -59,7 +59,7 @@ export default function Dashboard({ onUnauthorized }) {
   }, [onUnauthorized])
 
   if (error) return <Card className="text-danger">{error}</Card>
-  if (!stats) return <Card className="text-subtle">Loading dashboard…</Card>
+  if (!stats) return <Card className="text-body-subtle">Loading dashboard…</Card>
 
   const revenue = (stats.total_revenue || 0).toLocaleString()
   const topPlans = stats.top_plans || []
@@ -126,17 +126,17 @@ export default function Dashboard({ onUnauthorized }) {
         <CardTitle>Top Selling Plans</CardTitle>
         <ul className="space-y-2">
           {topPlans.length === 0 && (
-            <li className="rounded-base border border-line bg-neutral-medium px-4 py-3 text-sm">
+            <li className="rounded-base border border-border-default-medium bg-neutral-secondary-medium px-4 py-3 text-sm">
               No plan sales data available.
             </li>
           )}
           {topPlans.map((plan) => (
             <li
               key={plan.name}
-              className="flex items-center justify-between rounded-base border border-line bg-neutral-medium px-4 py-3 text-sm"
+              className="flex items-center justify-between rounded-base border border-border-default-medium bg-neutral-secondary-medium px-4 py-3 text-sm"
             >
               <span className="text-heading">{plan.name}</span>
-              <span className="text-brand-strong">({plan.sales} sold)</span>
+              <span className="text-fg-brand-strong font-semibold">({plan.sales} sold)</span>
             </li>
           ))}
         </ul>

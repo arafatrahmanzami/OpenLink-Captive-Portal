@@ -15,7 +15,7 @@ function Message({ message }) {
   if (!message?.text) return null
   return (
     <p
-      className={`mt-4 text-sm ${message.ok ? 'text-success-strong' : 'text-danger'}`}
+      className={`mt-4 text-sm ${message.ok ? 'text-fg-success-strong font-semibold' : 'text-fg-danger'}`}
     >
       {message.text}
     </p>

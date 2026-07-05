@@ -27,16 +27,16 @@ ChartJS.register(
 )
 
 ChartJS.defaults.font.family = '"JetBrains Mono", monospace'
-ChartJS.defaults.color = '#888888'
+ChartJS.defaults.color = '#9CA3AF'
 
 // Shared palette (mirrors the design-system tokens).
 export const C = {
-  brand: '#F44174',
-  success: '#00CC88',
-  danger: '#FF3355',
-  body: '#888888',
-  neutralPrimary: '#050505',
-  heading: '#EDEDED',
+  brand: '#FF6C00',
+  success: '#009966',
+  danger: '#C70036',
+  body: '#9CA3AF',
+  neutralPrimary: '#000000',
+  heading: '#FFFFFF',
 }
 
 const grid = 'rgba(255, 255, 255, 0.03)'

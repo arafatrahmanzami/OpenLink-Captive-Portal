@@ -147,7 +147,7 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
                 type="checkbox"
                 checked={form.reusable}
                 onChange={set('reusable')}
-                className="h-4 w-4 rounded border-line-medium bg-neutral-medium text-brand accent-brand"
+                className="h-4 w-4 rounded-sm border border-border-default-medium bg-neutral-secondary-medium text-brand accent-brand focus:ring-2 focus:ring-brand-soft"
               />
               Reusable
             </label>
@@ -156,17 +156,17 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
         </form>
       </Card>
 
-      <Card className="p-0 sm:p-0">
+      <Card className="p-0 sm:p-0 overflow-hidden">
         <div className="p-5 sm:p-6">
           <CardTitle className="mb-0">Existing Vouchers</CardTitle>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] text-left text-sm">
+          <table className="w-full min-w-[640px] text-left text-sm text-body">
             <thead>
-              <tr className="border-y border-line bg-neutral-soft text-body">
+              <tr className="border-b border-border bg-neutral-secondary-soft text-body">
                 {['Name', 'Code', 'Duration', 'Price', 'Status', 'Used By', 'Actions'].map(
                   (h) => (
-                    <th key={h} className="px-6 py-3 font-medium">
+                    <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
                       {h}
                     </th>
                   ),
@@ -176,42 +176,47 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
             <tbody>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-6 py-8 text-center text-subtle">
+                  <td colSpan={7} className="px-6 py-8 text-center text-body-subtle bg-neutral-primary">
                     No vouchers found.
                   </td>
                 </tr>
               )}
-              {filtered.map((v) => (
-                <tr
-                  key={v.id}
-                  className="border-b border-line transition hover:bg-neutral-soft"
-                >
-                  <td className="px-6 py-4 font-semibold text-heading">
-                    {v.name || 'N/A'}
-                  </td>
-                  <td className="px-6 py-4 text-brand-strong">{v.code}</td>
-                  <td className="px-6 py-4">{formatDuration(v.duration)}</td>
-                  <td className="px-6 py-4 text-heading">
-                    {currency}
-                    {(v.price || 0).toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <StatusChip status={voucherStatus(v)} />
-                  </td>
-                  <td className="px-6 py-4 text-xs text-body">
-                    {v.is_used ? v.user_mac || 'N/A' : '—'}
-                  </td>
-                  <td className="px-6 py-4">
-                    <button
-                      onClick={() => remove(v.id)}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-line-medium bg-neutral-medium text-body transition hover:border-danger hover:bg-danger-soft hover:text-brand-strong"
-                      aria-label="Delete voucher"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {filtered.map((v, index) => {
+                const isLast = index === filtered.length - 1
+                return (
+                  <tr
+                    key={v.id}
+                    className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
+                      isLast ? '' : 'border-b border-border'
+                    }`}
+                  >
+                    <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
+                      {v.name || 'N/A'}
+                    </th>
+                    <td className="px-6 py-4 text-fg-brand-strong font-semibold">{v.code}</td>
+                    <td className="px-6 py-4">{formatDuration(v.duration)}</td>
+                    <td className="px-6 py-4 text-heading">
+                      {currency}
+                      {(v.price || 0).toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <StatusChip status={voucherStatus(v)} />
+                    </td>
+                    <td className="px-6 py-4 text-xs text-body">
+                      {v.is_used ? v.user_mac || 'N/A' : '—'}
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => remove(v.id)}
+                        className="flex h-8 w-8 items-center justify-center rounded-default border border-border-default-medium bg-neutral-secondary-medium text-body transition duration-150 hover:border-border-danger hover:bg-danger-soft hover:text-fg-danger-strong"
+                        aria-label="Delete voucher"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>

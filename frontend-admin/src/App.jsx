@@ -25,7 +25,7 @@ function Backdrop() {
         style={{
           backgroundSize: '50px 50px',
           backgroundImage:
-            'linear-gradient(to right, rgba(244,65,116,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(244,65,116,0.03) 1px, transparent 1px)',
+            'linear-gradient(to right, rgba(255,108,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,108,0,0.03) 1px, transparent 1px)',
           maskImage:
             'radial-gradient(circle at center, black 50%, transparent 100%)',
         }}
@@ -99,7 +99,7 @@ export default function App() {
 
   if (authed === null) {
     return (
-      <div className="grid h-full place-items-center bg-neutral-primary text-subtle">
+      <div className="grid h-full place-items-center bg-neutral-primary-soft text-body">
         Loading…
       </div>
     )
