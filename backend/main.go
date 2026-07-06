@@ -124,7 +124,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	// For the root or index.html, serve the themed template
 	theme, err := getSetting("active_theme")
 	if err != nil || theme == "" {
-		theme = "music"
+		theme = "default"
 	}
 
 	themePath := fmt.Sprintf("%s/themes/%s.html", frontendDir, theme)
