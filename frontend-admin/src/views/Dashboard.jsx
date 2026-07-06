@@ -9,26 +9,31 @@ import {
   TrafficRadarChart,
 } from '../components/charts.jsx'
 
-function StatCard({ title, value, icon: Icon, trend }) {
+function StatCard({ title, value, icon: Icon, trend, variant = 'brand' }) {
+  const accentClasses = {
+    brand: 'bg-brand text-black',
+    purple: 'bg-purple text-white',
+    success: 'bg-success text-white',
+  }
   return (
-    <Card className="h-full">
+    <Card className="h-full relative overflow-hidden">
       <div className="flex items-start justify-between">
         <div>
-          <div className="mb-2 text-[13px] font-medium uppercase tracking-wider text-body-subtle">
+          <div className="mb-2 text-[12px] font-bold uppercase tracking-wider text-body-subtle">
             {title}
           </div>
-          <div className="text-3xl font-bold tracking-tight text-heading">
+          <div className="text-3xl font-black tracking-tight text-heading font-heading">
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-none border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
+        <div className={`flex items-center justify-center rounded-none border-2 border-default p-3 shadow-xs ${accentClasses[variant] || accentClasses.brand}`}>
           <Icon className="h-5 w-5" />
         </div>
       </div>
       {trend != null && (
-        <div className="mt-2 flex items-center gap-1 text-[13px] font-semibold text-fg-success-strong">
-          <TrendingUp className="h-4 w-4" />
-          {trend}
+        <div className="mt-4 inline-flex items-center gap-1 rounded-none border-2 border-success bg-success-soft px-2 py-0.5 text-xs font-bold text-fg-success shadow-2xs">
+          <TrendingUp className="h-3.5 w-3.5" />
+          <span>{trend}</span>
         </div>
       )}
     </Card>
@@ -72,6 +77,7 @@ export default function Dashboard({ onUnauthorized }) {
           value={`${currency}${revenue}`}
           icon={DollarSign}
           trend={`+${stats.revenue_trend || 0}%`}
+          variant="brand"
         />
       </div>
       <div className="lg:col-span-4 animate-fadeIn animate-stagger-2">
@@ -79,6 +85,7 @@ export default function Dashboard({ onUnauthorized }) {
           title="Live Online Users"
           value={stats.live_users || 0}
           icon={Users}
+          variant="purple"
         />
       </div>
       <div className="lg:col-span-4 animate-fadeIn animate-stagger-3">
@@ -86,6 +93,7 @@ export default function Dashboard({ onUnauthorized }) {
           title="Active Vouchers"
           value={stats.active_vouchers || 0}
           icon={CheckCircle}
+          variant="success"
         />
       </div>
 
@@ -121,19 +129,19 @@ export default function Dashboard({ onUnauthorized }) {
       <div className="lg:col-span-6 animate-fadeIn animate-stagger-6">
         <Card className="h-full">
           <CardTitle>Top Selling Plans</CardTitle>
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {topPlans.length === 0 && (
-              <li className="rounded-none border border-border-default bg-neutral-secondary-medium px-4 py-4 text-sm text-body-subtle text-center shadow-xs">
+              <li className="rounded-none border-2 border-default bg-neutral-secondary-medium px-4 py-4 text-sm text-body-subtle text-center shadow-xs">
                 No plan sales data available.
               </li>
             )}
             {topPlans.map((plan) => (
               <li
                 key={plan.name}
-                className="flex items-center justify-between rounded-none border border-border-default bg-neutral-secondary-medium px-4 py-3.5 text-sm shadow-xs transition-all hover:bg-neutral-tertiary-medium hover:border-border-default-strong hover:translate-x-[2px] duration-150"
+                className="flex items-center justify-between rounded-none border-2 border-default bg-neutral-primary px-4 py-3.5 text-sm shadow-xs transition-all hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-2xs duration-100"
               >
-                <span className="text-heading font-medium">{plan.name}</span>
-                <span className="text-brand font-semibold">({plan.sales} sold)</span>
+                <span className="text-heading font-bold">{plan.name}</span>
+                <span className="text-fg-brand-strong font-black">({plan.sales} sold)</span>
               </li>
             ))}
           </ul>

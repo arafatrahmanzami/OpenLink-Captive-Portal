@@ -52,20 +52,20 @@ export default function Zones({ onUnauthorized, search = '' }) {
   return (
     <div className="animate-fadeIn animate-stagger-1">
       <Card className="p-0 sm:p-0 overflow-hidden">
-        <div className="flex items-center justify-between p-5 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6 border-b-2 border-default">
           <CardTitle icon={MapPin} className="mb-0">
             Hotspot Zones
           </CardTitle>
-          <span className="rounded-none border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
+          <span className="rounded-none border-2 border-default bg-brand px-3 py-1 text-sm font-bold text-black shadow-xs">
             {zones.length} {zones.length === 1 ? 'zone' : 'zones'}
           </span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[560px] text-left text-sm text-body">
             <thead>
-              <tr className="border-b border-border-default bg-neutral-secondary-soft text-body">
+              <tr className="border-b-2 border-default bg-neutral-secondary-soft text-body">
                 {['Zone (Subnet)', 'Active Now', 'Total Users', 'Revenue'].map((h) => (
-                  <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
+                  <th key={h} className="px-6 py-3.5 font-bold select-none text-heading" scope="col">
                     {h}
                   </th>
                 ))}
@@ -85,17 +85,17 @@ export default function Zones({ onUnauthorized, search = '' }) {
                   <tr
                     key={z.label}
                     className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                      isLast ? '' : 'border-b border-border-default'
+                      isLast ? '' : 'border-b-2 border-default'
                     }`}
                   >
-                    <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
+                    <th scope="row" className="px-6 py-4 font-bold text-heading whitespace-nowrap text-left">
                       {z.label}
                     </th>
                     <td className="px-6 py-4">
-                      <span className="font-semibold text-fg-success-strong">{z.active}</span>
+                      <span className="font-bold text-fg-success">{z.active}</span>
                     </td>
-                    <td className="px-6 py-4 font-mono">{z.users}</td>
-                    <td className="px-6 py-4 text-fg-brand-strong font-semibold whitespace-nowrap">
+                    <td className="px-6 py-4 font-mono font-semibold">{z.users}</td>
+                    <td className="px-6 py-4 text-fg-brand-strong font-black whitespace-nowrap">
                       {money(z.revenue)}
                     </td>
                   </tr>

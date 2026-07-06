@@ -162,16 +162,16 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
 
       <div className="animate-fadeIn animate-stagger-2">
         <Card className="p-0 sm:p-0 overflow-hidden">
-          <div className="p-5 sm:p-6">
+          <div className="p-5 sm:p-6 border-b-2 border-default">
             <CardTitle className="mb-0">Existing Vouchers</CardTitle>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-sm text-body">
               <thead>
-                <tr className="border-b border-border bg-neutral-secondary-soft text-body">
+                <tr className="border-b-2 border-default bg-neutral-secondary-soft text-body">
                   {['Name', 'Code', 'Duration', 'Price', 'Status', 'Used By', 'Actions'].map(
                     (h) => (
-                      <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
+                      <th key={h} className="px-6 py-3.5 font-bold select-none text-heading" scope="col">
                         {h}
                       </th>
                     ),
@@ -192,28 +192,28 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
                     <tr
                       key={v.id}
                       className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                        isLast ? '' : 'border-b border-border-default'
+                        isLast ? '' : 'border-b-2 border-default'
                       }`}
                     >
-                      <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
+                      <th scope="row" className="px-6 py-4 font-bold text-heading whitespace-nowrap text-left">
                         {v.name || 'N/A'}
                       </th>
-                      <td className="px-6 py-4 text-fg-brand-strong font-semibold">{v.code}</td>
+                      <td className="px-6 py-4 text-fg-brand-strong font-black">{v.code}</td>
                       <td className="px-6 py-4 font-mono">{formatDuration(v.duration)}</td>
-                      <td className="px-6 py-4 text-heading">
+                      <td className="px-6 py-4 text-heading font-semibold">
                         {currency}
                         {(v.price || 0).toFixed(2)}
                       </td>
                       <td className="px-6 py-4">
                         <StatusChip status={voucherStatus(v)} />
                       </td>
-                      <td className="px-6 py-4 text-xs font-mono text-body">
+                      <td className="px-6 py-4 text-xs font-mono text-body font-semibold">
                         {v.is_used ? v.user_mac || 'N/A' : '—'}
                       </td>
                       <td className="px-6 py-4">
                         <button
                           onClick={() => remove(v.id)}
-                          className="flex h-8 w-8 items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft text-body-subtle shadow-xs hover:bg-danger-soft hover:text-danger hover:border-danger-subtle hover:-translate-y-[0.5px] transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-danger"
+                          className="flex h-8 w-8 items-center justify-center rounded-none border-2 border-default bg-neutral-primary-soft text-body hover:bg-danger hover:text-white hover:shadow-xs hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[1px] active:translate-y-[1px] transition-all duration-100"
                           aria-label="Delete voucher"
                         >
                           <Trash2 className="h-4 w-4" />

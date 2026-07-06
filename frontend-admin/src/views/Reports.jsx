@@ -5,19 +5,24 @@ import { useCurrency } from '../lib/currency.js'
 import { Card, CardTitle } from '../components/ui.jsx'
 import { SalesBarChart } from '../components/charts.jsx'
 
-function StatCard({ title, value, icon: Icon }) {
+function StatCard({ title, value, icon: Icon, variant = 'brand' }) {
+  const accentClasses = {
+    brand: 'bg-brand text-black',
+    purple: 'bg-purple text-white',
+    success: 'bg-success text-white',
+  }
   return (
-    <Card className="h-full">
+    <Card className="h-full relative overflow-hidden">
       <div className="flex items-start justify-between">
         <div>
-          <div className="mb-2 text-[13px] font-medium uppercase tracking-wider text-body-subtle">
+          <div className="mb-2 text-[12px] font-bold uppercase tracking-wider text-body-subtle">
             {title}
           </div>
-          <div className="text-3xl font-bold tracking-tight text-heading">
+          <div className="text-3xl font-black tracking-tight text-heading font-heading">
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-none border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
+        <div className={`flex items-center justify-center rounded-none border-2 border-default p-3 shadow-xs ${accentClasses[variant] || accentClasses.brand}`}>
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -84,16 +89,16 @@ export default function Reports({ onUnauthorized }) {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
       <div className="lg:col-span-3 animate-fadeIn animate-stagger-1">
-        <StatCard title="Total Revenue" value={money(totalRevenue)} icon={DollarSign} />
+        <StatCard title="Total Revenue" value={money(totalRevenue)} icon={DollarSign} variant="brand" />
       </div>
       <div className="lg:col-span-3 animate-fadeIn animate-stagger-2">
-        <StatCard title="Redeemed Revenue" value={money(redeemedRevenue)} icon={Wallet} />
+        <StatCard title="Redeemed Revenue" value={money(redeemedRevenue)} icon={Wallet} variant="success" />
       </div>
       <div className="lg:col-span-3 animate-fadeIn animate-stagger-3">
-        <StatCard title="Vouchers Sold" value={sold} icon={ShoppingCart} />
+        <StatCard title="Vouchers Sold" value={sold} icon={ShoppingCart} variant="purple" />
       </div>
       <div className="lg:col-span-3 animate-fadeIn animate-stagger-4">
-        <StatCard title="Average Sale" value={money(avg)} icon={BarChart2} />
+        <StatCard title="Average Sale" value={money(avg)} icon={BarChart2} variant="brand" />
       </div>
 
       <div className="lg:col-span-7 animate-fadeIn animate-stagger-5">
@@ -107,15 +112,15 @@ export default function Reports({ onUnauthorized }) {
 
       <div className="lg:col-span-5 animate-fadeIn animate-stagger-5">
         <Card className="h-full p-0 sm:p-0 overflow-hidden">
-          <div className="p-5 sm:p-6">
+          <div className="p-5 sm:p-6 border-b-2 border-default">
             <CardTitle className="mb-0">Revenue by Plan</CardTitle>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[360px] text-left text-sm text-body">
               <thead>
-                <tr className="border-b border-border-default bg-neutral-secondary-soft text-body">
+                <tr className="border-b-2 border-default bg-neutral-secondary-soft text-body">
                   {['Plan', 'Sold', 'Revenue', 'Share'].map((h) => (
-                    <th key={h} className="px-6 py-3 font-medium select-none" scope="col">
+                    <th key={h} className="px-6 py-3.5 font-bold select-none text-heading" scope="col">
                       {h}
                     </th>
                   ))}
@@ -136,17 +141,17 @@ export default function Reports({ onUnauthorized }) {
                     <tr
                       key={p.name}
                       className={`bg-neutral-primary transition hover:bg-neutral-secondary-soft ${
-                        isLast ? '' : 'border-b border-border-default'
+                        isLast ? '' : 'border-b-2 border-default'
                       }`}
                     >
-                      <th scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap text-left">
+                      <th scope="row" className="px-6 py-4 font-bold text-heading whitespace-nowrap text-left">
                         {p.name}
                       </th>
-                      <td className="px-6 py-4 font-mono">{p.count}</td>
-                      <td className="px-6 py-4 text-fg-brand-strong font-semibold whitespace-nowrap">
+                      <td className="px-6 py-4 font-mono font-semibold">{p.count}</td>
+                      <td className="px-6 py-4 text-fg-brand-strong font-black whitespace-nowrap">
                         {money(p.revenue)}
                       </td>
-                      <td className="px-6 py-4">{share}%</td>
+                      <td className="px-6 py-4 font-semibold">{share}%</td>
                     </tr>
                   )
                 })}

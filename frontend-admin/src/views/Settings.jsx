@@ -27,10 +27,10 @@ function Message({ message }) {
   if (!message?.text) return null
   return (
     <div
-      className={`mt-4 rounded-none border p-3.5 text-sm shadow-2xs ${
+      className={`mt-4 rounded-none border-2 border-default p-3.5 text-sm font-bold shadow-xs ${
         message.ok
-          ? 'border-border-success-subtle bg-success-soft text-fg-success-strong'
-          : 'border-border-danger-subtle bg-danger-soft text-fg-danger-strong'
+          ? 'bg-success-soft text-fg-success'
+          : 'bg-danger-soft text-fg-danger-strong'
       }`}
     >
       {message.text}

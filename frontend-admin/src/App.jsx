@@ -12,23 +12,17 @@ import Zones from './views/Zones.jsx'
 import Reports from './views/Reports.jsx'
 import Settings from './views/Settings.jsx'
 
-// Decorative background grid + ambient glows (matches the design system).
+// Decorative background grid (matches the neobrutalist system).
 function Backdrop() {
   return (
-    <>
-      <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          backgroundSize: '50px 50px',
-          backgroundImage:
-            'linear-gradient(to right, rgba(200,60,86,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(200,60,86,0.02) 1px, transparent 1px)',
-          maskImage:
-            'radial-gradient(circle at center, black 50%, transparent 100%)',
-        }}
-      />
-      <div className="pointer-events-none absolute -right-36 -top-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
-      <div className="pointer-events-none absolute -bottom-36 -left-36 z-0 h-[500px] w-[500px] rounded-full bg-brand opacity-[0.03] blur-[140px]" />
-    </>
+    <div
+      className="pointer-events-none absolute inset-0 z-0 opacity-5 dark:opacity-[0.02]"
+      style={{
+        backgroundSize: '32px 32px',
+        backgroundImage:
+          'linear-gradient(to right, #000000 1px, transparent 1px), linear-gradient(to bottom, #000000 1px, transparent 1px)',
+      }}
+    />
   )
 }
 
@@ -103,8 +97,13 @@ export default function App() {
 
   if (authed === null) {
     return (
-      <div className="grid h-full place-items-center bg-neutral-primary-soft text-body">
-        Loading…
+      <div className="grid h-full place-items-center bg-neutral-secondary-soft text-heading p-4">
+        <div className="w-full max-w-xs border-2 border-default bg-neutral-primary p-6 text-center shadow-md">
+          <div className="mb-4 font-heading text-lg font-bold">LOADING SYSTEM...</div>
+          <div className="h-6 w-full border-2 border-default bg-neutral-secondary p-1">
+            <div className="h-full bg-brand border border-default animate-pulse" style={{ width: '60%' }} />
+          </div>
+        </div>
       </div>
     )
   }

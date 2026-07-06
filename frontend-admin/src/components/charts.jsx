@@ -26,7 +26,7 @@ ChartJS.register(
   Filler,
 )
 
-ChartJS.defaults.font.family = "'Charis SIL', serif"
+ChartJS.defaults.font.family = "'Space Grotesk', sans-serif"
 ChartJS.defaults.font.size = 11
 
 const getVar = (name) => {
@@ -36,12 +36,12 @@ const getVar = (name) => {
 
 // Shared dynamic palette reflecting the neumorphic CSS variables.
 export const C = {
-  get brand() { return getVar('--brand') || '#C83C56' },
-  get success() { return getVar('--success') || '#1E7854' },
-  get danger() { return getVar('--danger') || '#C83C56' },
-  get body() { return getVar('--body') || '#5C4E50' },
-  get neutralPrimary() { return getVar('--neutral-primary-soft') || '#F5EFEF' },
-  get heading() { return getVar('--heading') || '#3D2E30' },
+  get brand() { return getVar('--brand') || '#FFDB33' },
+  get success() { return getVar('--success') || '#16A34A' },
+  get danger() { return getVar('--danger') || '#E63946' },
+  get body() { return getVar('--body') || '#5A5A5A' },
+  get neutralPrimary() { return getVar('--neutral-primary-soft') || '#FFFFFF' },
+  get heading() { return getVar('--heading') || '#000000' },
 }
 
 const getGridColor = () => {
