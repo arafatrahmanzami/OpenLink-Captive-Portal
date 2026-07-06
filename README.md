@@ -209,4 +209,4 @@ Contributions are welcome! Please feel free to submit issues, feature requests, 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GNU General Public License v3](LICENSE).
