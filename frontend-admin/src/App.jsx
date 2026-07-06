@@ -110,7 +110,13 @@ export default function App() {
   }
 
   if (!authed) {
-    return <Login onSuccess={() => setAuthed(true)} />
+    return (
+      <Login
+        onSuccess={() => setAuthed(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
+    )
   }
 
   return (
