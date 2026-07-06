@@ -213,7 +213,7 @@ export default function Vouchers({ onUnauthorized, search = '' }) {
                       <td className="px-6 py-4">
                         <button
                           onClick={() => remove(v.id)}
-                          className="flex h-8 w-8 items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft text-body-subtle shadow-xs hover:bg-danger-soft hover:text-danger hover:border-danger-subtle hover:-translate-y-[0.5px] transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-danger"
+                          className="flex h-8 w-8 items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft text-body-subtle shadow-xs hover:bg-danger-soft hover:text-danger hover:border-danger-subtle hover:-translate-y-[0.5px] transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-danger"
                           aria-label="Delete voucher"
                         >
                           <Trash2 className="h-4 w-4" />

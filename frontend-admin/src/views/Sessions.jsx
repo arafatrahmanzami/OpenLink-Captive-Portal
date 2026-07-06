@@ -52,7 +52,7 @@ export default function Sessions({ onUnauthorized, search = '' }) {
           <CardTitle icon={Users} className="mb-0">
             Active Sessions
           </CardTitle>
-          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
+          <span className="rounded-none border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
             {active.length} online
           </span>
         </div>

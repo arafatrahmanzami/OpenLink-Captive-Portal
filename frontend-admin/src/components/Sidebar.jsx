@@ -25,7 +25,7 @@ function NavLink({ item, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`group flex w-full items-center rounded-base px-3 py-2 text-sm font-medium transition-all duration-75 select-none outline-none focus:outline-none focus:ring-1 focus:ring-brand/30 ${
+      className={`group flex w-full items-center rounded-none px-3 py-2 text-sm font-medium transition-all duration-75 select-none outline-none focus:outline-none focus:ring-1 focus:ring-brand/30 ${
         active
           ? 'bg-neutral-secondary-strong text-fg-brand-strong shadow-2xs'
           : 'bg-transparent text-heading hover:bg-neutral-secondary-medium'
@@ -59,7 +59,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
       >
         <div className="mb-10 flex items-center justify-between px-1">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft p-2.5 text-brand shadow-xs hover:shadow-sm hover:-translate-y-[1px] transition-all duration-200">
+            <div className="flex items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft p-2.5 text-brand shadow-xs hover:shadow-sm hover:-translate-y-[1px] transition-all duration-200">
               <Flower2 className="h-5 w-5" />
             </div>
             <h1 className="font-heading text-xl font-bold tracking-tight text-heading">
@@ -68,7 +68,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-border-default-medium bg-neutral-primary-soft text-body hover:text-heading shadow-xs hover:shadow-sm transition-all duration-200 lg:hidden"
+            className="flex h-8 w-8 items-center justify-center rounded-none border border-border-default-medium bg-neutral-primary-soft text-body hover:text-heading shadow-xs hover:shadow-sm transition-all duration-200 lg:hidden"
             aria-label="Close menu"
           >
             <X className="h-4 w-4" />
@@ -87,12 +87,12 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
         </nav>
 
         <div className="mt-4 border-t border-border-default pt-6 px-1">
-          <div className="mb-6 rounded-base border border-border-success-subtle bg-success-soft p-4 shadow-xs text-left">
+          <div className="mb-6 rounded-none border border-border-success-subtle bg-success-soft p-4 shadow-xs text-left">
             <h4 className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-fg-success-strong/80">
               System Status
             </h4>
             <div className="flex items-center gap-2 text-sm font-bold text-fg-success-strong">
-              <span className="h-2.5 w-2.5 animate-pulseGlow rounded-full bg-success shadow-[0_0_6px_var(--success)]" />
+              <span className="h-2.5 w-2.5 animate-pulseGlow rounded-none bg-success shadow-[0_0_6px_var(--success)]" />
               Server Online
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
           <div className="flex items-center justify-between px-2">
             <button
               onClick={() => onNavigate('settings')}
-              className={`flex h-9 w-9 items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft transition-all duration-200 hover:text-brand focus:outline-none focus:ring-1 focus:ring-brand/30 btn-glint ${
+              className={`flex h-9 w-9 items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft transition-all duration-200 hover:text-brand focus:outline-none focus:ring-1 focus:ring-brand/30 btn-glint ${
                 view === 'settings'
                   ? 'text-brand bg-neutral-secondary-medium'
                   : 'text-body hover:bg-neutral-secondary-medium hover:text-heading'
@@ -111,7 +111,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
             </button>
             <button
               onClick={onLogout}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border-default bg-neutral-primary-soft text-body hover:bg-neutral-secondary-medium hover:text-brand transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-brand/30 btn-glint"
+              className="flex h-9 w-9 items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft text-body hover:bg-neutral-secondary-medium hover:text-brand transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-brand/30 btn-glint"
               aria-label="Log out"
             >
               <LogOut className="h-5 w-5" />

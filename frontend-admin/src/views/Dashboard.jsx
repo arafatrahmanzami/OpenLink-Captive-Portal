@@ -21,7 +21,7 @@ function StatCard({ title, value, icon: Icon, trend }) {
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-full border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
+        <div className="flex items-center justify-center rounded-none border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -123,14 +123,14 @@ export default function Dashboard({ onUnauthorized }) {
           <CardTitle>Top Selling Plans</CardTitle>
           <ul className="space-y-2">
             {topPlans.length === 0 && (
-              <li className="rounded-base border border-border-default bg-neutral-secondary-medium px-4 py-4 text-sm text-body-subtle text-center shadow-xs">
+              <li className="rounded-none border border-border-default bg-neutral-secondary-medium px-4 py-4 text-sm text-body-subtle text-center shadow-xs">
                 No plan sales data available.
               </li>
             )}
             {topPlans.map((plan) => (
               <li
                 key={plan.name}
-                className="flex items-center justify-between rounded-base border border-border-default bg-neutral-secondary-medium px-4 py-3.5 text-sm shadow-xs transition-all hover:bg-neutral-tertiary-medium hover:border-border-default-strong hover:translate-x-[2px] duration-150"
+                className="flex items-center justify-between rounded-none border border-border-default bg-neutral-secondary-medium px-4 py-3.5 text-sm shadow-xs transition-all hover:bg-neutral-tertiary-medium hover:border-border-default-strong hover:translate-x-[2px] duration-150"
               >
                 <span className="text-heading font-medium">{plan.name}</span>
                 <span className="text-brand font-semibold">({plan.sales} sold)</span>

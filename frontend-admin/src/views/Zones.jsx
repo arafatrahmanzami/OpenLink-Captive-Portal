@@ -56,7 +56,7 @@ export default function Zones({ onUnauthorized, search = '' }) {
           <CardTitle icon={MapPin} className="mb-0">
             Hotspot Zones
           </CardTitle>
-          <span className="rounded-default border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
+          <span className="rounded-none border border-border-brand-subtle bg-brand-softer px-2.5 py-1 text-sm font-semibold text-fg-brand-strong shadow-2xs">
             {zones.length} {zones.length === 1 ? 'zone' : 'zones'}
           </span>
         </div>

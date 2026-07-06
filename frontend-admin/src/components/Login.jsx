@@ -54,7 +54,7 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
           <button
             type="button"
             onClick={onToggleTheme}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border-default/60 bg-neutral-primary-soft/60 text-body hover:bg-neutral-secondary-medium hover:text-heading hover:scale-105 transition-all shadow-xs backdrop-blur-md dark:border-border-default/20 dark:bg-neutral-primary-soft/30"
+            className="flex h-10 w-10 items-center justify-center rounded-none border border-border-default/60 bg-neutral-primary-soft/60 text-body hover:bg-neutral-secondary-medium hover:text-heading hover:scale-105 transition-all shadow-xs backdrop-blur-md dark:border-border-default/20 dark:bg-neutral-primary-soft/30"
             aria-label="Toggle theme"
           >
             {theme === 'dark' ? (
@@ -67,19 +67,19 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
       )}
 
       {/* Login Card */}
-      <div className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-2xl border border-border-default/80 bg-neutral-primary-soft/75 p-8 text-center shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-brand/5 dark:border-border-default/20 dark:bg-neutral-primary-soft/45 dark:hover:shadow-brand/10 sm:p-10 animate-fadeIn">
+      <div className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-none border border-border-default/80 bg-neutral-primary-soft/75 p-8 text-center shadow-2xl backdrop-blur-xl transition-all duration-500 hover:shadow-brand/5 dark:border-border-default/20 dark:bg-neutral-primary-soft/45 dark:hover:shadow-brand/10 sm:p-10 animate-fadeIn">
         {/* Top decorative gradient bar */}
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand via-rose-500 to-brand" />
 
         {/* Security badge indicator */}
-        <div className="mx-auto mb-4 inline-flex items-center gap-1.5 rounded-full border border-border-default/80 bg-neutral-secondary-medium/60 px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-body-subtle dark:bg-neutral-secondary-medium/40">
-          <span className="h-1.5 w-1.5 rounded-full bg-success animate-ping" />
+        <div className="mx-auto mb-4 inline-flex items-center gap-1.5 rounded-none border border-border-default/80 bg-neutral-secondary-medium/60 px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-body-subtle dark:bg-neutral-secondary-medium/40">
+          <span className="h-1.5 w-1.5 rounded-none bg-success animate-ping" />
           <span className="opacity-80">Security Gateway</span>
         </div>
 
         {/* Rotating Brand Logo Icon Container */}
-        <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-border-default bg-neutral-primary-soft/50 text-brand shadow-sm backdrop-blur-xs transition-all duration-300 hover:scale-105 dark:border-border-default/20">
-          <div className="absolute inset-0 rounded-2xl bg-brand/5 blur-xs animate-pulse" />
+        <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-none border border-border-default bg-neutral-primary-soft/50 text-brand shadow-sm backdrop-blur-xs transition-all duration-300 hover:scale-105 dark:border-border-default/20">
+          <div className="absolute inset-0 rounded-none bg-brand/5 blur-xs animate-pulse" />
           <Flower2 className="h-10 w-10 text-brand dark:text-fg-brand animate-spin-slow" />
         </div>
 
@@ -94,7 +94,7 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
         {/* Login Form */}
         <form onSubmit={submit} className="space-y-5 text-left">
           <Field label="Security Password" htmlFor="password">
-            <div className="relative rounded-base shadow-xs">
+            <div className="relative rounded-none shadow-xs">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-body-subtle/70">
                 <Lock className="h-4 w-4" />
               </div>
@@ -106,7 +106,7 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
                 placeholder="••••••••"
                 autoComplete="current-password"
                 required
-                className="w-full rounded-base border border-border-default bg-neutral-secondary-medium/80 pl-10 pr-10 py-3 text-sm text-heading outline-none transition-all duration-200 placeholder:text-body-subtle/30 hover:border-border-default-strong focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand disabled:bg-disabled disabled:text-fg-disabled disabled:cursor-not-allowed dark:border-border-default/60 dark:bg-neutral-secondary-medium/40"
+                className="w-full rounded-none border border-border-default bg-neutral-secondary-medium/80 pl-10 pr-10 py-3 text-sm text-heading outline-none transition-all duration-200 placeholder:text-body-subtle/30 hover:border-border-default-strong focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand disabled:bg-disabled disabled:text-fg-disabled disabled:cursor-not-allowed dark:border-border-default/60 dark:bg-neutral-secondary-medium/40"
               />
               <button
                 type="button"
@@ -136,7 +136,7 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
 
           {/* Styled Error Alert */}
           {error && (
-            <div className="flex items-center gap-2.5 rounded-base border border-danger-strong/20 bg-danger-soft p-3 text-xs font-semibold text-fg-danger-strong animate-fadeIn">
+            <div className="flex items-center gap-2.5 rounded-none border border-danger-strong/20 bg-danger-soft p-3 text-xs font-semibold text-fg-danger-strong animate-fadeIn">
               <ShieldAlert className="h-4 w-4 shrink-0 text-danger" />
               <span>{error}</span>
             </div>

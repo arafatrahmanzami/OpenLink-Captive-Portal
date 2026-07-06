@@ -26,7 +26,7 @@ ChartJS.register(
   Filler,
 )
 
-ChartJS.defaults.font.family = '"Plus Jakarta Sans", sans-serif'
+ChartJS.defaults.font.family = "'Charis SIL', serif"
 ChartJS.defaults.font.size = 11
 
 const getVar = (name) => {
@@ -66,7 +66,7 @@ export function SalesBarChart({ labels, data }) {
             backgroundColor: brandColor + '25',
             borderColor: brandColor,
             borderWidth: 1.5,
-            borderRadius: 4,
+            borderRadius: 0,
           },
         ],
       }}

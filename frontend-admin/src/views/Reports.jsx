@@ -17,7 +17,7 @@ function StatCard({ title, value, icon: Icon }) {
             {value}
           </div>
         </div>
-        <div className="flex items-center justify-center rounded-full border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
+        <div className="flex items-center justify-center rounded-none border border-border-brand-subtle bg-brand-softer p-3 text-fg-brand shadow-xs">
           <Icon className="h-5 w-5" />
         </div>
       </div>
