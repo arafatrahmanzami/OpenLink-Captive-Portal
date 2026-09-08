@@ -3,12 +3,12 @@
 **OpenLink** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).  
 It provides a lightweight, voucher‑based captive portal for OpenWrt routers, with a Go backend and a React frontend.
 
-## Key improvements in this fork
+## Key improvements/changes in this fork
 
 - ✅ **Fully rebranded** – all UI elements (sidebar, login, admin panel) now say **OpenLink**.
 - ✅ **Interactive installer** – choose your network interface (e.g., `br-lan3`) and gateway IP to avoid lockouts.
 - ✅ **Dark mode fix** – the “Unused” badge now has a gray background with white text for readability.
-- ✅ 
+- ✅ **Easy Default Password**: `openlinkadmin`
 - ✅ **No more hardcoded dependencies** – the installer works on any OpenWrt version with NoDogSplash.
 
 ---
