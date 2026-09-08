@@ -1,5 +1,17 @@
-GEMINI.md
+# Compiled binaries
+voucher_server
+/backend/backend
 
-# Generated admin dashboard build output (source in frontend-admin/).
-# Built by CI on release and by `npm run build` for source installs.
+# Build outputs
+release/
+bin/
+dist/
 frontend/admin/
+frontend-admin/node_modules/
+frontend-admin/dist/
+frontend-admin/build/
+
+# IDE and system files
+*.swp
+*.swo
+.DS_Store
