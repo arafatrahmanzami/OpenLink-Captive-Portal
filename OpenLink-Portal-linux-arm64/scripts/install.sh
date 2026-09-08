@@ -46,13 +46,11 @@ mkdir -p /www/voucher
 mkdir -p /opt/voucher
 mkdir -p /data # For the persistent database
 
-# 2. Copy files (Updated for multi-arch archive layout)
+# 2. Copy files
 echo "Copying application files..."
-cp "$RELEASE_ROOT/opt/voucher/voucher_server" /opt/voucher/
+cp "$RELEASE_ROOT/voucher_server" /opt/voucher/
 chmod +x /opt/voucher/voucher_server
-mkdir -p /www/voucher/admin
-mkdir -p /www/voucher/admin
-cp -r "$RELEASE_ROOT/www/voucher"/* /www/voucher/admin/
+cp -r "$RELEASE_ROOT/frontend"/* /www/voucher/
 
 # Copy the binauth script and make it executable
 cp "$SCRIPT_DIR/binauth.sh" /opt/voucher/

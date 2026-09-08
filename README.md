@@ -1,8 +1,8 @@
-# RoseNet Access Portal
+# OpenLink Access Portal
 
 ## OpenWrt WiFi Voucher System
 
-RoseNet Access Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.
+OpenLink Access Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.
 
 ## Table of Contents
 
@@ -30,11 +30,11 @@ RoseNet Access Portal is a comprehensive, self-contained voucher authentication 
 
 ## System Architecture
 
-The RoseNet Access Portal operates entirely on the OpenWrt router, comprising three core components that work in concert to deliver the captive portal experience:
+The OpenLink Access Portal operates entirely on the OpenWrt router, comprising three core components that work in concert to deliver the captive portal experience:
 
 1.  **Go Backend (`voucher_server`)**: Serves as the central logic hub, handling HTTP requests, database interactions, and voucher authentication.
 2.  **Frontend**: Provides the user interface for voucher entry and the administrative interface for managing vouchers.
-3.  **NoDogSplash**: The captive portal software responsible for intercepting unauthenticated traffic and redirecting users to the RoseNet Access Portal.
+3.  **NoDogSplash**: The captive portal software responsible for intercepting unauthenticated traffic and redirecting users to the OpenLink Access Portal.
 
 ## Components
 
@@ -58,7 +58,7 @@ The integration with NoDogSplash is fundamental to the captive portal functional
 
 1.  A user connects to the Wi-Fi network.
 2.  NoDogSplash intercepts the user's initial HTTP request and redirects them to its `splash.html` page (`/etc/nodogsplash/htdocs/splash.html`).
-3.  This `splash.html` contains a meta-refresh that immediately redirects the user to the RoseNet Access Portal's Go-powered voucher page (e.g., `http://<router-lan-ip>:7891`), forwarding essential parameters like `ip`, `mac`, and `token`. The router's LAN IP is detected automatically during installation, so the portal works on any subnet without manual edits.
+3.  This `splash.html` contains a meta-refresh that immediately redirects the user to the OpenLink Access Portal's Go-powered voucher page (e.g., `http://<router-lan-ip>:7891`), forwarding essential parameters like `ip`, `mac`, and `token`. The router's LAN IP is detected automatically during installation, so the portal works on any subnet without manual edits.
 4.  The user enters a valid voucher code on the portal page.
 5.  The frontend JavaScript validates the voucher and stages the session via `/binauth-stage`.
 6.  Upon successful validation, the user is redirected to the NoDogSplash authentication URL.
@@ -67,7 +67,7 @@ The integration with NoDogSplash is fundamental to the captive portal functional
 
 ## Installation & Deployment
 
-RoseNet Access Portal can be deployed on your OpenWrt router either by using a pre-compiled binary release (recommended) or by building from source. Everything is installed directly on the router — no separate Go toolchain or local machine staging is required.
+OpenLink Access Portal can be deployed on your OpenWrt router either by using a pre-compiled binary release (recommended) or by building from source. Everything is installed directly on the router — no separate Go toolchain or local machine staging is required.
 
 ### Method 1: Using a Pre-compiled Release (Recommended)
 
@@ -92,23 +92,23 @@ This is the easiest method. You do everything over SSH on the router itself.
 
     | `uname -m` / arch        | Release archive                    |
     | ------------------------ | ---------------------------------- |
-    | `aarch64` / `arm64`      | `RoseNet-Portal-linux-arm64.zip`   |
-    | `armv7l`, `armv6l` / arm | `RoseNet-Portal-linux-arm.zip`     |
-    | `mips`, `mipsel`         | `RoseNet-Portal-linux-mipsle.zip`  |
-    | `x86_64`                 | `RoseNet-Portal-linux-amd64.zip`   |
+    | `aarch64` / `arm64`      | `OpenLink-Portal-linux-arm64.zip`   |
+    | `armv7l`, `armv6l` / arm | `OpenLink-Portal-linux-arm.zip`     |
+    | `mips`, `mipsel`         | `OpenLink-Portal-linux-mipsle.zip`  |
+    | `x86_64`                 | `OpenLink-Portal-linux-amd64.zip`   |
 
 3.  **Download the latest release** with `wget` (replace the filename with the one for your architecture):
 
     ```sh
-    wget https://github.com/nhAsif/RoseNet-Access-Portal/releases/latest/download/RoseNet-Portal-linux-arm64.zip
+    wget https://github.com/nhAsif/OpenLink-Access-Portal/releases/latest/download/OpenLink-Portal-linux-arm64.zip
     ```
 
 4.  **Unzip the archive**:
     If `unzip` is not installed, install it first with `opkg update && opkg install unzip`.
 
     ```sh
-    unzip RoseNet-Portal-linux-arm64.zip
-    cd RoseNet-Portal-linux-arm64
+    unzip OpenLink-Portal-linux-arm64.zip
+    cd OpenLink-Portal-linux-arm64
     ```
 
 5.  **Run the installation script**:
@@ -149,14 +149,14 @@ For developers who want to build the binary themselves.
 2.  **Copy the project to the router** (including `voucher_server`, `frontend/`, and `scripts/`):
 
     ```sh
-    scp -r RoseNet-Captive-Portal root@<router-lan-ip>:/root/
+    scp -r OpenLink-Captive-Portal root@<router-lan-ip>:/root/
     ```
 
 3.  **Run the installation script on the router**:
 
     ```sh
     ssh root@<router-lan-ip>
-    cd /root/RoseNet-Captive-Portal
+    cd /root/OpenLink-Captive-Portal
     chmod +x scripts/install.sh
     sh scripts/install.sh
     ```

@@ -1,9 +1,9 @@
 {
-  "name": "rosenet-admin",
+  "name": "openlink-admin",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "RoseNet Access Portal admin dashboard (React 18 + Vite + Tailwind). Builds static files into ../frontend/admin served by the Go backend at /admin/.",
+  "description": "OpenLink Access Portal admin dashboard (React 18 + Vite + Tailwind). Builds static files into ../frontend/admin served by the Go backend at /admin/.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

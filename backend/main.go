@@ -78,7 +78,7 @@ func main() {
 	}
 
 	// Initialize admin password if not set
-	if err := initializeAdminPassword("rosepinepink"); err != nil {
+	if err := initializeAdminPassword("openlinkadmin"); err != nil {
 		log.Fatalf("Failed to initialize admin password: %v", err)
 	}
 
@@ -106,6 +106,7 @@ func main() {
 	http.HandleFunc("/admin/update-settings", authMiddleware(adminUpdateSettingsHandler))
 
 	// Serve the portal with theme support
+	http.Handle("/admin/", http.StripPrefix("/admin", http.FileServer(http.Dir(frontendDir))))
 	http.HandleFunc("/", rootHandler)
 
 	log.Printf("Starting server on :7891, serving from %s", frontendDir)
@@ -140,7 +141,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	brand, err := getSetting("brand_name")
 	if err != nil || brand == "" {
-		brand = "RoseNet"
+		brand = "OpenLink"
 	}
 	page := strings.ReplaceAll(string(content), "{{BRAND}}", html.EscapeString(brand))
 
@@ -350,7 +351,7 @@ func adminGetSettingsHandler(w http.ResponseWriter, r *http.Request) {
 		settings["currency_symbol"] = "$"
 	}
 	if _, ok := settings["brand_name"]; !ok {
-		settings["brand_name"] = "RoseNet"
+		settings["brand_name"] = "OpenLink"
 	}
 	json.NewEncoder(w).Encode(settings)
 }

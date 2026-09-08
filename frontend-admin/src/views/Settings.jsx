@@ -17,7 +17,7 @@ const CURRENCIES = [
 ]
 
 const THEMES = [
-  { value: 'default', label: 'RoseNet (Matrix Pink)' },
+  { value: 'default', label: 'OpenLink (Matrix Pink)' },
   { value: 'modern', label: 'QuickConnect (Clean Modern)' },
   { value: 'corporate', label: 'GlobalNet (ISP Corporate)' },
   { value: 'music', label: 'AsifNET (Retro Music)' },
@@ -42,7 +42,7 @@ export default function Settings({ onUnauthorized }) {
   const { currency, setCurrency } = useCurrency()
   const [symbol, setSymbol] = useState(currency)
   const [theme, setTheme] = useState('music')
-  const [brand, setBrand] = useState('RoseNet')
+  const [brand, setBrand] = useState('OpenLink')
   const [generalMsg, setGeneralMsg] = useState(null)
 
   const [pw, setPw] = useState({ old: '', next: '', confirm: '' })
@@ -70,7 +70,7 @@ export default function Settings({ onUnauthorized }) {
       const res = await api.updateSettings({
         currency_symbol: symbol.trim(),
         active_theme: theme,
-        brand_name: brand.trim() || 'RoseNet',
+        brand_name: brand.trim() || 'OpenLink',
       })
       if (res.status === 401) return onUnauthorized()
       await asJson(res, 'Failed to update settings')
@@ -109,7 +109,7 @@ export default function Settings({ onUnauthorized }) {
               <Input
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-                placeholder="RoseNet"
+                placeholder="OpenLink"
                 maxLength={40}
                 required
               />

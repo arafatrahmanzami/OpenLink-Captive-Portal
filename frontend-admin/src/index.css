@@ -510,3 +510,65 @@ input[type="radio"]:disabled {
   transform: translate(1px, 1px);
   box-shadow: var(--shadow-2xs);
 }
+
+/* High Contrast Unused Badge Fix */
+html.dark .badge-unused, html.dark [class*="bg-yellow-"], html.dark [class*="text-yellow-"] {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* Universal Dark Mode Fix for Status Badges */
+html.dark .badge-unused, 
+html.dark [class*="bg-yellow-"], 
+html.dark span:has-text("Unused"),
+html.dark .text-yellow-800,
+html.dark .text-yellow-700 {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+html.dark .badge-active, 
+html.dark [class*="bg-green-"],
+html.dark [class*="bg-emerald-"] {
+  background-color: #166534 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* Force "Unused" (yellow) badges to Gray/White in Dark Mode */
+html.dark .bg-yellow-100, 
+html.dark [class*="bg-yellow-"] {
+    background-color: #4b5563 !important; /* Tailwind Gray-600 */
+    color: #ffffff !important;
+    border-color: #6b7280 !important;
+}
+html.dark .text-yellow-800, 
+html.dark [class*="text-yellow-"] {
+    color: #ffffff !important;
+}
+
+/* Force "Unused" badges to Gray/White in Dark Mode */
+html.dark .bg-yellow-100, 
+html.dark [class*="bg-yellow-"] {
+    background-color: #4b5563 !important;
+    color: #ffffff !important;
+    border-color: #6b7280 !important;
+}
+html.dark .text-yellow-800, 
+html.dark [class*="text-yellow-"] {
+    color: #ffffff !important;
+}
+
+/* Dark mode fix for Unused badges (overrides yellow background) */
+html.dark .bg-brand-softer.text-black {
+  background-color: #4b5563 !important; /* gray-600 */
+  color: #ffffff !important;
+}
+html.dark .bg-brand-softer {
+  background-color: #4b5563 !important;
+}
+html.dark .text-black.bg-brand-softer {
+  color: #ffffff !important;
+}

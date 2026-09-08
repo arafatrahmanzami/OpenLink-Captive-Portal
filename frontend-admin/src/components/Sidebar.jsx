@@ -63,7 +63,7 @@ export default function Sidebar({ view, onNavigate, onLogout, open, onClose }) {
               <Flower2 className="h-5 w-5" />
             </div>
             <h1 className="font-heading text-xl font-bold tracking-tight text-heading">
-              Rose<span className="text-brand-strong">Net</span>
+              Open<span className="text-brand-strong">Link</span>
             </h1>
           </div>
           <button

@@ -29,7 +29,6 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
 
   return (
     <div className="relative flex h-full min-h-screen w-full items-center justify-center overflow-hidden bg-neutral-secondary-soft px-4 transition-colors duration-300">
-      {/* Bold retro grid background */}
       <div
         className="pointer-events-none absolute inset-0 z-0 opacity-10 dark:opacity-5"
         style={{
@@ -39,7 +38,6 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
         }}
       />
 
-      {/* Theme Switcher Button */}
       {onToggleTheme && (
         <div className="absolute top-6 right-6 z-20">
           <button
@@ -57,9 +55,7 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
         </div>
       )}
 
-      {/* Login Card Styled as a Retro Window */}
       <div className="relative z-10 w-full max-w-[420px] border-2 border-default bg-neutral-primary shadow-xl animate-fadeIn">
-        {/* Retro Title Bar */}
         <div className="flex items-center justify-between border-b-2 border-default bg-brand px-4 py-3 text-black">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full border-2 border-default bg-danger" />
@@ -71,20 +67,17 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
         </div>
 
         <div className="p-8 sm:p-10 text-center">
-          {/* Brand Logo Container */}
           <div className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-none border-2 border-default bg-brand text-black shadow-sm">
             <Flower2 className="h-10 w-10" />
           </div>
 
-          {/* Branding header */}
           <h1 className="mb-2 font-heading text-3xl font-black tracking-tight text-heading">
-            Rose<span className="text-brand-strong">Net</span> Admin
+            Open<span className="text-brand-strong">Link</span> Admin
           </h1>
           <p className="mb-8 text-sm font-semibold text-body-subtle">
             CONSOLE PASSWORD REQUIRED
           </p>
 
-          {/* Login Form */}
           <form onSubmit={submit} className="space-y-6 text-left">
             <Field label="Console Password" htmlFor="password">
               <div className="relative rounded-none shadow-xs">
@@ -127,7 +120,6 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
               )}
             </Button>
 
-            {/* Styled Error Alert */}
             {error && (
               <div className="flex items-center gap-2.5 rounded-none border-2 border-danger bg-danger-soft p-3.5 text-xs font-bold text-fg-danger-strong shadow-2xs animate-fadeIn">
                 <ShieldAlert className="h-5 w-5 shrink-0 text-danger" />
@@ -138,21 +130,9 @@ export default function Login({ onSuccess, theme, onToggleTheme }) {
         </div>
       </div>
 
-      {/* Footer */}
       <footer className="absolute bottom-6 left-0 right-0 z-10 text-center text-xs text-body-subtle flex flex-col items-center justify-center gap-1 select-none">
-        <p className="flex items-center gap-1 font-bold">
-          made with <Heart className="h-3.5 w-3.5 fill-danger text-danger animate-pulse inline mx-0.5" /> by{' '}
-          <a
-            href="https://github.com/nhAsif"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-heading hover:text-brand-strong transition-colors font-bold underline decoration-default decoration-2 underline-offset-2 hover:decoration-brand"
-          >
-            nhAsif
-          </a>
-        </p>
         <p className="text-[10px] uppercase tracking-widest font-black opacity-60">
-          powered by <span className="text-black bg-brand px-1 border border-default">openwrt</span>
+          OpenLink Portal &bull; Powered by OpenWrt
         </p>
       </footer>
     </div>
