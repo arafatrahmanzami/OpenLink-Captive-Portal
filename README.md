@@ -1,8 +1,65 @@
-# OpenLink Access Portal
+# OpenLink Captive Portal
+
+**OpenLink** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).  
+It provides a lightweight, voucher‑based captive portal for OpenWrt routers, with a Go backend and a React frontend.
+
+## Key improvements in this fork
+
+- ✅ **Fully rebranded** – all UI elements (sidebar, login, admin panel) now say **OpenLink**.
+- ✅ **Interactive installer** – choose your network interface (e.g., `br-lan3`) and gateway IP to avoid lockouts.
+- ✅ **Dark mode fix** – the “Unused” badge now has a gray background with white text for readability.
+- ✅ 
+- ✅ **No more hardcoded dependencies** – the installer works on any OpenWrt version with NoDogSplash.
+
+---
+
+
+
+# Installation & Deployment
+Detects the router architecture.
+Downloads the matching zip from release.
+Extracts and runs the installer.
+
+
+bash
+# Install with a single command:
+curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | \
+grep "browser_download_url" | \
+grep "$(uname -m | sed 's/armv7l/arm/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/')" | \
+cut -d '"' -f 4 | \
+wget -qi - && \
+unzip OpenLink-Portal-linux-*.zip && \
+cd OpenLink-Portal-linux-* && \
+chmod +x scripts/install.sh && \
+sh scripts/install.sh
+
+
+#Recommended single command for OpenWrt / BusyBox (which may not have curl), use wget and grep:
+
+SSH into your OpenWrt router and run:
+
+
+bash
+# Using wget (most OpenWrt builds)
+wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | \
+grep -o "https://.*/OpenLink-Portal-linux-$(uname -m | sed 's/armv7l/arm/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/').zip" | \
+head -n1 | \
+xargs wget -O OpenLink-Portal.zip && \
+unzip OpenLink-Portal.zip && \
+cd OpenLink-Portal-linux-* && \
+chmod +x scripts/install.sh && \
+sh scripts/install.sh
+
+
+
+
+
+
+
 
 ## OpenWrt WiFi Voucher System
 
-OpenLink Access Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.
+OpenLink Captive Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.
 
 ## Table of Contents
 
@@ -100,7 +157,12 @@ This is the easiest method. You do everything over SSH on the router itself.
 3.  **Download the latest release** with `wget` (replace the filename with the one for your architecture):
 
     ```sh
-    wget https://github.com/nhAsif/OpenLink-Access-Portal/releases/latest/download/OpenLink-Portal-linux-arm64.zip
+    wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-arm64.zip
+    ```
+or  **Download the specific release** with `wget` (replace the filename with the one for your architecture):
+
+    ```sh
+    wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/v3.9/RoseNet-Portal-linux-arm64.zip
     ```
 
 4.  **Unzip the archive**:
@@ -172,7 +234,7 @@ Users connecting to your Wi-Fi network will be redirected to the voucher entry p
 ### Administrator Panel
 
 Access the administrator panel at `/admin/` (e.g., `http://<router-lan-ip>:7891/admin/`). The installation script prints the exact URL with your router's detected IP when it finishes. The old `/admin.html` link still works and redirects to `/admin/`.
-*   **Default Password**: `rosepinepink`
+*   **Default Password**: `openlinkadmin`
 *   **Features**:
     *   Secure login and password management.
     *   Real-time dashboard with revenue and user statistics.
