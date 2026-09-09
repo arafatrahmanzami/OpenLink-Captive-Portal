@@ -23,9 +23,6 @@ jobs:
         cache: 'npm'
         cache-dependency-path: frontend-admin/package-lock.json
 
-    # Source lives in frontend-admin/; the build emits static files into
-    # frontend/admin/ (git-ignored). Built once here and shared with every
-    # matrix arch below via an artifact so we don't rebuild it N times.
     - name: Install and build admin frontend
       run: |
         cd frontend-admin
@@ -48,19 +45,11 @@ jobs:
     strategy:
       matrix:
         os: [linux]
-        arch: [amd64, arm64]
-        include:
-          - os: linux
-            arch: arm # For 32-bit ARM Linux
-          - os: linux
-            arch: mipsle # For ramips
-
+        arch: [amd64, arm64, arm, armv6, mipsle]   # <-- added armv6
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Restore the compiled admin dashboard into frontend/admin/ so the release
-    # archive's `cp -r frontend` picks it up.
     - name: Download admin frontend
       uses: actions/download-artifact@v4
       with:
@@ -70,7 +59,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: '1.22' # Use a recent Go version
+        go-version: '1.22'
 
     - name: Install UPX
       run: |
@@ -82,8 +71,14 @@ jobs:
       run: |
         cd backend
         BINARY_NAME="voucher_server"
-        GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags="-s -w" -o $BINARY_NAME .
-        mv $BINARY_NAME ../ # Move to root of workspace
+        GOOS=${{ matrix.os }}
+        GOARCH=${{ matrix.arch }}
+        # Set GOARM=6 for armv6, otherwise default (7 for arm)
+        if [ "${{ matrix.arch }}" = "armv6" ]; then
+          export GOARM=6
+        fi
+        go build -ldflags="-s -w" -o $BINARY_NAME .
+        mv $BINARY_NAME ../   # Move to root of workspace
       shell: bash
 
     - name: Compress binary with UPX
@@ -93,9 +88,8 @@ jobs:
 
     - name: Create release archive and checksum
       run: |
-        RELEASE_NAME="RoseNet-Portal-${{ matrix.os }}-${{ matrix.arch }}"
+        RELEASE_NAME="OpenLink-Portal-${{ matrix.os }}-${{ matrix.arch }}"
 
-        # Create a temporary directory to stage files
         mkdir -p "${RELEASE_NAME}"
         cp "voucher_server" "${RELEASE_NAME}/"
         cp -r frontend "${RELEASE_NAME}/"
@@ -106,10 +100,9 @@ jobs:
         ARCHIVE_NAME="${RELEASE_NAME}.zip"
         zip -r "${ARCHIVE_NAME}" "${RELEASE_NAME}"
 
-        # Generate SHA256 checksum
         sha256sum "${ARCHIVE_NAME}" > "${ARCHIVE_NAME}.sha256"
 
-        rm -rf "${RELEASE_NAME}" # Clean up temporary directory
+        rm -rf "${RELEASE_NAME}"
       shell: bash
 
     - name: Upload artifact
@@ -117,7 +110,7 @@ jobs:
       with:
         name: ${{ matrix.os }}-${{ matrix.arch }}
         path: |
-          RoseNet-Portal-${{ matrix.os }}-${{ matrix.arch }}.*
+          OpenLink-Portal-${{ matrix.os }}-${{ matrix.arch }}.*
 
   release:
     name: Create GitHub Release
@@ -132,7 +125,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: artifacts
-        pattern: linux-* # Only the per-arch release archives, not admin-frontend
+        pattern: linux-*
 
     - name: List downloaded artifacts
       run: ls -R artifacts
