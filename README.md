@@ -46,20 +46,16 @@ ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_6
 echo "Detected architecture: $ARCH" && \
 URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep "browser_download_url" | grep "OpenLink-Portal-linux-${ARCH}.zip" | cut -d '"' -f 4) && \
 if [ -n "$URL" ]; then \
-  echo "Downloading from: $URL" && \
-  wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL" && \
-  unzip "OpenLink-Portal-linux-${ARCH}.zip" && \
-  cd OpenLink-Portal-linux-* && \
-  chmod +x scripts/install.sh && \
-  sh scripts/install.sh; \
+  echo "Downloading from API: $URL" && \
+  wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
 else \
-  echo "API lookup failed. Using fallback URL for arm64..." && \
-  wget -O "OpenLink-Portal-linux-arm64.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/v3.9.0/OpenLink-Portal-linux-arm64.zip" && \
-  unzip "OpenLink-Portal-linux-arm64.zip" && \
-  cd OpenLink-Portal-linux-* && \
-  chmod +x scripts/install.sh && \
-  sh scripts/install.sh; \
-fi
+  echo "API lookup failed – using fallback direct URL" && \
+  wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-${ARCH}.zip"; \
+fi && \
+unzip "OpenLink-Portal-linux-${ARCH}.zip" && \
+cd OpenLink-Portal-linux-* && \
+chmod +x scripts/install.sh && \
+sh scripts/install.sh
 
 ```
 
@@ -76,12 +72,12 @@ ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_6
 URL=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
 if [ -n "$URL" ]; then \
   echo "Using API‑detected URL: $URL" && \
-  wget -O "OpenLink-Portal-${ARCH}.zip" "$URL"; \
+  wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
 else \
   echo "API failed – using fallback direct URL" && \
-  wget -O "OpenLink-Portal-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-${ARCH}.zip"; \
+  wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-unzip "OpenLink-Portal-${ARCH}.zip" && \
+unzip "OpenLink-Portal-linux-${ARCH}.zip" && \
 cd OpenLink-Portal-linux-* && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
