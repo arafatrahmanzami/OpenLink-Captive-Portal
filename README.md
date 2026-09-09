@@ -1,54 +1,140 @@
 # OpenLink Captive Portal
 
-**OpenLink** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).  
-It provides a lightweight, voucher‑based captive portal for OpenWrt routers, with a Go backend and a React frontend.
+**OpenLink Captive Portal** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).  
+It provides easy installation of a lightweight, voucher‑based captive portal for OpenWrt routers, with a Go backend and a React frontend.
 
 ## Key improvements/changes in this fork
 
 - ✅ **Fully rebranded** – all UI elements (sidebar, login, admin panel) now say **OpenLink**.
-- ✅ **Interactive installer** – choose your network interface (e.g., `br-lan3`) and gateway IP to avoid lockouts.
-- ✅ **Dark mode fix** – the “Unused” badge now has a gray background with white text for readability.
+- ✅ **Interactive installer** – choose your network interface (e.g., `br-lan3`) and gateway IP to avoid luci lockouts.
+- ✅ **Dark mode “Unused” status badge visibility issue fixed.** – the “Unused” badge now has a gray background with white text for readability.
 - ✅ **Easy Default Password**: `openlinkadmin`
 - ✅ **No more hardcoded dependencies** – the installer works on any OpenWrt version with NoDogSplash.
+- ✅ **Easy one liner Installation** – auto installs dependency "unzip" first, detects architecture , downloads matching zip then extracts and  installs
+- ✅ **Added ARMv6 support** – Raspberry Pi 1/Zero support
+- ✅ **Theme switching works** – default.html ,modern.html , corporate.html , music.html
+- ✅ **Redirects clients to the voucher portal** Port 2050 is NoDogSplash’s default splash page, but now redirect clients from that splash page to the voucher portal on port 7891
+- ✅ **Portal stays available after reboot.** All functions works as expected even after reboot or power loss
 
 ---
 
 
 
-# Installation & Deployment
-Detects the router architecture.
-Downloads the matching zip from release.
-Extracts and runs the installer.
+
+# Easy Installation 
+- The commands run entirely from /tmp, so they won’t clutter root filesystem.
+
+- Auto installs dependency (unzip – required to extract the archive . If not installed, installs it first)
+
+- Detects the router architecture.
+
+- Downloads the matching zip from release.
+
+- Extracts and runs the installer.
+
+- Interactive prompts lets to choose from desired network interfaces & (e.g., 'br-hotspot' ,'br-lan' , 'br-lan2' , 'br-lan3' , 'br-lan2' , 'br-guest' etc ) and gateway IP to avoid luci lockouts by a blind auto-detection.
 
 
-bash
-# Install with a single command:
+
+#Install with single command for OpenWrt / BusyBox  (which may not have curl but my have wget & grep, in that case use bellow wget and grep method instead):
+
+```bash
+# Using wget (most OpenWrt builds)
+cd /tmp && \
+opkg update && \
+opkg install unzip && \
 curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | \
-grep "browser_download_url" | \
-grep "$(uname -m | sed 's/armv7l/arm/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/')" | \
-cut -d '"' -f 4 | \
-wget -qi - && \
+grep -o "https://.*/OpenLink-Portal-linux-$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/').zip" | \
+head -n1 | \
+xargs curl -L -O && \
 unzip OpenLink-Portal-linux-*.zip && \
 cd OpenLink-Portal-linux-* && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
+```
 
 
-#Recommended single command for OpenWrt / BusyBox (which may not have curl), use wget and grep:
 
-SSH into your OpenWrt router and run:
+#Recommended install method : wget and grep – usually present in most OpenWrt builds. If not, you can install it or use curl (the first command already uses curl).
 
-
-bash
-# Using wget (most OpenWrt builds)
+```bash
+# Install with a single command:
+cd /tmp && \
+opkg update && \
+opkg install unzip && \
 wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | \
-grep -o "https://.*/OpenLink-Portal-linux-$(uname -m | sed 's/armv7l/arm/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/').zip" | \
+grep -o "https://.*/OpenLink-Portal-linux-$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/').zip" | \
 head -n1 | \
 xargs wget -O OpenLink-Portal.zip && \
 unzip OpenLink-Portal.zip && \
 cd OpenLink-Portal-linux-* && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
+```
+
+
+
+
+
+
+
+# During the installation : 
+
+Choose form existing network such as "br-hotspot" and its ip 192.168.254.1 when prompted.
+
+
+# After installation:
+
+http://192.168.254.1:7891/ → user portal (themed voucher page)
+
+http://192.168.254.1:7891/admin/ → admin login (OpenLink Admin page)
+Use password: openlinkadmin
+
+
+
+## What happens behind the scenes:
+
+NoDogSplash (port 2050) intercepts clients and serves a minimal splash.html that immediately redirects them to the Go backend on port 7891.
+
+The Go backend handles all authentication, voucher management, theming, and the admin panel.
+
+NoDogSplash’s own splash page is not meant to be the user login page – it just kicks off the redirect.
+
+The splash.html on port 2050 is intentionally minimal – it's a stub that passes the client’s IP, MAC, and token to the real portal. So it's fine that you can't interact with it directly; it’s not supposed to be a full login page.
+
+
+## Why is this better?
+
+Separation of concerns: NoDogSplash handles the network-level interception; the Go backend handles business logic and user interface.
+
+Full-featured portal: The Go backend provides voucher generation, admin dashboard, themes, and persistence – things NoDogSplash alone cannot do.
+
+Flexibility: You can customise the portal UI without touching NoDogSplash.
+
+
+
+
+
+
+
+## Summary
+
+Clean install – runs from /tmp, auto-installs unzip, detects CPU architecture, downloads matching release.
+
+Safe interactive prompts – choose network interface (e.g., br-hotspot) and gateway IP to prevent Luci lockouts.
+
+One-liner command – provided for both wget and curl.
+
+Access after install – Portal on port 7891; Admin at /admin/ (default password: openlinkadmin).
+
+Architecture – NoDogSplash (port 2050) only redirects to Go backend (port 7891), which handles all authentication, vouchers, themes, and admin logic.
+
+Advantage – clean separation of network interception (NoDogSplash) from business logic (Go), making customization easy without touching NoDogSplash.
+
+
+
+
+
 
 
 
@@ -60,6 +146,7 @@ sh scripts/install.sh
 ## OpenWrt WiFi Voucher System
 
 OpenLink Captive Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.
+
 
 ## Table of Contents
 
@@ -157,13 +244,15 @@ This is the easiest method. You do everything over SSH on the router itself.
 3.  **Download the latest release** with `wget` (replace the filename with the one for your architecture):
 
     ```sh
+    cd /tmp
     wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-arm64.zip
     ```
 or  **Download the specific release** with `wget` (replace the filename with the one for your architecture):
 
-    ```sh
-    wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/v3.9/RoseNet-Portal-linux-arm64.zip
-    ```
+  ```sh
+    cd /tmp
+  wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/v3.9.1/OpenLink-Portal-linux-arm64.zip
+  ```
 
 4.  **Unzip the archive**:
     If `unzip` is not installed, install it first with `opkg update && opkg install unzip`.
