@@ -1,6 +1,7 @@
 package main
 
 import (
+"path/filepath"
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
@@ -106,7 +107,7 @@ func main() {
 	http.HandleFunc("/admin/update-settings", authMiddleware(adminUpdateSettingsHandler))
 
 	// Serve the portal with theme support
-	http.Handle("/admin/", http.StripPrefix("/admin", http.FileServer(http.Dir(frontendDir))))
+	http.Handle("/admin/", http.StripPrefix("/admin", http.FileServer(http.Dir(filepath.Join(frontendDir, "admin")))))
 	http.HandleFunc("/", rootHandler)
 
 	log.Printf("Starting server on :7891, serving from %s", frontendDir)
