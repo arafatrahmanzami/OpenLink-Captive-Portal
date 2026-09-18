@@ -345,7 +345,7 @@ Access the administrator panel at `/admin/` (e.g., `http://<router-lan-ip>:7891/
 
 ## Configuration
 
-*   **Default Admin Password**: The default administrator password is `rosepinepink`.
+*   **Default Admin Password**: The default administrator password is `openlinkadmin`.
 *   **Server Port**: The Go backend listens on port `7891` by default.
 *   **LAN IP**: Detected automatically at install time and wired into the captive-portal redirects, so no IP is hardcoded. The frontend resolves the router address from the browser's location, and `splash.html` uses the IP detected by `install.sh` (override with `LAN_IP=<ip> ./scripts/install.sh`).
 *   **Persistence**: Data is stored in `/data/` as JSON files. This ensures portability and easy backups without needing database drivers.
