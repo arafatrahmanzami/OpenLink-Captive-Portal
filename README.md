@@ -1,6 +1,6 @@
 # OpenLink Captive Portal
 
-**OpenLink Captive Portal** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).Now maintained  by [arafatrahmanzami](https://github.com/arafatrahmanzami/)
+**OpenLink Captive Portal** is a rebranded and enhanced fork of [RoseNet-Captive-Portal](https://github.com/nhAsif/RoseNet-Captive-Portal) by [nhAsif](https://github.com/nhAsif).Now maintained  by [arafatrahmanzami](https://github.com/arafatrahmanzami/).
 It provides easy installation of a lightweight, voucher‑based captive portal for OpenWrt routers, with a Go backend and a React frontend.
 
 ## Key improvements/changes in this fork
