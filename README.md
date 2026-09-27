@@ -36,7 +36,7 @@ It provides easy installation of a lightweight, voucher‑based captive portal f
 
 
 
-#Install with single command for OpenWrt / BusyBox  (which may not have curl but my have wget & grep, in that case use bellow wget and grep method instead):
+#Install with single command for OpenWrt / BusyBox  (which may not have curl but may have wget & grep, in that case use bellow wget and grep method instead):
 
 ```bash
 
