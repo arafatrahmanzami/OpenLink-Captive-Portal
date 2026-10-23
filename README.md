@@ -57,12 +57,13 @@ if [ -n "$URL" ]; then \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
 else \
   echo "API lookup failed – using fallback direct URL" && \
-  TAG=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 | sed 's/\\//g') && \
+  TAG=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1) && \
   TAG=${TAG:-latest} && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/${TAG}/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
-cd OpenLink-Portal-linux-* && \
+rm -rf "OpenLink-Portal-linux-${ARCH}" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" -d "OpenLink-Portal-linux-${ARCH}" && \
+cd "OpenLink-Portal-linux-${ARCH}" && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
 
@@ -86,12 +87,13 @@ if [ -n "$URL" ]; then \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
 else \
   echo "API failed – using fallback direct URL" && \
-  TAG=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1 | sed 's/\\//g') && \
+  TAG=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1) && \
   TAG=${TAG:-latest} && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/${TAG}/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
-cd OpenLink-Portal-linux-* && \
+rm -rf "OpenLink-Portal-linux-${ARCH}" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" -d "OpenLink-Portal-linux-${ARCH}" && \
+cd "OpenLink-Portal-linux-${ARCH}" && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
 
