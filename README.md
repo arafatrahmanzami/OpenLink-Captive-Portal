@@ -51,7 +51,7 @@ if ! command -v unzip >/dev/null 2>&1; then \
 fi && \
 ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 echo "Detected architecture: $ARCH" && \
-URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
+URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep '^https://.*/OpenLink-Portal-linux-'"${ARCH}"'\.zip$' | head -n1) && \
 if [ -n "$URL" ]; then \
   echo "Downloading from API: $URL" && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
@@ -78,7 +78,7 @@ if ! command -v unzip >/dev/null 2>&1; then \
   elif command -v opkg >/dev/null 2>&1; then opkg update && opkg install unzip; fi; \
 fi && \
 ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
-URL=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
+URL=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | tr '"' '\n' | grep '^https://.*/OpenLink-Portal-linux-'"${ARCH}"'\.zip$' | head -n1) && \
 if [ -n "$URL" ]; then \
   echo "Using API‑detected URL: $URL" && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
