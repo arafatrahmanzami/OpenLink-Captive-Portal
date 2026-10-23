@@ -227,3 +227,11 @@ echo "Restarting NoDogSplash..."
 
 echo "Installation complete!"
 echo "Admin panel: http://${LAN_IP}:7891/admin/"
+uci commit firewall
+/etc/init.d/firewall restart
+
+echo "Restarting NoDogSplash..."
+/etc/init.d/nodogsplash restart
+
+echo "Installation complete!"
+echo "Admin panel: http://${LAN_IP}:7891/admin/"
