@@ -59,7 +59,12 @@ jobs:
           esac
           go build -ldflags="-s -w" -o voucher_server .
           mv voucher_server ../
-          upx --best --lzma ../voucher_server
+          # UPX fails on armv6 binaries with current UPX 4.2.4 — skip it for armv6
+          if [ "${{ matrix.arch }}" != "armv6" ]; then
+            upx --best --lzma ../voucher_server
+          else
+            echo "Skipping UPX for armv6 (known UPX 4.2.4 incompatibility)"
+          fi
 
       - name: Create NESTED release archive
         shell: bash
