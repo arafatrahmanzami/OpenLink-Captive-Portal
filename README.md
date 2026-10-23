@@ -61,8 +61,7 @@ else \
   TAG=${TAG:-latest} && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/${TAG}/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-rm -rf "OpenLink-Portal-linux-${ARCH}" && \
-unzip -o "OpenLink-Portal-linux-${ARCH}.zip" -d "OpenLink-Portal-linux-${ARCH}" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
 cd "OpenLink-Portal-linux-${ARCH}" && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
@@ -91,8 +90,7 @@ else \
   TAG=${TAG:-latest} && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/${TAG}/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-rm -rf "OpenLink-Portal-linux-${ARCH}" && \
-unzip -o "OpenLink-Portal-linux-${ARCH}.zip" -d "OpenLink-Portal-linux-${ARCH}" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
 cd "OpenLink-Portal-linux-${ARCH}" && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
