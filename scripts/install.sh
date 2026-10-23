@@ -197,26 +197,24 @@ cat << EOF > /etc/nodogsplash/htdocs/splash.html
 EOF
 
 # 7. Restart NoDogSplash to apply changes
-echo "# 8. Configure Firewall for Captive Portal
+# 8. Configure Firewall for Captive Portal
 echo "Configuring firewall for $INTERFACE..."
 
-# Find the firewall zone that matches the interface's logical network
-ZONE_NAME=$(uci show firewall | grep -B5 "device='$INTERFACE'" | grep "zone" | cut -d. -f2 | cut -d= -f1 | head -n1)
-if [ -z "$ZONE_NAME" ]; then
-    ZONE_NAME="lan" # Fallback
-fi
+# Automatically deduce the network name (e.g., br-lan3 -> lan3)
+NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
 
-# Ensure the zone accepts input and allows forwarding
-uci set firewall.$ZONE_NAME.input='ACCEPT'
-uci set firewall.$ZONE_NAME.output='ACCEPT'
-uci set firewall.$ZONE_NAME.forward='ACCEPT'
-uci set firewall.$ZONE_NAME.masq='1'
+uci add firewall zone
+uci set firewall.@zone[-1].name='openlink'
+uci set firewall.@zone[-1].input='ACCEPT'
+uci set firewall.@zone[-1].output='ACCEPT'
+uci set firewall.@zone[-1].forward='ACCEPT'
+uci set firewall.@zone[-1].masq='1'
+uci set firewall.@zone[-1].network="$NET_NAME"
 
-# Add explicit rule for Captive Portal ports (2050, 7891, DHCP, DNS)
 uci -q delete firewall.nds_portal
 uci set firewall.nds_portal=rule
 uci set firewall.nds_portal.name='Allow-OpenLink-Portal'
-uci set firewall.nds_portal.src="$ZONE_NAME"
+uci set firewall.nds_portal.src='openlink'
 uci set firewall.nds_portal.proto='tcp udp'
 uci set firewall.nds_portal.dest_port='53 67 80 443 2050 7891'
 uci set firewall.nds_portal.target='ACCEPT'
@@ -224,9 +222,8 @@ uci set firewall.nds_portal.target='ACCEPT'
 uci commit firewall
 /etc/init.d/firewall restart
 
-echo "Restarting NoDogSplash...""
+echo "Restarting NoDogSplash..."
 /etc/init.d/nodogsplash restart
 
 echo "Installation complete!"
-echo "Your voucher server is running on interface $INTERFACE at IP $LAN_IP."
-echo "Admin panel access: http://${LAN_IP}:7891/admin/"
+echo "Admin panel: http://${LAN_IP}:7891/admin/"
