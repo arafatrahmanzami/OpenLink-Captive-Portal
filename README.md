@@ -155,6 +155,27 @@ Advantage – clean separation of network interception (NoDogSplash) from busine
 
 
 
+## Troubleshooting: OpenWrt Snapshots (`apk`)
+
+If you are running an OpenWrt **development snapshot**, the package manager has changed from `opkg` to `apk`. Snapshots often have untrusted package signatures and occasionally missing dependencies. 
+
+If the automatic installer fails at the "Configuring NoDogSplash" step, you can install the package manually before running the installer:
+
+```bash
+# Update package lists (ignore untrusted warnings)
+apk update --allow-untrusted
+
+# Install NoDogSplash manually
+apk add --allow-untrusted nodogsplash
+
+# Verify it installed
+ndsctl status
+```
+
+Once `ndsctl` is available, re-run the OpenLink installer (`sh scripts/install.sh`) and it will skip the package installation step and complete the setup successfully.
+
+---
+
 ## OpenWrt WiFi Voucher System
 
 OpenLink Captive Portal is a comprehensive, self-contained voucher authentication system designed for Wi-Fi users on OpenWrt routers. It provides a robust and lightweight solution for managing internet access through a captive portal, leveraging a Go backend, a vanilla JavaScript frontend, and seamless integration with NoDogSplash.

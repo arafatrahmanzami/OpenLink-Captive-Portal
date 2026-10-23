@@ -20,7 +20,7 @@ fi
 if command -v apk >/dev/null 2>&1; then
     PKG_MANAGER="apk"
     PKG_UPDATE="apk update"
-    PKG_INSTALL="apk add --no-cache"
+    PKG_INSTALL="apk add --no-cache --allow-untrusted"
 elif command -v opkg >/dev/null 2>&1; then
     PKG_MANAGER="opkg"
     PKG_UPDATE="opkg update"
@@ -74,8 +74,17 @@ mkdir -p /www/voucher
 mkdir -p /opt/voucher
 mkdir -p /data # For the persistent database
 
-# 2. Copy files (Updated for multi-arch archive layout)
+# 2. Stop the service before overwriting the binary
+echo "Stopping any running voucher server..."
+/etc/init.d/voucher stop 2>/dev/null || true
+killall voucher_server 2>/dev/null || true
+
+# 3. Copy files (Updated for multi-arch archive layout)
 echo "Copying application files..."
+# Stop service to prevent Text file busy
+/etc/init.d/voucher stop 2>/dev/null || true
+killall voucher_server 2>/dev/null || true
+
 cp "$BIN_SRC" /opt/voucher/voucher_server
 chmod +x /opt/voucher/voucher_server
 cp -r "$WEB_SRC"/* /www/voucher/
