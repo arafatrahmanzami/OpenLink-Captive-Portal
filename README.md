@@ -45,6 +45,10 @@ It provides easy installation of a lightweight, voucher‑based captive portal f
 
 # Install with (using curl) a single command:
 cd /tmp && \
+if ! command -v unzip >/dev/null 2>&1; then \
+  if command -v apk >/dev/null 2>&1; then apk update --allow-untrusted && apk add --allow-untrusted unzip; \
+  elif command -v opkg >/dev/null 2>&1; then opkg update && opkg install unzip; fi; \
+fi && \
 ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 echo "Detected architecture: $ARCH" && \
 URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep "browser_download_url" | grep "OpenLink-Portal-linux-${ARCH}.zip" | cut -d '"' -f 4) && \
@@ -69,8 +73,10 @@ sh scripts/install.sh
 ```bash
 
 cd /tmp && \
-opkg update && \
-opkg install unzip && \
+if ! command -v unzip >/dev/null 2>&1; then \
+  if command -v apk >/dev/null 2>&1; then apk update --allow-untrusted && apk add --allow-untrusted unzip; \
+  elif command -v opkg >/dev/null 2>&1; then opkg update && opkg install unzip; fi; \
+fi && \
 ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 URL=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
 if [ -n "$URL" ]; then \
