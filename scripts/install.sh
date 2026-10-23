@@ -197,7 +197,34 @@ cat << EOF > /etc/nodogsplash/htdocs/splash.html
 EOF
 
 # 7. Restart NoDogSplash to apply changes
-echo "Restarting NoDogSplash..."
+echo "# 8. Configure Firewall for Captive Portal
+echo "Configuring firewall for $INTERFACE..."
+
+# Find the firewall zone that matches the interface's logical network
+ZONE_NAME=$(uci show firewall | grep -B5 "device='$INTERFACE'" | grep "zone" | cut -d. -f2 | cut -d= -f1 | head -n1)
+if [ -z "$ZONE_NAME" ]; then
+    ZONE_NAME="lan" # Fallback
+fi
+
+# Ensure the zone accepts input and allows forwarding
+uci set firewall.$ZONE_NAME.input='ACCEPT'
+uci set firewall.$ZONE_NAME.output='ACCEPT'
+uci set firewall.$ZONE_NAME.forward='ACCEPT'
+uci set firewall.$ZONE_NAME.masq='1'
+
+# Add explicit rule for Captive Portal ports (2050, 7891, DHCP, DNS)
+uci -q delete firewall.nds_portal
+uci set firewall.nds_portal=rule
+uci set firewall.nds_portal.name='Allow-OpenLink-Portal'
+uci set firewall.nds_portal.src="$ZONE_NAME"
+uci set firewall.nds_portal.proto='tcp udp'
+uci set firewall.nds_portal.dest_port='53 67 80 443 2050 7891'
+uci set firewall.nds_portal.target='ACCEPT'
+
+uci commit firewall
+/etc/init.d/firewall restart
+
+echo "Restarting NoDogSplash...""
 /etc/init.d/nodogsplash restart
 
 echo "Installation complete!"
