@@ -51,19 +51,29 @@ jobs:
         run: |
           cd backend
           export GOOS=linux
-          export GOARCH=${{ matrix.arch }}
-          case "${{ matrix.arch }}" in
-            arm)    export GOARM=7 ;;
-            armv6)  export GOARM=6 ;;
-            mipsle) export GOMIPS=softfloat ;;
-          esac
+          
+          # Map CI architecture names to correct Go env variables
+          if [ "${{ matrix.arch }}" = "arm" ]; then
+            export GOARCH=arm
+            export GOARM=7
+          elif [ "${{ matrix.arch }}" = "armv6" ]; then
+            export GOARCH=arm
+            export GOARM=6
+          elif [ "${{ matrix.arch }}" = "mipsle" ]; then
+            export GOARCH=mipsle
+            export GOMIPS=softfloat
+          else
+            export GOARCH=${{ matrix.arch }}
+          fi
+
           go build -ldflags="-s -w" -o voucher_server .
           mv voucher_server ../
-          # UPX fails on armv6 binaries with current UPX 4.2.4 — skip it for armv6
+          
+          # UPX fails on armv6 binaries, skip it
           if [ "${{ matrix.arch }}" != "armv6" ]; then
             upx --best --lzma ../voucher_server
           else
-            echo "Skipping UPX for armv6 (known UPX 4.2.4 incompatibility)"
+            echo "Skipping UPX for armv6"
           fi
 
       - name: Create NESTED release archive
