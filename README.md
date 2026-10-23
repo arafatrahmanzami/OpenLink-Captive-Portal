@@ -12,6 +12,9 @@ It provides easy installation of a lightweight, voucher‑based captive portal f
 - ✅ **No more hardcoded dependencies** – the installer works on any OpenWrt version with NoDogSplash.
 - ✅ **Easy one liner Installation** – auto installs dependency "unzip" first, detects architecture , downloads matching zip then extracts and  installs
 - ✅ **Added ARMv6 support** – Raspberry Pi 1/Zero support
+- ✅ **OpenWrt Snapshot (`apk`) Support** – Automatically uses `--allow-untrusted` to install NoDogSplash and `iptables-nft` on modern development snapshots.
+- ✅ **Automatic Firewall Configuration** – The installer now auto-configures `fw4` (nftables) zones to allow captive portal traffic (Ports 2050, 7891).
+- ✅ **Multi-Arch Builds** – Fixed CI pipeline to natively build `amd64`, `arm64`, `arm`, `armv6`, and `mipsle` (softfloat) binaries.
 - ✅ **Theme switching works** – default.html ,modern.html , corporate.html , music.html
 - ✅ **Redirects clients to the voucher portal** Port 2050 is NoDogSplash’s default splash page, but now redirect clients from that splash page to the voucher portal on port 7891
 - ✅ **Portal stays available after reboot.** All functions works as expected even after reboot or power loss
@@ -284,7 +287,7 @@ or  **Download the specific release** with `wget` (replace the filename with the
 
   ```sh
     cd /tmp
-  wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/download/v3.9.1/OpenLink-Portal-linux-arm64.zip
+  wget https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-arm64.zip
   ```
 
 4.  **Unzip the archive**:
