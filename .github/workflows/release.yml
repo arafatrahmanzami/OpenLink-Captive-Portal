@@ -2,10 +2,8 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
-    tags:
-      - 'v*' # Push events to new tags like v1.0.0
+    branches: [main]
+    tags: ['v*']
   workflow_dispatch:
 
 jobs:
@@ -13,104 +11,74 @@ jobs:
     name: Build admin frontend
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '24'
-        cache: 'npm'
-        cache-dependency-path: frontend-admin/package-lock.json
-
-    - name: Install and build admin frontend
-      run: |
-        cd frontend-admin
-        npm ci
-        npm run build
-      shell: bash
-
-    - name: Upload admin build
-      uses: actions/upload-artifact@v4
-      with:
-        name: admin-frontend
-        path: frontend/admin
-        if-no-files-found: error
-        retention-days: 1
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: frontend-admin/package-lock.json
+      - run: cd frontend-admin && npm ci && npm run build
+      - uses: actions/upload-artifact@v5
+        with:
+          name: admin-frontend
+          path: frontend/admin
+          if-no-files-found: error
+          retention-days: 1
 
   build:
-    name: Build for ${{ matrix.os }}-${{ matrix.arch }}
+    name: Build linux-${{ matrix.arch }}
     needs: frontend
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
     strategy:
+      fail-fast: false
       matrix:
-        os: [linux]
-        arch: [amd64, arm64, arm, armv6, mipsle]   # <-- added armv6
+        arch: [amd64, arm64, arm, armv6, mipsle]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          name: admin-frontend
+          path: frontend/admin
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.22'
+      - run: sudo apt-get update && sudo apt-get install -y upx-ucl
 
-    - name: Download admin frontend
-      uses: actions/download-artifact@v4
-      with:
-        name: admin-frontend
-        path: frontend/admin
+      - name: Build backend
+        shell: bash
+        run: |
+          cd backend
+          export GOOS=linux
+          export GOARCH=${{ matrix.arch }}
+          case "${{ matrix.arch }}" in
+            arm)    export GOARM=7 ;;
+            armv6)  export GOARM=6 ;;
+            mipsle) export GOMIPS=softfloat ;;
+          esac
+          go build -ldflags="-s -w" -o voucher_server .
+          mv voucher_server ../
+          upx --best --lzma ../voucher_server
 
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.22'
+      - name: Create NESTED release archive
+        shell: bash
+        run: |
+          NAME="OpenLink-Portal-linux-${{ matrix.arch }}"
+          mkdir -p "$NAME/opt/voucher" "$NAME/www/voucher" "$NAME/scripts"
+          cp voucher_server "$NAME/opt/voucher/"
+          cp -r frontend/* "$NAME/www/voucher/"
+          cp -r scripts/* "$NAME/scripts/"
+          [ -f nodogsplash/nodogsplash.conf ] && cp nodogsplash/nodogsplash.conf "$NAME/"
+          [ -f LICENSE ] && cp LICENSE "$NAME/"
+          zip -r -9 "$NAME.zip" "$NAME"
+          sha256sum "$NAME.zip" > "$NAME.zip.sha256"
+          rm -rf "$NAME"
 
-    - name: Install UPX
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y upx-ucl
-      shell: bash
-
-    - name: Build backend
-      run: |
-        cd backend
-        BINARY_NAME="voucher_server"
-        GOOS=${{ matrix.os }}
-        GOARCH=${{ matrix.arch }}
-        # Set GOARM=6 for armv6, otherwise default (7 for arm)
-        if [ "${{ matrix.arch }}" = "armv6" ]; then
-          export GOARM=6
-        fi
-        go build -ldflags="-s -w" -o $BINARY_NAME .
-        mv $BINARY_NAME ../   # Move to root of workspace
-      shell: bash
-
-    - name: Compress binary with UPX
-      run: |
-        upx --best --lzma voucher_server
-      shell: bash
-
-    - name: Create release archive and checksum
-      run: |
-        RELEASE_NAME="OpenLink-Portal-${{ matrix.os }}-${{ matrix.arch }}"
-
-        mkdir -p "${RELEASE_NAME}"
-        cp "voucher_server" "${RELEASE_NAME}/"
-        cp -r frontend "${RELEASE_NAME}/"
-        cp nodogsplash/nodogsplash.conf "${RELEASE_NAME}/"
-        cp LICENSE "${RELEASE_NAME}/"
-        cp -r scripts "${RELEASE_NAME}/"
-
-        ARCHIVE_NAME="${RELEASE_NAME}.zip"
-        zip -r "${ARCHIVE_NAME}" "${RELEASE_NAME}"
-
-        sha256sum "${ARCHIVE_NAME}" > "${ARCHIVE_NAME}.sha256"
-
-        rm -rf "${RELEASE_NAME}"
-      shell: bash
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ matrix.os }}-${{ matrix.arch }}
-        path: |
-          OpenLink-Portal-${{ matrix.os }}-${{ matrix.arch }}.*
+      - uses: actions/upload-artifact@v5
+        with:
+          name: linux-${{ matrix.arch }}
+          path: OpenLink-Portal-linux-${{ matrix.arch }}.*
 
   release:
     name: Create GitHub Release
@@ -119,20 +87,13 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     permissions:
       contents: write
-
     steps:
-    - name: Download all build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        path: artifacts
-        pattern: linux-*
-
-    - name: List downloaded artifacts
-      run: ls -R artifacts
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: artifacts/**/*
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v5
+        with:
+          path: artifacts
+          pattern: linux-*
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

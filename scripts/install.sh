@@ -4,6 +4,34 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 RELEASE_ROOT="$(dirname "$SCRIPT_DIR")"
 
+# --- Detect archive layout (flat OR nested) ---
+if [ -f "$RELEASE_ROOT/opt/voucher/voucher_server" ]; then
+    BIN_SRC="$RELEASE_ROOT/opt/voucher/voucher_server"
+    WEB_SRC="$RELEASE_ROOT/www/voucher"
+elif [ -f "$RELEASE_ROOT/voucher_server" ]; then
+    BIN_SRC="$RELEASE_ROOT/voucher_server"
+    WEB_SRC="$RELEASE_ROOT/frontend"
+else
+    echo "ERROR: Cannot locate voucher_server in $RELEASE_ROOT" >&2
+    exit 1
+fi
+
+# --- Detect package manager (apk on 25.x+, opkg on 24.10 and earlier) ---
+if command -v apk >/dev/null 2>&1; then
+    PKG_MANAGER="apk"
+    PKG_UPDATE="apk update"
+    PKG_INSTALL="apk add --no-cache"
+elif command -v opkg >/dev/null 2>&1; then
+    PKG_MANAGER="opkg"
+    PKG_UPDATE="opkg update"
+    PKG_INSTALL="opkg install"
+else
+    echo "ERROR: Neither apk nor opkg found." >&2
+    exit 1
+fi
+echo "Package manager: $PKG_MANAGER"
+
+
 echo "=================================================="
 echo "      OpenLink Captive Portal Setup Wizard        "
 echo "=================================================="
@@ -48,11 +76,9 @@ mkdir -p /data # For the persistent database
 
 # 2. Copy files (Updated for multi-arch archive layout)
 echo "Copying application files..."
-cp "$RELEASE_ROOT/opt/voucher/voucher_server" /opt/voucher/
+cp "$BIN_SRC" /opt/voucher/voucher_server
 chmod +x /opt/voucher/voucher_server
-mkdir -p /www/voucher/admin
-mkdir -p /www/voucher/admin
-cp -r "$RELEASE_ROOT/www/voucher"/* /www/voucher/admin/
+cp -r "$WEB_SRC"/* /www/voucher/
 
 # Copy the binauth script and make it executable
 cp "$SCRIPT_DIR/binauth.sh" /opt/voucher/
@@ -100,9 +126,9 @@ chmod +x /etc/init.d/voucher
 echo "Configuring NoDogSplash..."
 
 if [ ! -f /etc/init.d/nodogsplash ]; then
-    echo "NoDogSplash not found. Installing it via opkg..."
-    opkg update
-    if ! opkg install nodogsplash; then
+    echo "NoDogSplash not found. Installing via $PKG_MANAGER..."
+    $PKG_UPDATE
+    if ! $PKG_INSTALL nodogsplash; then
         echo "Error: failed to install NoDogSplash via opkg."
         exit 1
     fi

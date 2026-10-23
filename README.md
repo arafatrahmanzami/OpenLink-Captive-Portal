@@ -42,7 +42,7 @@ It provides easy installation of a lightweight, voucher‑based captive portal f
 
 # Install with (using curl) a single command:
 cd /tmp && \
-ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/') && \
+ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 echo "Detected architecture: $ARCH" && \
 URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep "browser_download_url" | grep "OpenLink-Portal-linux-${ARCH}.zip" | cut -d '"' -f 4) && \
 if [ -n "$URL" ]; then \
@@ -68,7 +68,7 @@ sh scripts/install.sh
 cd /tmp && \
 opkg update && \
 opkg install unzip && \
-ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/mips/mipsle/') && \
+ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 URL=$(wget -qO- https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
 if [ -n "$URL" ]; then \
   echo "Using API‑detected URL: $URL" && \
