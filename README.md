@@ -51,7 +51,7 @@ if ! command -v unzip >/dev/null 2>&1; then \
 fi && \
 ARCH=$(uname -m | sed 's/armv7l/arm/; s/armv6l/armv6/; s/aarch64/arm64/; s/x86_64/amd64/; s/^mipsel$/mipsle/; s/^mips$/mipsle/') && \
 echo "Detected architecture: $ARCH" && \
-URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep "browser_download_url" | grep "OpenLink-Portal-linux-${ARCH}.zip" | cut -d '"' -f 4) && \
+URL=$(curl -s https://api.github.com/repos/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest | grep -o "https://.*/OpenLink-Portal-linux-${ARCH}.zip" | head -n1) && \
 if [ -n "$URL" ]; then \
   echo "Downloading from API: $URL" && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "$URL"; \
@@ -59,7 +59,7 @@ else \
   echo "API lookup failed – using fallback direct URL" && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-unzip "OpenLink-Portal-linux-${ARCH}.zip" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
 cd OpenLink-Portal-linux-* && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
@@ -86,7 +86,7 @@ else \
   echo "API failed – using fallback direct URL" && \
   wget -O "OpenLink-Portal-linux-${ARCH}.zip" "https://github.com/arafatrahmanzami/OpenLink-Captive-Portal/releases/latest/download/OpenLink-Portal-linux-${ARCH}.zip"; \
 fi && \
-unzip "OpenLink-Portal-linux-${ARCH}.zip" && \
+unzip -o "OpenLink-Portal-linux-${ARCH}.zip" && \
 cd OpenLink-Portal-linux-* && \
 chmod +x scripts/install.sh && \
 sh scripts/install.sh
