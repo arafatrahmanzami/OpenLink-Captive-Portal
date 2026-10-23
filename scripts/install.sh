@@ -203,13 +203,13 @@ echo "Configuring firewall for $INTERFACE..."
 # Automatically deduce the network name (e.g., br-lan3 -> lan3)
 NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
 
-uci add firewall zone
-uci set firewall.@zone[-1].name='openlink'
-uci set firewall.@zone[-1].input='ACCEPT'
-uci set firewall.@zone[-1].output='ACCEPT'
-uci set firewall.@zone[-1].forward='ACCEPT'
-uci set firewall.@zone[-1].masq='1'
-uci set firewall.@zone[-1].network="$NET_NAME"
+uci set firewall.openlink=zone
+uci set firewall.openlink.name='openlink'
+uci set firewall.openlink.input='ACCEPT'
+uci set firewall.openlink.output='ACCEPT'
+uci set firewall.openlink.forward='ACCEPT'
+uci set firewall.openlink.masq='1'
+uci set firewall.openlink.network="$NET_NAME"
 
 uci -q delete firewall.nds_portal
 uci set firewall.nds_portal=rule
