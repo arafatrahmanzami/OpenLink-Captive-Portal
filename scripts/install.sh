@@ -58,6 +58,20 @@ if [ -z "$LAN_IP" ]; then
     exit 1
 fi
 
+# Auto-detect the logical network name (e.g., br-lan3 -> lan3 or lanb)
+NET_NAME=$(uci show network | grep "device='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+if [ -z "$NET_NAME" ]; then
+    NET_NAME=$(uci show network | grep "ifname='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+fi
+if [ -z "$NET_NAME" ]; then
+    echo "WARNING: Could not auto-detect the logical network name for $INTERFACE."
+    read -p "Please enter the logical network name (e.g., lan3, lanb, hotspot): " NET_NAME
+    if [ -z "$NET_NAME" ]; then
+        echo "ERROR: Logical network name required. Aborting to prevent damage to your main LAN."
+        exit 1
+    fi
+fi
+
 # 2. Interactive Timeout & Network Settings
 echo ""
 echo "--- Timeout & Network Settings (Press Enter to use defaults) ---"
@@ -73,6 +87,12 @@ PREAUTH_TIMEOUT="${USER_PREAUTH:-30}"
 read -p "Nodogsplash check interval in seconds [60]: " USER_CHECK
 CHECK_INTERVAL="${USER_CHECK:-60}"
 
+read -p "Max concurrent clients [250]: " USER_MAXCLIENTS
+MAXCLIENTS="${USER_MAXCLIENTS:-250}"
+
+read -p "DHCP lease time (e.g. 12h, 24h, 31d, infinite) [12h]: " USER_LEASETIME
+LEASETIME="${USER_LEASETIME:-12h}"
+
 read -p "Disable IPv6 on the portal interface? (y/n) [y]: " USER_DISABLE_IPV6
 DISABLE_IPV6="${USER_DISABLE_IPV6:-y}"
 
@@ -84,6 +104,8 @@ echo " -> Idle Timeout     : $IDLE_TIMEOUT mins"
 echo " -> Forced Timeout   : $FORCE_TIMEOUT mins"
 echo " -> Pre-Auth Timeout : $PREAUTH_TIMEOUT mins"
 echo " -> Check Interval   : $CHECK_INTERVAL secs"
+echo " -> Max Clients      : $MAXCLIENTS"
+echo " -> DHCP Lease Time  : $LEASETIME"
 echo " -> Disable IPv6     : $DISABLE_IPV6"
 echo "=================================================="
 sleep 2
@@ -161,7 +183,7 @@ config nodogsplash
 	option fwhook_enabled '1'
 	option gatewayinterface '$INTERFACE'
 	option gatewayipaddress '$LAN_IP'
-	option maxclients '250'
+	option maxclients '$MAXCLIENTS'
 	option binauth '/opt/voucher/binauth.sh'
 	option clientidletimeout '$IDLE_TIMEOUT'
 	option clientforcetimeout '$FORCE_TIMEOUT'
@@ -199,37 +221,25 @@ cat << EOF > /etc/nodogsplash/htdocs/splash.html
 EOF
 
 # 9. Disable IPv6 if requested
+# Apply DHCP Lease Time
+echo "Setting DHCP lease time to $LEASETIME for $NET_NAME..."
+uci set dhcp.$NET_NAME.leasetime="$LEASETIME"
+uci commit dhcp
+/etc/init.d/dnsmasq restart
+
 if [ "$DISABLE_IPV6" = "y" ] || [ "$DISABLE_IPV6" = "Y" ]; then
     echo "Disabling IPv6 on $INTERFACE..."
-    # Automatically find the correct logical network name
-    NET_NAME=$(uci show network | grep "device='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
-    if [ -z "$NET_NAME" ]; then
-        NET_NAME=$(uci show network | grep "ifname='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
-    fi
-    
-    if [ -n "$NET_NAME" ]; then
-        uci set network.$NET_NAME.ipv6='0'
-        uci set dhcp.$NET_NAME.ra='disabled'
-        uci set dhcp.$NET_NAME.dhcpv6='disabled'
-        uci set dhcp.$NET_NAME.ndp='disabled'
-        uci commit network
-        uci commit dhcp
-        /etc/init.d/dnsmasq restart
-    else
-        echo "WARNING: Could not find logical network for $INTERFACE. Skipping IPv6 disable."
-    fi
+    uci set network.$NET_NAME.ipv6='0'
+    uci set dhcp.$NET_NAME.ra='disabled'
+    uci set dhcp.$NET_NAME.dhcpv6='disabled'
+    uci set dhcp.$NET_NAME.ndp='disabled'
+    uci commit network
+    uci commit dhcp
+    /etc/init.d/dnsmasq restart
 fi
 
 # 10. Configure Firewall for Captive Portal
 echo "Configuring firewall for $INTERFACE..."
-NET_NAME=$(uci show network | grep "device='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
-if [ -z "$NET_NAME" ]; then
-    NET_NAME=$(uci show network | grep "ifname='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
-fi
-if [ -z "$NET_NAME" ]; then
-    NET_NAME="lan" # Fallback
-fi
-
 uci set firewall.openlink=zone
 uci set firewall.openlink.name='openlink'
 uci set firewall.openlink.input='ACCEPT'
