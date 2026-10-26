@@ -201,20 +201,34 @@ EOF
 # 9. Disable IPv6 if requested
 if [ "$DISABLE_IPV6" = "y" ] || [ "$DISABLE_IPV6" = "Y" ]; then
     echo "Disabling IPv6 on $INTERFACE..."
-    NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
-    uci set network.$NET_NAME.ipv6='0'
-    uci set dhcp.$NET_NAME.ra='disabled'
-    uci set dhcp.$NET_NAME.dhcpv6='disabled'
-    uci set dhcp.$NET_NAME.ndp='disabled'
-    uci commit network
-    uci commit dhcp
-    /etc/init.d/network restart
-    /etc/init.d/dnsmasq restart
+    # Automatically find the correct logical network name
+    NET_NAME=$(uci show network | grep "device='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+    if [ -z "$NET_NAME" ]; then
+        NET_NAME=$(uci show network | grep "ifname='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+    fi
+    
+    if [ -n "$NET_NAME" ]; then
+        uci set network.$NET_NAME.ipv6='0'
+        uci set dhcp.$NET_NAME.ra='disabled'
+        uci set dhcp.$NET_NAME.dhcpv6='disabled'
+        uci set dhcp.$NET_NAME.ndp='disabled'
+        uci commit network
+        uci commit dhcp
+        /etc/init.d/dnsmasq restart
+    else
+        echo "WARNING: Could not find logical network for $INTERFACE. Skipping IPv6 disable."
+    fi
 fi
 
 # 10. Configure Firewall for Captive Portal
 echo "Configuring firewall for $INTERFACE..."
-NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
+NET_NAME=$(uci show network | grep "device='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+if [ -z "$NET_NAME" ]; then
+    NET_NAME=$(uci show network | grep "ifname='$INTERFACE'" | cut -d. -f2 | cut -d= -f1 | head -n1)
+fi
+if [ -z "$NET_NAME" ]; then
+    NET_NAME="lan" # Fallback
+fi
 
 uci set firewall.openlink=zone
 uci set firewall.openlink.name='openlink'
