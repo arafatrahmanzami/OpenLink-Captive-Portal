@@ -19,7 +19,7 @@ fi
 # --- Detect package manager (apk on 25.x+, opkg on 24.10 and earlier) ---
 if command -v apk >/dev/null 2>&1; then
     PKG_MANAGER="apk"
-    PKG_UPDATE="apk update"
+    PKG_UPDATE="apk update --allow-untrusted"
     PKG_INSTALL="apk add --no-cache --allow-untrusted"
 elif command -v opkg >/dev/null 2>&1; then
     PKG_MANAGER="opkg"
@@ -31,14 +31,12 @@ else
 fi
 echo "Package manager: $PKG_MANAGER"
 
-
 echo "=================================================="
 echo "      OpenLink Captive Portal Setup Wizard        "
 echo "=================================================="
 
-# 0. Interactive Network & Interface Selection
+# 1. Interactive Network & Interface Selection
 DEFAULT_INTERFACE="$(uci -q get network.lan.device 2>/dev/null || echo "br-lan")"
-
 echo "Available network interfaces on this router:"
 ip -o link show | awk -F': ' '{print " - " $2}'
 echo ""
@@ -46,7 +44,6 @@ echo ""
 read -p "Enter target gateway interface [$DEFAULT_INTERFACE]: " USER_INTERFACE
 INTERFACE="${USER_INTERFACE:-$DEFAULT_INTERFACE}"
 
-# Auto-detect IP for the chosen interface
 DEFAULT_IP="$(ip -4 addr show dev "$INTERFACE" 2>/dev/null | grep -oE 'inet [0-9.]+' | awk '{print $2}' | head -n1)"
 if [ -z "$DEFAULT_IP" ]; then
     DEFAULT_IP="$(uci -q get network.lan.ipaddr)"
@@ -61,46 +58,61 @@ if [ -z "$LAN_IP" ]; then
     exit 1
 fi
 
+# 2. Interactive Timeout & Network Settings
+echo ""
+echo "--- Timeout & Network Settings (Press Enter to use defaults) ---"
+read -p "Inactivity timeout in minutes [120]: " USER_IDLE
+IDLE_TIMEOUT="${USER_IDLE:-120}"
+
+read -p "Forced session timeout in minutes [1440]: " USER_FORCE
+FORCE_TIMEOUT="${USER_FORCE:-1440}"
+
+read -p "Pre-auth idle timeout in minutes [30]: " USER_PREAUTH
+PREAUTH_TIMEOUT="${USER_PREAUTH:-30}"
+
+read -p "Nodogsplash check interval in seconds [60]: " USER_CHECK
+CHECK_INTERVAL="${USER_CHECK:-60}"
+
+read -p "Disable IPv6 on the portal interface? (y/n) [y]: " USER_DISABLE_IPV6
+DISABLE_IPV6="${USER_DISABLE_IPV6:-y}"
+
 echo ""
 echo "Configuration locked in:"
-echo " -> Interface : $INTERFACE"
-echo " -> Portal IP : $LAN_IP"
+echo " -> Interface        : $INTERFACE"
+echo " -> Portal IP        : $LAN_IP"
+echo " -> Idle Timeout     : $IDLE_TIMEOUT mins"
+echo " -> Forced Timeout   : $FORCE_TIMEOUT mins"
+echo " -> Pre-Auth Timeout : $PREAUTH_TIMEOUT mins"
+echo " -> Check Interval   : $CHECK_INTERVAL secs"
+echo " -> Disable IPv6     : $DISABLE_IPV6"
 echo "=================================================="
-sleep 1
+sleep 2
 
-# 1. Create directories
+# 3. Create directories
 echo "Creating directories..."
 mkdir -p /www/voucher
 mkdir -p /opt/voucher
-mkdir -p /data # For the persistent database
+mkdir -p /data
 
-# 2. Stop the service before overwriting the binary
+# 4. Stop the service before overwriting the binary (Text file busy fix)
 echo "Stopping any running voucher server..."
 /etc/init.d/voucher stop 2>/dev/null || true
 killall voucher_server 2>/dev/null || true
 
-# 3. Copy files (Updated for multi-arch archive layout)
+# 5. Copy files
 echo "Copying application files..."
-# Stop service to prevent Text file busy
-/etc/init.d/voucher stop 2>/dev/null || true
-killall voucher_server 2>/dev/null || true
-
 cp "$BIN_SRC" /opt/voucher/voucher_server
 chmod +x /opt/voucher/voucher_server
 cp -r "$WEB_SRC"/* /www/voucher/
-
-# Copy the binauth script and make it executable
 cp "$SCRIPT_DIR/binauth.sh" /opt/voucher/
 chmod +x /opt/voucher/binauth.sh
 
-# 3. Create the init script to start the server on boot
+# 6. Create the init script to start the server on boot
 echo "Creating init.d startup script..."
 cat << 'EOF' > /etc/init.d/voucher
 #!/bin/sh /etc/rc.common
-
 START=99
 STOP=10
-
 USE_PROCD=1
 PROG=/opt/voucher/voucher_server
 LOG_FILE=/tmp/voucher.log
@@ -114,31 +126,26 @@ start_service() {
     procd_set_param respawn
     procd_close_instance
 }
-
 stop_service() {
     echo "Stopping voucher server..."
 }
-
 reload_service() {
     stop
     start
 }
 EOF
 
-# 4. Make the init script executable and enable it
-echo "Enabling and starting the service..."
 chmod +x /etc/init.d/voucher
 /etc/init.d/voucher enable
 /etc/init.d/voucher restart
 
-# 5. Install and configure NoDogSplash
+# 7. Install and configure NoDogSplash
 echo "Configuring NoDogSplash..."
-
 if [ ! -f /etc/init.d/nodogsplash ]; then
     echo "NoDogSplash not found. Installing via $PKG_MANAGER..."
     $PKG_UPDATE
     if ! $PKG_INSTALL nodogsplash; then
-        echo "Error: failed to install NoDogSplash via opkg."
+        echo "Error: failed to install NoDogSplash."
         exit 1
     fi
 fi
@@ -156,20 +163,15 @@ config nodogsplash
 	option gatewayipaddress '$LAN_IP'
 	option maxclients '250'
 	option binauth '/opt/voucher/binauth.sh'
-	option client_idle_timeout '30'
-	list preauthenticated_users 'allow tcp port 7891'
-	list preauthenticated_users 'allow tcp port 53'
-	list preauthenticated_users 'allow udp port 53'
-	list authenticated_users 'allow all'
+	option clientidletimeout '$IDLE_TIMEOUT'
+	option clientforcetimeout '$FORCE_TIMEOUT'
+	option preauthidletimeout '$PREAUTH_TIMEOUT'
+	option checkinterval '$CHECK_INTERVAL'
 	option splashpage 'splash.html'
-	option preauthidletimeout '3'
-	option authidletimeout '1'
-	option checkinterval '20'
-	list authenticated_users 'allow all'
+	list preauthenticated_users 'allow tcp port 7891'
 	list preauthenticated_users 'allow tcp port 53'
 	list preauthenticated_users 'allow udp port 53'
-	list preauthenticated_users 'allow tcp port 7891'
-	list preauthenticated_users 'allow udp port 7891'
+	list authenticated_users 'allow all'
 	list users_to_router 'allow tcp port 22'
 	list users_to_router 'allow tcp port 23'
 	list users_to_router 'allow tcp port 53'
@@ -179,7 +181,7 @@ config nodogsplash
 	list users_to_router 'allow tcp port 7891'
 EOF
 
-# 6. Create the custom splash page for redirection
+# 8. Create the custom splash page for redirection
 echo "Creating custom NoDogSplash splash page..."
 mkdir -p /etc/nodogsplash/htdocs/
 cat << EOF > /etc/nodogsplash/htdocs/splash.html
@@ -196,11 +198,22 @@ cat << EOF > /etc/nodogsplash/htdocs/splash.html
 </html>
 EOF
 
-# 7. Restart NoDogSplash to apply changes
-# 8. Configure Firewall for Captive Portal
-echo "Configuring firewall for $INTERFACE..."
+# 9. Disable IPv6 if requested
+if [ "$DISABLE_IPV6" = "y" ] || [ "$DISABLE_IPV6" = "Y" ]; then
+    echo "Disabling IPv6 on $INTERFACE..."
+    NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
+    uci set network.$NET_NAME.ipv6='0'
+    uci set dhcp.$NET_NAME.ra='disabled'
+    uci set dhcp.$NET_NAME.dhcpv6='disabled'
+    uci set dhcp.$NET_NAME.ndp='disabled'
+    uci commit network
+    uci commit dhcp
+    /etc/init.d/network restart
+    /etc/init.d/dnsmasq restart
+fi
 
-# Automatically deduce the network name (e.g., br-lan3 -> lan3)
+# 10. Configure Firewall for Captive Portal
+echo "Configuring firewall for $INTERFACE..."
 NET_NAME=$(echo "$INTERFACE" | sed 's/br-//')
 
 uci set firewall.openlink=zone
@@ -222,16 +235,12 @@ uci set firewall.nds_portal.target='ACCEPT'
 uci commit firewall
 /etc/init.d/firewall restart
 
+# 11. Restart NoDogSplash and finish
 echo "Restarting NoDogSplash..."
 /etc/init.d/nodogsplash restart
 
+echo "=================================================="
 echo "Installation complete!"
-echo "Admin panel: http://${LAN_IP}:7891/admin/"
-uci commit firewall
-/etc/init.d/firewall restart
-
-echo "Restarting NoDogSplash..."
-/etc/init.d/nodogsplash restart
-
-echo "Installation complete!"
-echo "Admin panel: http://${LAN_IP}:7891/admin/"
+echo "Your voucher server is running on interface $INTERFACE at IP $LAN_IP."
+echo "Admin panel access: http://${LAN_IP}:7891/admin/"
+echo "=================================================="
